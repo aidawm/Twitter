@@ -33,4 +33,14 @@ public class Tweet {
             likes.remove(liker);
     }
 
+    public void addNewReply(Tweet tweet){
+        replies.add(tweet);
+    }
+
+    public void removeReply(Tweet tweet){
+        if(replies.contains(tweet))
+            replies.remove(tweet);
+    }
+
+
 }
