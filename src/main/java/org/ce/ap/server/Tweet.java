@@ -29,8 +29,7 @@ public class Tweet {
         likes.add(liker);
     }
     public void removeLike(User liker){
-        if (likes.contains(liker))
-            likes.remove(liker);
+        likes.remove(liker);
     }
 
     public void addNewReply(Tweet tweet){
@@ -38,8 +37,7 @@ public class Tweet {
     }
 
     public void removeReply(Tweet tweet){
-        if(replies.contains(tweet))
-            replies.remove(tweet);
+        replies.remove(tweet);
     }
 
 
