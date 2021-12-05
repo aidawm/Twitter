@@ -104,4 +104,11 @@ public class Tweet {
         return sendDate;
     }
 
+    /**
+     *
+     * @return tweet's author
+     */
+    public User getAuthor() {
+        return author;
+    }
 }
