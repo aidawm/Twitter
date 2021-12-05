@@ -38,8 +38,11 @@ public class Tweet {
      * @param liker is using for removing liker
      */
     public void removeLike(User liker){
-        if (likes.contains(liker))
             likes.remove(liker);
+        if (!likes.contains(liker))
+        {
+            System.err.println("tweet not found");
+        }
     }
 
 }
