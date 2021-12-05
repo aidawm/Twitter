@@ -25,11 +25,24 @@ public class Tweet {
         this.replies=new ArrayList<>();
     }
 
+    /**
+     *
+     * @param liker is using for adding liker
+     */
     public void likeTweet(User liker){
         likes.add(liker);
     }
+
+    /**
+     *
+     * @param liker is using for removing liker
+     */
     public void removeLike(User liker){
         likes.remove(liker);
+        if (!likes.contains(liker))
+        {
+            System.err.println("liker not found");
+        }
     }
 
     public void addNewReply(Tweet tweet){
@@ -38,6 +51,10 @@ public class Tweet {
 
     public void removeReply(Tweet tweet){
         replies.remove(tweet);
+        if (!likes.contains(tweet))
+        {
+            System.err.println("reply not found");
+        }
     }
 
 
