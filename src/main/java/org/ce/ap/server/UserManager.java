@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * this class holds the server's user information and process on it
  */
 public class UserManager {
-    ///// list of users that read from database
     private ArrayList<User> users;
 
     /**
@@ -44,31 +43,15 @@ public class UserManager {
 
     }
 
-    /**
-     * find the user's name from its username
-     * @param username the user's username
-     * @return the user
-     */
     public String findName(String username){
         User user = findUser(username);
         return user.getFirstName()+" "+user.getUsername();
     }
 
-    /**
-     * get the user's password from database
-     * @param username the user's username
-     * @return the user's password
-     */
     public String getUserPassword(String username){
         User user = findUser(username);
         return user.getPassword();
     }
-
-    /**
-     * get the user's birthDate from database
-     * @param username the user's username
-     * @return the user's birthDate
-     */
     public LocalDate getUserBirthDate(String username){
         User user = findUser(username);
         return user.getBirthDate();
