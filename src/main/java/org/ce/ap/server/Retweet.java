@@ -15,4 +15,11 @@ public class Retweet extends Tweet{
         this.retweet = retweet;
     }
 
+    /**
+     *
+     * @return tweet
+     */
+    public Tweet getRetweet() {
+        return retweet;
+    }
 }
