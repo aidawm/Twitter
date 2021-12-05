@@ -45,10 +45,17 @@ public class Tweet {
         }
     }
 
+    /**
+     * add new reply for the tweet
+     * @param tweet the tweet's reply
+     */
     public void addNewReply(Tweet tweet){
         replies.add(tweet);
     }
-
+    /**
+     * remove the reply of the tweet
+     * @param tweet the tweet's reply
+     */
     public void removeReply(Tweet tweet){
         replies.remove(tweet);
         if (!likes.contains(tweet))
@@ -57,22 +64,42 @@ public class Tweet {
         }
     }
 
+    /**
+     * get the tweet's text
+     * @return text field
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * edit(set) the tweet's text
+     * @param text tweet's text
+     */
     public void editText(String text) {
         this.text = text;
     }
 
+    /**
+     * get the tweet's likes list
+     * @return likes field
+     */
     public HashSet<User> getLikes() {
         return likes;
     }
 
+    /**
+     * get the tweet's reply list
+     * @return replies field
+     */
     public ArrayList<Tweet> getReplies() {
         return replies;
     }
 
+    /**
+     * get the tweet's sendDate
+     * @return sendDate field
+     */
     public LocalDate getSendDate() {
         return sendDate;
     }
