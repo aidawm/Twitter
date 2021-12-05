@@ -25,9 +25,18 @@ public class Tweet {
         this.replies=new ArrayList<>();
     }
 
+    /**
+     *
+     * @param liker is using for adding liker
+     */
     public void likeTweet(User liker){
         likes.add(liker);
     }
+
+    /**
+     *
+     * @param liker is using for removing liker
+     */
     public void removeLike(User liker){
         if (likes.contains(liker))
             likes.remove(liker);
