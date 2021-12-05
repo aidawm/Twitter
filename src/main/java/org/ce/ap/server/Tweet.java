@@ -57,5 +57,24 @@ public class Tweet {
         }
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void editText(String text) {
+        this.text = text;
+    }
+
+    public HashSet<User> getLikes() {
+        return likes;
+    }
+
+    public ArrayList<Tweet> getReplies() {
+        return replies;
+    }
+
+    public LocalDate getSendDate() {
+        return sendDate;
+    }
 
 }
