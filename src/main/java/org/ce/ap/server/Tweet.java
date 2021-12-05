@@ -12,6 +12,11 @@ public class Tweet {
     private ArrayList<Tweet> replies;
     private final LocalDate sendDate;
 
+    /**
+     * create a new object from tweet
+     * @param author is using for setting the tweet's author
+     * @param text is using for setting the tweet's text
+     */
     public Tweet(User author,String text){
         this.author=author;
         this.text=text;
@@ -19,4 +24,13 @@ public class Tweet {
         this.likes=new HashSet<>();
         this.replies=new ArrayList<>();
     }
+
+    public void likeTweet(User liker){
+        likes.add(liker);
+    }
+    public void removeLike(User liker){
+        if (likes.contains(liker))
+            likes.remove(liker);
+    }
+
 }
