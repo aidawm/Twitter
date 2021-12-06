@@ -190,11 +190,10 @@ public class User {
     private void checkName(String text) throws InvalidNameException{
         for (char c : text.toCharArray())
         {
-            if (!(c >= 'a' && c <= 'z'))
+            if (!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z'))
             {
                 throw new InvalidNameException("name only can be a string of alphabets!");
             }
-            break;
         }
     }
 }
