@@ -1,8 +1,11 @@
 package main.java.org.ce.ap.server;
 
 import java.time.LocalDate;
+import java.util.Locale;
+
 import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 
 public class User {
     private String firstName;
@@ -22,13 +25,14 @@ public class User {
      * @param birthDate is using for setting birthDate
      * @throws InvalidAgeException if the age isn't greater than 13 or it is after now
      */
-    public User(String firstName, String lastName, String username, String password, LocalDate birthDate) throws InvalidAgeException {
+    public User(String firstName, String lastName, String username, String password, LocalDate birthDate) throws InvalidAgeException,InvalidUsernameException {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.birthDate = birthDate;
         this.registryDate = LocalDate.now();
+        checkUsername();
         checkAge();
     }
 
@@ -158,6 +162,20 @@ public class User {
         else if (text.length()>256)
         {
             throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
+        }
+    }
+
+    /**
+     * check the username be valid
+     * @throws InvalidUsernameException
+     */
+    private void checkUsername() throws InvalidUsernameException{
+        if(username.length()<4 || username.length()>15)
+            throw new InvalidUsernameException("the username must be greater than 4 and less than 15");
+        username=username.toLowerCase(Locale.ROOT);
+        for (char c : username.toCharArray()){
+            if(!((c>='a' && c<='z')|| c=='_' || (c>='0' && c<='9')))
+                throw new InvalidUsernameException("the username must have A-Z , 0-9 character ");
         }
     }
 }
