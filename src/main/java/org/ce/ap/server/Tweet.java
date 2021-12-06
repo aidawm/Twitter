@@ -25,6 +25,7 @@ public class Tweet {
         this.sendDate=LocalDate.now();
         this.likes=new HashSet<>();
         this.replies=new ArrayList<>();
+        checkTweetCharacters();
     }
 
     /**
@@ -113,6 +114,19 @@ public class Tweet {
     public User getAuthor() {
         return author;
     }
-
+    /**
+     *
+     * @throws InvalidCharacterNumberException if the number is greater than 256 or the text is null
+     */
+    private void checkTweetCharacters() throws InvalidCharacterNumberException {
+        if (text.length() == 0 || text == null)
+        {
+            throw new InvalidCharacterNumberException("Text shouldn't be empty!");
+        }
+        else if (text.length()>256)
+        {
+            throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
+        }
+    }
 
 }
