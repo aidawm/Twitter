@@ -5,7 +5,9 @@ import java.util.Locale;
 
 import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
+import main.java.org.ce.ap.server.exceptions.InvalidNameException;
 
 public class User {
     private String firstName;
@@ -25,7 +27,8 @@ public class User {
      * @param birthDate is using for setting birthDate
      * @throws InvalidAgeException if the age isn't greater than 13 or it is after now
      */
-    public User(String firstName, String lastName, String username, String password, LocalDate birthDate) throws InvalidAgeException,InvalidUsernameException {
+    public User(String firstName, String lastName, String username, String password, LocalDate birthDate) throws InvalidAgeException,InvalidUsernameException ,InvalidNameException{
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -34,6 +37,8 @@ public class User {
         this.registryDate = LocalDate.now();
         checkUsername();
         checkAge();
+        checkName(firstName);
+        checkName(lastName);
     }
 
     /**
@@ -159,7 +164,7 @@ public class User {
         {
             throw new InvalidCharacterNumberException("biography shouldn't be empty!");
         }
-        else if (text.length()>256)
+        else if (text.length() > 256)
         {
             throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
         }
@@ -176,6 +181,20 @@ public class User {
         for (char c : username.toCharArray()){
             if(!((c>='a' && c<='z')|| c=='_' || (c>='0' && c<='9')))
                 throw new InvalidUsernameException("the username must have A-Z , 0-9 character ");
+        }
+    }
+     /**
+     * @param text should be valid
+     * @throws InvalidNameException id the text isn't valid
+     */
+    private void checkName(String text) throws InvalidNameException{
+        for (char c : text.toCharArray())
+        {
+            if (!(c >= 'a' && c <= 'z'))
+            {
+                throw new InvalidNameException("name only can be a string of alphabets!");
+            }
+            break;
         }
     }
 }
