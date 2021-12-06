@@ -3,6 +3,7 @@ package main.java.org.ce.ap.server;
 import java.time.LocalDate;
 import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.exceptions.InvalidNameException;
 
 public class User {
     private String firstName;
@@ -22,7 +23,7 @@ public class User {
      * @param birthDate is using for setting birthDate
      * @throws InvalidAgeException if the age isn't greater than 13 or it is after now
      */
-    public User(String firstName, String lastName, String username, String password, LocalDate birthDate) throws InvalidAgeException {
+    public User(String firstName, String lastName, String username, String password, LocalDate birthDate) throws InvalidAgeException, InvalidNameException {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -155,7 +156,7 @@ public class User {
         {
             throw new InvalidCharacterNumberException("biography shouldn't be empty!");
         }
-        else if (text.length()>256)
+        else if (text.length() > 256)
         {
             throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
         }
