@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+
 public class Tweet {
 
     private final User author;
@@ -17,7 +19,7 @@ public class Tweet {
      * @param author is using for setting the tweet's author
      * @param text is using for setting the tweet's text
      */
-    public Tweet(User author,String text){
+    public Tweet(User author,String text) throws InvalidCharacterNumberException{
         this.author=author;
         this.text=text;
         this.sendDate=LocalDate.now();
@@ -111,4 +113,6 @@ public class Tweet {
     public User getAuthor() {
         return author;
     }
+
+
 }
