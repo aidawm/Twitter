@@ -1,5 +1,7 @@
 package main.java.org.ce.ap.server;
 
+import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -29,12 +31,12 @@ public class UserManager {
      * @param username user's username
      * @return the user
      */
-    public User findUser(String username){
+    public User findUser(String username) throws InvalidUsernameException{
         for (User user:users){
             if(user.getUsername().equals(username))
                 return user;
         }
-        return null;
+        throw new InvalidUsernameException("the username doesn't exist!!");
     }
 
     /**
@@ -49,7 +51,7 @@ public class UserManager {
      * @param username user's username
      * @return the user's name
      */
-    public String findName(String username){
+    public String findName(String username) throws InvalidUsernameException{
         User user = findUser(username);
         return user.getFirstName()+" "+user.getUsername();
     }
@@ -59,7 +61,7 @@ public class UserManager {
      * @param username user's username
      * @return the user's password
      */
-    public String getUserPassword(String username){
+    public String getUserPassword(String username) throws InvalidUsernameException{
         User user = findUser(username);
         return user.getPassword();
     }
@@ -68,9 +70,24 @@ public class UserManager {
      * @param username user's username
      * @return the user's birthDate
      */
-    public LocalDate getUserBirthDate(String username){
+    public LocalDate getUserBirthDate(String username) throws InvalidUsernameException{
         User user = findUser(username);
         return user.getBirthDate();
     }
+
+    /**
+     * check the username is taken or not
+     * @param username the username
+     * @return true if it is not taken
+     */
+    public boolean isNotUsernameExist(String username){
+        try {
+            findUser(username);
+            throw new InvalidUsernameException("the username is exist now!");
+        }catch (InvalidUsernameException e){
+            return true;
+        }
+    }
+
 
 }
