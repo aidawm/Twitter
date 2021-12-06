@@ -31,6 +31,8 @@ public class User {
         this.birthDate = birthDate;
         this.registryDate = LocalDate.now();
         checkAge();
+        checkName(firstName);
+        checkName(lastName);
     }
 
     /**
@@ -161,4 +163,21 @@ public class User {
             throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
         }
     }
+
+    /**
+     *
+     * @param text should be valid
+     * @throws InvalidNameException id the text isn't valid
+     */
+    private void checkName(String text) throws InvalidNameException{
+        for (char c : text.toCharArray())
+        {
+            if (!(c >= 'a' && c <= 'z'))
+            {
+                throw new InvalidNameException("name only can be a string of alphabets!");
+            }
+            break;
+        }
+    }
+
 }
