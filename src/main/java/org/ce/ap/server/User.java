@@ -1,6 +1,7 @@
 package main.java.org.ce.ap.server;
 
 import java.time.LocalDate;
+import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
 
 public class User {
     private String firstName;
@@ -18,15 +19,16 @@ public class User {
      * @param username is using for setting username
      * @param password is using for setting password
      * @param birthDate is using for setting birthDate
+     * @throws InvalidAgeException if the age isn't greater than 13 or it is after now
      */
-    public User(String firstName, String lastName, String username, String password, LocalDate birthDate) {
+    public User(String firstName, String lastName, String username, String password, LocalDate birthDate) throws InvalidAgeException {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.birthDate = birthDate;
         this.registryDate = LocalDate.now();
-
+        checkAge();
     }
 
     /**
@@ -131,5 +133,15 @@ public class User {
      */
     public void setBiography(String biography) {
         this.biography = biography;
+    }
+
+    /**
+     * @throws InvalidAgeException if the age isn't greater than 13 or it is after now
+     */
+    private void checkAge() throws InvalidAgeException {
+        if(LocalDate.now().isBefore(birthDate))
+            throw new InvalidAgeException("the birthdate couldn't be after now :)");
+        if((LocalDate.now().getYear()-birthDate.getYear())<13)
+            throw new InvalidAgeException("the age must be greater than 13 ;) ");
     }
 }
