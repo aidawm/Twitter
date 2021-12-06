@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import java.time.LocalDate;
 import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
+import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 
 public class User {
     private String firstName;
@@ -131,7 +132,8 @@ public class User {
      *
      * @param biography is using for setting biography
      */
-    public void setBiography(String biography) {
+    public void setBiography(String biography) throws InvalidCharacterNumberException {
+        checkBiography(biography);
         this.biography = biography;
     }
 
@@ -143,5 +145,19 @@ public class User {
             throw new InvalidAgeException("the birthdate couldn't be after now :)");
         if((LocalDate.now().getYear()-birthDate.getYear())<13)
             throw new InvalidAgeException("the age must be greater than 13 ;) ");
+    }
+    /**
+     *
+     * @throws InvalidCharacterNumberException if the number is greater than 256 or the text is null
+     */
+    private void checkBiography(String text) throws InvalidCharacterNumberException{
+        if (text.length() == 0 || text == null)
+        {
+            throw new InvalidCharacterNumberException("biography shouldn't be empty!");
+        }
+        else if (text.length()>256)
+        {
+            throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
+        }
     }
 }
