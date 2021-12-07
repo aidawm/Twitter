@@ -28,17 +28,18 @@ public class User {
      * @throws InvalidAgeException if the age isn't greater than 13 or it is after now
      */
     public User(String firstName, String lastName, String username, String password, LocalDate birthDate) throws InvalidAgeException,InvalidUsernameException ,InvalidNameException{
-
+        checkName(firstName);
+        checkName(lastName);
+        checkUsername(username);
+        checkAge(birthDate);
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.birthDate = birthDate;
         this.registryDate = LocalDate.now();
-        checkUsername();
-        checkAge();
-        checkName(firstName);
-        checkName(lastName);
+
+
     }
 
     /**
@@ -147,16 +148,17 @@ public class User {
     }
 
     /**
+     * @param birthDate the user's birthDate
      * @throws InvalidAgeException if the age isn't greater than 13 or it is after now
      */
-    private void checkAge() throws InvalidAgeException {
+    private void checkAge(LocalDate birthDate) throws InvalidAgeException {
         if(LocalDate.now().isBefore(birthDate))
             throw new InvalidAgeException("the birthdate couldn't be after now :)");
         if((LocalDate.now().getYear()-birthDate.getYear())<13)
             throw new InvalidAgeException("the age must be greater than 13 ;) ");
     }
     /**
-     *
+     * @param text the biography text
      * @throws InvalidCharacterNumberException if the number is greater than 256 or the text is null
      */
     private void checkBiography(String text) throws InvalidCharacterNumberException{
@@ -172,9 +174,10 @@ public class User {
 
     /**
      * check the username be valid
+     * @param username the user's username
      * @throws InvalidUsernameException
      */
-    private void checkUsername() throws InvalidUsernameException{
+    private void checkUsername(String username) throws InvalidUsernameException{
         if(username.length()<4 || username.length()>15)
             throw new InvalidUsernameException("the username must be greater than 4 and less than 15");
         username=username.toLowerCase(Locale.ROOT);
