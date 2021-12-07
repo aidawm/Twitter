@@ -15,7 +15,6 @@ public class SignUp{
     private String username;
     private String password;
     private LocalDate birthDate;
-    private final LocalDate registryDate;
 
     /**
      *
