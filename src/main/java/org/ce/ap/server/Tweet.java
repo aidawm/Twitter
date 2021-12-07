@@ -20,12 +20,12 @@ public class Tweet {
      * @param text is using for setting the tweet's text
      */
     public Tweet(User author,String text) throws InvalidCharacterNumberException{
+        checkTweetCharacters(text);
         this.author=author;
         this.text=text;
         this.sendDate=LocalDate.now();
         this.likes=new HashSet<>();
         this.replies=new ArrayList<>();
-        checkTweetCharacters();
     }
 
     /**
@@ -115,10 +115,10 @@ public class Tweet {
         return author;
     }
     /**
-     *
+     * @param text tweet's text
      * @throws InvalidCharacterNumberException if the number is greater than 256 or the text is null
      */
-    private void checkTweetCharacters() throws InvalidCharacterNumberException {
+    private void checkTweetCharacters(String  text) throws InvalidCharacterNumberException {
         if (text.length() == 0 || text == null)
         {
             throw new InvalidCharacterNumberException("Text shouldn't be empty!");
