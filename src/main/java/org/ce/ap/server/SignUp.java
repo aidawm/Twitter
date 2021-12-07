@@ -24,15 +24,13 @@ public class SignUp{
      * @param username is using for setting username
      * @param password is using for setting password
      * @param birthDate  is using for setting birthDate
-     * @param registryDate is using for setting registryDate
      */
-    public SignUp(String firstName, String lastName, String username, String password, LocalDate birthDate, LocalDate registryDate) {
+    public SignUp(String firstName, String lastName, String username, String password, LocalDate birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.birthDate = birthDate;
-        this.registryDate = registryDate;
     }
     /**
      * @param birthDate the user's birthDate
