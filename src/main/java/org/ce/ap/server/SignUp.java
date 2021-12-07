@@ -17,6 +17,15 @@ public class SignUp{
     private LocalDate birthDate;
     private final LocalDate registryDate;
 
+    /**
+     *
+     * @param firstName is using for setting firstname
+     * @param lastName is using for setting lastName
+     * @param username is using for setting username
+     * @param password is using for setting password
+     * @param birthDate  is using for setting birthDate
+     * @param registryDate is using for setting registryDate
+     */
     public SignUp(String firstName, String lastName, String username, String password, LocalDate birthDate, LocalDate registryDate) {
         this.firstName = firstName;
         this.lastName = lastName;
