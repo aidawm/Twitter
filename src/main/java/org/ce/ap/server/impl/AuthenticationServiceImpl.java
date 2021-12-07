@@ -1,9 +1,6 @@
 package main.java.org.ce.ap.server.impl;
 
-import main.java.org.ce.ap.server.User;
-import main.java.org.ce.ap.server.AuthenticationService;
-import main.java.org.ce.ap.server.SignIn;
-import main.java.org.ce.ap.server.SignUp;
+import main.java.org.ce.ap.server.*;
 
 import java.time.LocalDate;
 

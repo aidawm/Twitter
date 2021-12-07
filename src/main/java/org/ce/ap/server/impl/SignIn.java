@@ -1,7 +1,8 @@
-package main.java.org.ce.ap.server;
+package main.java.org.ce.ap.server.impl;
 
-import main.java.org.ce.ap.server.exceptions.InvalidPasswordException;
-import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
+import main.java.org.ce.ap.server.exceptions.*;
+import main.java.org.ce.ap.server.*;
+
 
 public class SignIn implements AuthenticationService{
     private String username;
