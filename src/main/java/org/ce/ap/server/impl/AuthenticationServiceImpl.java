@@ -17,7 +17,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private LocalDate birthDate;
 
     public void signUp(){
-//        authenticationService = new
+        password=getHash(password);
+        authenticationService = new SignUp(firstName,  lastName,  username,  password,  birthDate);
     }
     public void signIn(){
         password=getHash(password);
@@ -29,16 +30,19 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         boolean isValid = false;
         while (!isValid){
             try{
-                authenticationService.verify();
+                user= authenticationService.verify();
             }
             catch (Exception e){
                 getData();
                 if(authenticationService instanceof SignIn){
                     signIn();
                 }
-
+                if(authenticationService instanceof  SignUp){
+                    signUp();
+                }
             }
         }
+        return user;
     }
     private String getHash(String password){
         return null;

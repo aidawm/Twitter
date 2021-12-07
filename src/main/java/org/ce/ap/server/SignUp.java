@@ -8,7 +8,7 @@ import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import java.time.LocalDate;
 import java.util.Locale;
 
-public class SignUp{
+public class SignUp implements AuthenticationService{
     UserManager userManager = new UserManager();
     private String firstName;
     private String lastName;
@@ -76,7 +76,7 @@ public class SignUp{
      * @throws InvalidUsernameException if the username is invalid
      * @throws InvalidAgeException if the age is invalid
      */
-    public User setUser() throws InvalidNameException, InvalidUsernameException, InvalidAgeException {
+    public User verify() throws InvalidNameException, InvalidUsernameException, InvalidAgeException {
         checkName(firstName);
         checkName(lastName);
         checkUsername(username);
