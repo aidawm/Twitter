@@ -3,7 +3,7 @@ package main.java.org.ce.ap.server;
 import main.java.org.ce.ap.server.exceptions.InvalidPasswordException;
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 
-public class SignIn {
+public class SignIn implements AuthenticationService{
     private String username;
     private String password;
     private UserManager userManager = new UserManager();
@@ -24,7 +24,7 @@ public class SignIn {
      * @throws InvalidUsernameException if the username doesn't exist
      * @throws InvalidPasswordException if the password is incorrect
      */
-    public User logIn() throws InvalidUsernameException, InvalidPasswordException {
+    public User verify() throws InvalidUsernameException, InvalidPasswordException {
         if(!userManager.getUserPassword(username).equals(password))
             throw new InvalidPasswordException("incorrect password!");
         return userManager.findUser(username);

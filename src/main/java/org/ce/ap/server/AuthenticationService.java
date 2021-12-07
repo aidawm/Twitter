@@ -1,5 +1,8 @@
 package main.java.org.ce.ap.server;
 
-public interface AuthenticationService {
+import main.java.org.ce.ap.server.exceptions.InvalidPasswordException;
+import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 
+public interface AuthenticationService {
+     User verify() throws InvalidUsernameException, InvalidPasswordException;
 }
