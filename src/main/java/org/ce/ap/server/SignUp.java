@@ -66,9 +66,9 @@ public class SignUp{
     /**
      *
      * @return a new uder
-     * @throws InvalidNameException
-     * @throws InvalidUsernameException
-     * @throws InvalidAgeException
+     * @throws InvalidNameException if the name is invalid
+     * @throws InvalidUsernameException if the username is invalid
+     * @throws InvalidAgeException if the age is invalid
      */
     public User setUser() throws InvalidNameException, InvalidUsernameException, InvalidAgeException {
         checkName(firstName);
