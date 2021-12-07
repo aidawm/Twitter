@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 public class SignUp{
-    private User user;
+    UserManager userManager = new UserManager();
     private String firstName;
     private String lastName;
     private String username;
@@ -45,34 +45,37 @@ public class SignUp{
         if(username.length()<4 || username.length()>15)
             throw new InvalidUsernameException("the username must be greater than 4 and less than 15");
         username=username.toLowerCase(Locale.ROOT);
-        for (char c : username.toCharArray()){
-            if(!((c>='a' && c<='z')|| c=='_' || (c>='0' && c<='9')))
+        for (char c : username.toCharArray()) {
+            if (!((c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9')))
                 throw new InvalidUsernameException("the username must have A-Z , 0-9 character ");
         }
+        userManager.isNotUsernameExist(username);
     }
     /**
      * @param text should be valid
      * @throws InvalidNameException if the text isn't valid
      */
-    private void checkName(String text) throws InvalidNameException{
-        for (char c : text.toCharArray())
-        {
-            if (!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z'))
-            {
+    private void checkName(String text) throws InvalidNameException {
+        for (char c : text.toCharArray()) {
+            if (!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z')) {
                 throw new InvalidNameException("name only can be a string of alphabets!");
             }
         }
     }
 
-    private User setUser() throws InvalidNameException, InvalidUsernameException, InvalidAgeException {
-        try {
-            checkName(firstName);
-            checkName(lastName);
-            checkUsername(username);
-
-            checkAge(birthDate);
-        }
-        return user;
+    /**
+     *
+     * @return a new uder
+     * @throws InvalidNameException
+     * @throws InvalidUsernameException
+     * @throws InvalidAgeException
+     */
+    public User setUser() throws InvalidNameException, InvalidUsernameException, InvalidAgeException {
+        checkName(firstName);
+        checkName(lastName);
+        checkUsername(username);
+        checkAge(birthDate);
+        return new User (firstName, lastName, username, password, birthDate);
     }
 
 }
