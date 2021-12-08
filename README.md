@@ -1,2 +1,2 @@
 # Twitter
-This is our Midterm project!
+This is our Midterm project ^^
