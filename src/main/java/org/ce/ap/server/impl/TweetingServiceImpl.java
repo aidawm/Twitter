@@ -8,9 +8,15 @@ import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 
 public class TweetingServiceImpl implements TweetingService {
 
+    public Tweet tweet;
     @Override
-    public void addNewTweet(User author, String text) throws InvalidCharacterNumberException {
-        Tweet tweet = new Tweet(author, text);
+    public void addNewTweet(User author, String text){
+        try {
+            tweet = new Tweet(author, text);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -39,8 +45,15 @@ public class TweetingServiceImpl implements TweetingService {
     }
 
     @Override
-    public void retweet(Tweet tweet, User user, String text) throws InvalidCharacterNumberException {
-        Retweet retweet = new Retweet(tweet, user, text);
+    public void retweet(Tweet tweet, User user, String text)  {
+        try {
+            Retweet retweet = new Retweet(tweet, user, text);
+//            tweet.addRetweet(retweet);
+            System.out.println(retweet.getRetweet().toString());
+            System.out.println(retweet.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
