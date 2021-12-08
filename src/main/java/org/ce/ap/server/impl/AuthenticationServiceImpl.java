@@ -1,8 +1,13 @@
 package main.java.org.ce.ap.server.impl;
 
 import main.java.org.ce.ap.server.*;
+import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
+import main.java.org.ce.ap.server.exceptions.InvalidNameException;
+import main.java.org.ce.ap.server.exceptions.InvalidPasswordException;
+import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class AuthenticationServiceImpl implements AuthenticationService{
     private User user;
@@ -13,12 +18,16 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private String password;
     private LocalDate birthDate;
 
+
     public void signUp(){
-        password=getHash(password);
+        getData();
+//        password=getHash(password);
         authenticationService = new SignUp(firstName,  lastName,  username,  password,  birthDate);
+        verify();
     }
     public void signIn(){
-        password=getHash(password);
+        getData();
+//        password=getHash(password);
         authenticationService = new SignIn(username,password);
     }
 
@@ -28,9 +37,10 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         while (!isValid){
             try{
                 user= authenticationService.verify();
+                isValid=true;
             }
+
             catch (Exception e){
-                getData();
                 if(authenticationService instanceof SignIn){
                     signIn();
                 }
@@ -56,6 +66,22 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         this.birthDate = birthDate;
     }
     private void getData(){
-
+        String data =Test.getData();
+        String[] dataArray = data.split(" ");
+        if(dataArray.length==2){
+            this.username=dataArray[0];
+            this.password=dataArray[2];
+        }
+        else if(dataArray.length==5){
+            this.firstName=dataArray[0];
+            this.lastName=dataArray[1];
+            this.username=dataArray[2];
+            this.password=dataArray[3];
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
+            this.birthDate= LocalDate.parse(dataArray[4], formatter);
+        }
+        else {
+            System.out.println("enter valid input ^^");
+        }
     }
 }
