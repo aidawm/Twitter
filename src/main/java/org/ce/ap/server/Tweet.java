@@ -28,7 +28,7 @@ public class Tweet {
         this.sendDate=LocalDate.now();
         this.likes=new HashSet<>();
         this.replies=new ArrayList<>();
-
+        retweets=new ArrayList<>();
     }
 
     /**
@@ -151,4 +151,11 @@ public class Tweet {
         retweets.remove(retweet);
     }
 
+    @Override
+    public String toString() {
+        return "Tweet{" +
+                "author=" + author +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }

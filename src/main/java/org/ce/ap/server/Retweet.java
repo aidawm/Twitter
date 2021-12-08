@@ -26,5 +26,8 @@ public class Retweet extends Tweet{
         return retweet;
     }
 
-
+    @Override
+    public String toString() {
+        return super.toString()+retweet.toString();
+    }
 }
