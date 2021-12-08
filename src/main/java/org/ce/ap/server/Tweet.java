@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
@@ -13,6 +14,7 @@ public class Tweet {
     private HashSet<User> likes;
     private ArrayList<Tweet> replies;
     private final LocalDate sendDate;
+    private ArrayList<Retweet> retweets;
 
     /**
      * create a new object from tweet
@@ -26,6 +28,7 @@ public class Tweet {
         this.sendDate=LocalDate.now();
         this.likes=new HashSet<>();
         this.replies=new ArrayList<>();
+
     }
 
     /**
@@ -127,6 +130,25 @@ public class Tweet {
         {
             throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
         }
+    }
+
+    /**
+     *
+     * @param retweet is the tweet that we want to publish this tweet again
+     */
+    public void addRetweet(Retweet retweet)
+    {
+        if (!retweets.contains(retweet))
+            retweets.add(retweet);
+    }
+
+    /**
+     *
+     * @param retweet is the tweet that we want to remove it
+     */
+    public void removeRetweet(Retweet retweet)
+    {
+        retweets.remove(retweet);
     }
 
 }
