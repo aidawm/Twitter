@@ -12,9 +12,10 @@ public class Retweet extends Tweet{
      * @param retweetAuthor is using for setting the retweet's author
      * @param retweetText   is using for setting the retweet's text
      */
-    public Retweet(User retweetAuthor, String retweetText, Tweet retweet) throws InvalidCharacterNumberException {
+    public Retweet(Tweet retweet, User retweetAuthor, String retweetText) throws InvalidCharacterNumberException {
         super(retweetAuthor, retweetText);
         this.retweet = retweet;
+        retweet.addRetweet(this);
     }
 
     /**
@@ -24,4 +25,6 @@ public class Retweet extends Tweet{
     public Tweet getRetweet() {
         return retweet;
     }
+
+
 }
