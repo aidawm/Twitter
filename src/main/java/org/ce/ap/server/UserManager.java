@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class UserManager {
 
-    private ArrayList<User> users;
+    private ArrayList<UserAccount> users;
 
     /**
      * create a new object from UserManager class
@@ -87,6 +87,31 @@ public class UserManager {
         }catch (InvalidUsernameException e){
             return true;
         }
+    }
+    private int findIndex(UserAccount user)
+    {
+        int i = 0;
+        for (User temp : users)
+        {
+            if (temp.equals(user))
+            {
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+
+    private ArrayList<Tweet> followingTweets(UserAccount user)
+    {
+        ArrayList<Tweet> followingTweet = new ArrayList<>();
+        UserAccount userAccount = users.get(findIndex(user));
+        int i = 0;
+        for (UserAccount followingUser: userAccount.getFollowing())
+        {
+            followingTweet.addAll(followingUser.getTweets());
+        }
+        return followingTweet;
     }
 
 
