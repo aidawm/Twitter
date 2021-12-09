@@ -4,7 +4,6 @@ import main.java.org.ce.ap.server.Retweet;
 import main.java.org.ce.ap.server.Tweet;
 import main.java.org.ce.ap.server.TweetingService;
 import main.java.org.ce.ap.server.User;
-import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 
 public class TweetingServiceImpl implements TweetingService {
 

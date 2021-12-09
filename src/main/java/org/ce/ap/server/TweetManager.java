@@ -69,9 +69,9 @@ public class TweetManager {
 
 }
 
-/**
- * this class can help us to sort the arraylist by date!
- */
+    /**
+    * this class can help us to sort the arraylist by date!
+    */
 class dateSorter implements Comparator<Tweet>
 {
     @Override
