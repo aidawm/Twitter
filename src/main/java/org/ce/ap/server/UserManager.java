@@ -10,13 +10,15 @@ import java.util.ArrayList;
  */
 public class UserManager {
 
-    private ArrayList<UserAccount> users;
+    private ArrayList<User> users;
+    private SubscribersManager subscribersManager;
 
     /**
      * create a new object from UserManager class
      */
     public UserManager(){
         getDataFromDatabase();
+        subscribersManager =new SubscribersManager(users);
     }
 
     /**
@@ -88,31 +90,36 @@ public class UserManager {
             return true;
         }
     }
-    private int findIndex(UserAccount user)
-    {
-        int i = 0;
-        for (User temp : users)
-        {
-            if (temp.equals(user))
-            {
-                return i;
-            }
-            i++;
-        }
-        return -1;
+//    private int findIndex(UserAccount user)
+//    {
+//        int i = 0;
+//        for (User temp : users)
+//        {
+//            if (temp.equals(user))
+//            {
+//                return i;
+//            }
+//            i++;
+//        }
+//        return -1;
+//    }
+
+//    private ArrayList<Tweet> followingTweets(UserAccount user)
+//    {
+//        ArrayList<Tweet> followingTweet = new ArrayList<>();
+//        UserAccount userAccount = users.get(findIndex(user));
+//        int i = 0;
+//        for (UserAccount followingUser: userAccount.getFollowing())
+//        {
+//            followingTweet.addAll(followingUser.getTweets());
+//        }
+//        return followingTweet;
+//    }
+    public void addNewUser(User user){
+        users.add(user);
+        subscribersManager.addNewUser(user);
     }
 
-    private ArrayList<Tweet> followingTweets(UserAccount user)
-    {
-        ArrayList<Tweet> followingTweet = new ArrayList<>();
-        UserAccount userAccount = users.get(findIndex(user));
-        int i = 0;
-        for (UserAccount followingUser: userAccount.getFollowing())
-        {
-            followingTweet.addAll(followingUser.getTweets());
-        }
-        return followingTweet;
-    }
 
 
 }

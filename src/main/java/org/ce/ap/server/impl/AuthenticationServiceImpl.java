@@ -13,6 +13,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private User user;
     ///// a instance from SignUp or SignIn class
     private AuthenticationService authenticationService;
+    private UserManager userManager =new UserManager();
     ///// user's information from console
     private String firstName;
     private String lastName;
@@ -50,6 +51,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
             try{
                 user= authenticationService.verify();
                 isValid=true;
+                if(authenticationService instanceof SignUp)
+                    userManager.addNewUser(user);
             }
 
             catch (Exception e){

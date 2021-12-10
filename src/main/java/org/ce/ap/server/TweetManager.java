@@ -4,7 +4,7 @@ import main.java.org.ce.ap.server.exceptions.InvalidDateException;
 import java.time.LocalDate;
 import java.util.*;
 
-public class TweetManager {
+public class TweetManager extends Publisher{
     private ArrayList<Tweet> tweets;
 
     public TweetManager(){
@@ -66,6 +66,12 @@ public class TweetManager {
             throw new InvalidDateException("the chosen date should be before now");
         }
     }
+    public void addNewTweet(Tweet tweet){
+        tweets.add(tweet);
+        sortTweetsByTime();
+        notify(tweet);
+    }
+
 
 }
 

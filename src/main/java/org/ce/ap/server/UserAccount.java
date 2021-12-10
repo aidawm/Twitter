@@ -1,25 +1,24 @@
 package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidDateException;
+import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class UserAccount extends User{
+public class UserAccount {
 
+    private final User user;
     private ArrayList<Tweet> tweets = new ArrayList<>();
-    private ArrayList<UserAccount> follower= new ArrayList<>();
-    private ArrayList<UserAccount> following= new ArrayList<>();
-    /**
-     * @param firstName is using for setting firstName
-     * @param lastName  is using for setting lastName
-     * @param username  is using for setting username
-     * @param password  is using for setting password
-     * @param birthDate is using for setting birthDate
-     */
-    public UserAccount(String firstName, String lastName, String username, String password, LocalDate birthDate) {
-        super(firstName, lastName, username, password, birthDate);
+    private ArrayList<User> follower= new ArrayList<>();
+    private ArrayList<User> following= new ArrayList<>();
+    private TimelineService timelineService= new TimelineService();
+    private ObserverService observerService = new ObserverServiceImpl();
+
+
+    public UserAccount(User user) {
+        this.user=user;
     }
 
     private void getDataFromDatabase(){
@@ -81,23 +80,29 @@ public class UserAccount extends User{
             follower.add(user);
     }
 
-    public void addFollowing(UserAccount user)
+    public void addFollowing(User user)
     {
         if (!following.contains(user))
             following.add(user);
+        observerService.subscribe(user,timelineService);
+    }
+    public void removeFollowing(User user){
+        observerService.unSubscribe(user,timelineService);
     }
 
     public ArrayList<Tweet> getTweets() {
         return tweets;
     }
 
-    public ArrayList<UserAccount> getFollower() {
-        return follower;
-    }
+//    public ArrayList<UserAccount> getFollower() {
+//        return follower;
+//    }
+//
+//    public ArrayList<UserAccount> getFollowing() {
+//        return following;
+//    }
 
-    public ArrayList<UserAccount> getFollowing() {
-        return following;
-    }
+
 }
 
 /**
