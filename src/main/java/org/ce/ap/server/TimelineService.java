@@ -1,9 +1,8 @@
 package main.java.org.ce.ap.server;
 
-public class TimelineService implements Subscriber{
+import java.util.ArrayList;
 
-    @Override
-    public void update(Tweet tweet) {
-
-    }
+public interface TimelineService {
+    public void update(Tweet tweet);
+    public ArrayList<Tweet> refresh();
 }

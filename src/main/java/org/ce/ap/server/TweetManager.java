@@ -18,14 +18,6 @@ public class TweetManager extends Publisher{
     }
 
     /**
-     * this class sorts Tweets by time
-     */
-    private void sortTweetsByTime()
-    {
-        tweets.sort(new dateSorter());
-    }
-
-    /**
      *
      * @param author is using for finding tweets by author
      * @return tweet array list
@@ -68,22 +60,12 @@ public class TweetManager extends Publisher{
     }
     public void addNewTweet(Tweet tweet){
         tweets.add(tweet);
-        sortTweetsByTime();
         notify(tweet);
     }
 
 
 }
 
-    /**
-    * this class can help us to sort the arraylist by date!
-    */
-class dateSorter implements Comparator<Tweet>
-{
-    @Override
-    public int compare(Tweet o1, Tweet o2) {
-        return o2.getSendDate().compareTo(o1.getSendDate());
-    }
-}
+
 
 
