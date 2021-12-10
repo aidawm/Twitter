@@ -2,10 +2,11 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidDateException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
+import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
+
 
 public class UserAccount {
 
@@ -13,23 +14,16 @@ public class UserAccount {
     private ArrayList<Tweet> tweets = new ArrayList<>();
     private ArrayList<User> follower= new ArrayList<>();
     private ArrayList<User> following= new ArrayList<>();
-    private TimelineService timelineService= new TimelineService();
+    private TimelineServiceImpl timelineService= new TimelineServiceImpl();
     private ObserverService observerService = new ObserverServiceImpl();
 
 
     public UserAccount(User user) {
         this.user=user;
+        observerService.subscribe(user,timelineService);
     }
 
     private void getDataFromDatabase(){
-    }
-
-    /**
-     * this class sorts Tweets by time
-     */
-    private void sortTweetsByTime()
-    {
-        tweets.sort(new dateSorter());
     }
 
     /**
@@ -74,7 +68,7 @@ public class UserAccount {
         }
     }
 
-    public void addFollower(UserAccount user)
+    public void addFollower(User user)
     {
         if (!follower.contains(user))
             follower.add(user);
@@ -92,6 +86,13 @@ public class UserAccount {
 
     public ArrayList<Tweet> getTweets() {
         return tweets;
+    }
+
+    public void show(ArrayList<Tweet> tweets){
+        for(Tweet tweet : tweets)
+        {
+            System.out.println(tweet);
+        }
     }
 
 //    public ArrayList<UserAccount> getFollower() {
