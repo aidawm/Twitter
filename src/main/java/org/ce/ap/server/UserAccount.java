@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidDateException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
+import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public class UserAccount {
 
     private final User user;
     private TweetingServiceImpl tweetingService = new TweetingServiceImpl();
-    private TimelineService timelineService= new TimelineService();
+    private TimelineServiceImpl timelineService= new TimelineServiceImpl();
     private ObserverService observerService = new ObserverServiceImpl();
 
 
