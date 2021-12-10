@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 public class SignUp implements AuthenticationService{
-    UserManager userManager = new UserManager();
+    private UserManager userManager = new UserManager();
     private String firstName;
     private String lastName;
     private String username;
