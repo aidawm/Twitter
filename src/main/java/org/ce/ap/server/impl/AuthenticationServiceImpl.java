@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 public class AuthenticationServiceImpl implements AuthenticationService{
     private User user;
-    ///// a instance from SignUp or SignIn class
+    ///// an instance from SignUp or SignIn class
     private AuthenticationService authenticationService;
     private UserManager userManager =new UserManager();
     ///// user's information from console
