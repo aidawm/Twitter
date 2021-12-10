@@ -117,7 +117,7 @@ public class UserManager {
 //    }
     public void addNewUser(User user){
         users.add(user);
-        subscribersManager.addNewUser(user);
+        SubscribersManager.addNewUser(user);
     }
 
 
