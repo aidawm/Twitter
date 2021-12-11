@@ -26,8 +26,9 @@ public class SignIn implements AuthenticationService{
      * @throws InvalidPasswordException if the password is incorrect
      */
     public User verify() throws InvalidUsernameException, InvalidPasswordException {
-        if(!userManager.getUserPassword(username).equals(password))
+        if(!userManager.getUserPassword(username).equals(password)){
             throw new InvalidPasswordException("incorrect password!");
+        }
         return userManager.findUser(username);
     }
 }

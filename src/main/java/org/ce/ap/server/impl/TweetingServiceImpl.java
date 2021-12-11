@@ -1,15 +1,13 @@
 package main.java.org.ce.ap.server.impl;
 
-import main.java.org.ce.ap.server.Retweet;
-import main.java.org.ce.ap.server.Tweet;
-import main.java.org.ce.ap.server.TweetingService;
-import main.java.org.ce.ap.server.User;
+import main.java.org.ce.ap.server.*;
 
 public class TweetingServiceImpl implements TweetingService {
 
 
 //    public Tweet tweet;
 
+    private TweetManager tweetManager =new TweetManager();
     /**
      * add a new tweet in Twitter
      * @param author the user that want to tweet
@@ -19,6 +17,7 @@ public class TweetingServiceImpl implements TweetingService {
     public void addNewTweet(User author, String text){
         try {
             Tweet tweet = new Tweet(author, text);
+            tweetManager.addNewTweet(tweet);
         }catch (Exception e){
             e.printStackTrace();
         }

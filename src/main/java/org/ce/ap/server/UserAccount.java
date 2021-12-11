@@ -20,6 +20,7 @@ public class UserAccount {
 
     public UserAccount(User user) {
         this.user=user;
+        observerService.subscribe(user,timelineService);
     }
 
     public void addFollowing(User user)

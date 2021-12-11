@@ -4,6 +4,7 @@ import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * this class holds the server's user information and process on it
@@ -12,6 +13,8 @@ public class UserManager {
 
     private ArrayList<User> users;
     private SubscribersManager subscribersManager;
+
+    static HashMap<String,String> database=new HashMap<>();
 
     /**
      * create a new object from UserManager class
@@ -65,8 +68,9 @@ public class UserManager {
      * @return the user's password
      */
     public String getUserPassword(String username) throws InvalidUsernameException{
-        User user = findUser(username);
-        return user.getPassword();
+        return database.get(username);
+//        User user = findUser(username);
+//        return user.getPassword();
     }
     /**
      *  get the user's birthDate by username
@@ -118,6 +122,7 @@ public class UserManager {
 //    }
     public void addNewUser(User user){
         users.add(user);
+        database.put(user.getUsername(),user.getPassword());
         SubscribersManager.addNewUser(user);
     }
 

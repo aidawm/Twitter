@@ -153,9 +153,6 @@ public class Tweet {
 
     @Override
     public String toString() {
-        return "Tweet{" +
-                "author=" + author +
-                ", text='" + text + '\'' +
-                '}';
+        return author +" : \t"+ text+"\n" ;
     }
 }

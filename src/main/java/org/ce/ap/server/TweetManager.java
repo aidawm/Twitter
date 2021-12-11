@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class TweetManager extends Publisher{
-    private ArrayList<Tweet> tweets;
+    private ArrayList<Tweet> tweets=new ArrayList<>();
 
     public TweetManager(){
         getDataFromDatabase();

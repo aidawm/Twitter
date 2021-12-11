@@ -16,7 +16,15 @@ public class Test {
     public void test_Authentication(){
         AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
         printAuthentication();
-        authenticationService.signUp();
+        UserManager userManager = new UserManager();
+        User user1 = new User("aida","mobli","aidawm","asdf", LocalDate.of(2001,3,21));
+        User user2 = new User("sara","rouhani","sa9978","qwer",LocalDate.of(1999,12,20));
+        User user3 = new User("sara","rouhani","qwerty","qwer",LocalDate.of(1999,12,20));
+        userManager.addNewUser(user1);
+        userManager.addNewUser(user2);
+        userManager.addNewUser(user3);
+
+        authenticationService.signIn();
 
 //        authenticationService.signIn();
     }
@@ -72,7 +80,9 @@ public class Test {
         userAccount1.addNewTweet("Hello world");
         userAccount3.addNewTweet("HIIIIIIIIIIIIIII^^");
         userAccount2.addNewTweet("bye :)");
+        System.out.println("///////////////////////////////timeline user 2");
         userAccount2.showTimeline();
+        System.out.println("///////////////////////////////timeline user 1");
         userAccount1.showTimeline();
     }
 

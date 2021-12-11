@@ -20,6 +20,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private String username;
     private String password;
     private LocalDate birthDate;
+    private String realPassword;
 
     /**
      * do signUp process
@@ -38,6 +39,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         getData();
 //        password=getHash(password);
         authenticationService = new SignIn(username,password);
+        verify();
     }
 
     /**
@@ -53,10 +55,12 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 isValid=true;
                 if(authenticationService instanceof SignUp)
                     userManager.addNewUser(user);
+
             }
 
             catch (Exception e){
                 if(authenticationService instanceof SignIn){
+                    System.out.println(e.getMessage());
                     signIn();
                 }
                 if(authenticationService instanceof  SignUp){
@@ -96,7 +100,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         String[] dataArray = data.split(" ");
         if(dataArray.length==2){
             this.username=dataArray[0];
-            this.password=dataArray[2];
+            this.password=dataArray[1];
         }
         else if(dataArray.length==5){
             this.firstName=dataArray[0];
