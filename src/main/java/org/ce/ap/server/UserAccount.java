@@ -30,16 +30,16 @@ public class UserAccount {
         observerService.unSubscribe(user,timelineService);
     }
 
-    public void addNewTweet(User author,String text) throws InvalidCharacterNumberException{
-        tweetingService.addNewTweet(author,text);
+    public void addNewTweet(String text) throws InvalidCharacterNumberException{
+        tweetingService.addNewTweet(user,text);
     }
     public void removeTweet(Tweet tweet){
         tweetingService.removeTweet(tweet);
     }
-    public void like(Tweet tweet, User user){
+    public void like(Tweet tweet){
         tweetingService.like(tweet,user);
     }
-    public void unLike(Tweet tweet, User user){
+    public void unLike(Tweet tweet){
         tweetingService.unLike(tweet,user);
     }
     public void reply(Tweet tweet, Tweet replyTweet){
@@ -48,14 +48,16 @@ public class UserAccount {
     public void removeReply(Tweet tweet, Tweet replyTweet){
         tweetingService.removeReply(tweet,replyTweet);
     }
-    public void retweet(Tweet tweet, User user, String text) throws InvalidCharacterNumberException{
+    public void retweet(Tweet tweet, String text) throws InvalidCharacterNumberException{
         tweetingService.retweet(tweet,user,text);
     }
     public void removeRetweet(Tweet tweet, Retweet retweet){
         tweetingService.removeRetweet(tweet,retweet);
     }
     public void showTimeline(){
-
+        for (Tweet tweet :timelineService.refresh()){
+            System.out.println(tweet);
+        }
     }
 }
 

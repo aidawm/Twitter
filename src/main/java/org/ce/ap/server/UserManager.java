@@ -17,6 +17,7 @@ public class UserManager {
      * create a new object from UserManager class
      */
     public UserManager(){
+        users=new ArrayList<>();
         getDataFromDatabase();
         subscribersManager =new SubscribersManager(users);
     }

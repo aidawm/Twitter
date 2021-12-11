@@ -24,11 +24,11 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     /**
      * do signUp process
      */
-    public void signUp(){
+    public User signUp(){
         getData();
 //        password=getHash(password);
         authenticationService = new SignUp(firstName,  lastName,  username,  password,  birthDate);
-        verify();
+        return verify();
     }
 
     /**

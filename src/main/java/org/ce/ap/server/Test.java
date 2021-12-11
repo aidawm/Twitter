@@ -51,5 +51,29 @@ public class Test {
 //        tweetingService.retweet(tweetingService.tweet,user2,"hi^^");
 
     }
+    public void test_timeline() throws InvalidCharacterNumberException {
+        UserManager userManager = new UserManager();
+        User user1 = new User("aida","mobli","aidawm","asdf", LocalDate.of(2001,3,21));
+        User user2 = new User("sara","rouhani","sa9978","qwer",LocalDate.of(1999,12,20));
+        User user3 = new User("sara","rouhani","qwerty","qwer",LocalDate.of(1999,12,20));
+        userManager.addNewUser(user1);
+        userManager.addNewUser(user2);
+        userManager.addNewUser(user3);
+
+        UserAccount userAccount1 = new UserAccount(user1);
+        UserAccount userAccount2 = new UserAccount(user2);
+        UserAccount userAccount3 = new UserAccount(user3);
+
+        userAccount1.addFollowing(user2);
+        userAccount1.addFollowing(user3);
+        userAccount2.addFollowing(user1);
+        userAccount2.addFollowing(user3);
+
+        userAccount1.addNewTweet("Hello world");
+        userAccount3.addNewTweet("HIIIIIIIIIIIIIII^^");
+        userAccount2.addNewTweet("bye :)");
+        userAccount2.showTimeline();
+        userAccount1.showTimeline();
+    }
 
 }

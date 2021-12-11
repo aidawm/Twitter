@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class SubscribersManager {
-    public static HashMap<User, HashSet<Subscriber>> subscribers;
+    public static HashMap<User, HashSet<Subscriber>> subscribers=new HashMap<>();
     public SubscribersManager(ArrayList<User> users){
-        subscribers=new HashMap<>();
         for (User user:users){
             subscribers.put(user,new HashSet<>());
         }
     }
     public static void subscribe(User user,Subscriber subscriber){
+
         HashSet<Subscriber> subscriberList= subscribers.get(user);
         subscriberList.add(subscriber);
         subscribers.put(user,subscriberList);
