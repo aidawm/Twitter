@@ -29,8 +29,8 @@ public class TweetingServiceImpl implements TweetingService {
      * @param tweet
      */
     @Override
-    public void removeTweet(Tweet tweet) {
-
+    public void removeTweet(Tweet tweet, User user) {
+        tweetManager.removeTweet(tweet, user);
     }
 
     /**
@@ -83,9 +83,10 @@ public class TweetingServiceImpl implements TweetingService {
     public void retweet(Tweet tweet, User user, String text)  {
         try {
             Retweet retweet = new Retweet(tweet, user, text);
-//            tweet.addRetweet(retweet);
+            tweetManager.addNewTweet(retweet);
+            tweet.addRetweet(retweet);
 //            System.out.println(retweet.getRetweet().toString());
-//            System.out.println(retweet.toString());
+            System.out.println(retweet);
         }catch (Exception e){
             e.printStackTrace();
         }

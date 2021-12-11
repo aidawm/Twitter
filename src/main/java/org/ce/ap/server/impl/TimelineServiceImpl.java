@@ -19,8 +19,11 @@ public class TimelineServiceImpl implements TimelineService, Subscriber {
     }
 
     @Override
-    public void update(Tweet tweet) {
-        tweets.add(tweet);
+    public void update(Tweet tweet, Boolean state) {
+        if (state)
+            tweets.add(tweet);
+        else
+            tweets.remove(tweet);
         sortTweetsByTime();
     }
 
@@ -28,7 +31,6 @@ public class TimelineServiceImpl implements TimelineService, Subscriber {
     public ArrayList<Tweet> refresh() {
         return tweets;
     }
-
 
 }
 /**

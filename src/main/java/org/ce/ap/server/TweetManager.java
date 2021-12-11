@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidDateException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class TweetManager extends Publisher{
@@ -37,7 +38,7 @@ public class TweetManager extends Publisher{
      * @return tweet array list
      * @throws InvalidDateException if the date is invalid
      */
-    public ArrayList findTweetsByTime(LocalDate date) throws InvalidDateException {
+    public ArrayList findTweetsByTime(LocalDateTime date) throws InvalidDateException {
         checkDate(date);
         ArrayList<Tweet> tweetArrayList= new ArrayList<>();
         for (Tweet tweet1:tweets) {
@@ -52,15 +53,27 @@ public class TweetManager extends Publisher{
      * @param date is the given date
      * @throws InvalidDateException if the date is invalid
      */
-    private void checkDate(LocalDate date) throws  InvalidDateException{
-        if (date.isAfter(LocalDate.now()))
+    private void checkDate(LocalDateTime date) throws  InvalidDateException{
+        if (date.isAfter(LocalDateTime.now()))
         {
             throw new InvalidDateException("the chosen date should be before now");
         }
     }
     public void addNewTweet(Tweet tweet){
         tweets.add(tweet);
-        notify(tweet);
+        notify(tweet, true);
+    }
+
+    public void removeTweet(Tweet tweet, User user)
+    {
+        if (user.equals(tweet.getAuthor()))
+        {
+            tweets.remove(tweet);
+            notify(tweet, false);
+        }
+        else
+            System.out.println("You don't have access to remove another tweet! ");
+
     }
 
 

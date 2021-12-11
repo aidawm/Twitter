@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class  Publisher {
-    public void notify(Tweet tweet){
+    public void notify(Tweet tweet, Boolean state){
         User user = tweet.getAuthor();
         HashSet<Subscriber> subscribers = SubscribersManager.subscribers.get(user);
         for (Subscriber subscriber:subscribers){
-            subscriber.update(tweet);
+            subscriber.update(tweet, state);
         }
     }
 }

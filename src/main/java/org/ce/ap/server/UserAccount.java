@@ -35,7 +35,7 @@ public class UserAccount {
         tweetingService.addNewTweet(user,text);
     }
     public void removeTweet(Tweet tweet){
-        tweetingService.removeTweet(tweet);
+        tweetingService.removeTweet(tweet, user);
     }
     public void like(Tweet tweet){
         tweetingService.like(tweet,user);
@@ -59,6 +59,10 @@ public class UserAccount {
         for (Tweet tweet :timelineService.refresh()){
             System.out.println(tweet);
         }
+    }
+    public ArrayList<Tweet> getTweets()
+    {
+        return timelineService.refresh();
     }
 }
 

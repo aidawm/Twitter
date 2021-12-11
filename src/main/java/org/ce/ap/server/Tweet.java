@@ -1,6 +1,6 @@
 package main.java.org.ce.ap.server;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ public class Tweet {
     private String text;
     private HashSet<User> likes;
     private ArrayList<Tweet> replies;
-    private final LocalDate sendDate;
+    private final LocalDateTime sendDate;
     private ArrayList<Retweet> retweets;
 
     /**
@@ -25,7 +25,7 @@ public class Tweet {
         checkTweetCharacters(text);
         this.author=author;
         this.text=text;
-        this.sendDate=LocalDate.now();
+        this.sendDate=LocalDateTime.now();
         this.likes=new HashSet<>();
         this.replies=new ArrayList<>();
         retweets=new ArrayList<>();
@@ -106,7 +106,7 @@ public class Tweet {
      * get the tweet's sendDate
      * @return sendDate field
      */
-    public LocalDate getSendDate() {
+    public LocalDateTime getSendDate() {
         return sendDate;
     }
 
@@ -153,6 +153,15 @@ public class Tweet {
 
     @Override
     public String toString() {
-        return author +" : \t"+ text+"\n" ;
+        String str =sendDate.getMinute()+ " " + sendDate.getSecond()+ "\t"+ author +" : \t"+ text+"\n";
+        if (replies.size() != 0)
+        {
+            str+= "replies :\n";
+        }
+        for (Tweet tweet:replies)
+        {
+            str = str + "\t" + tweet;
+        }
+        return str;
     }
 }

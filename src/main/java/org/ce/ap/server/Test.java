@@ -59,11 +59,11 @@ public class Test {
 //        tweetingService.retweet(tweetingService.tweet,user2,"hi^^");
 
     }
-    public void test_timeline() throws InvalidCharacterNumberException {
+    public void test_timeline() throws InvalidCharacterNumberException, InterruptedException {
         UserManager userManager = new UserManager();
-        User user1 = new User("aida","mobli","aidawm","asdf", LocalDate.of(2001,3,21));
-        User user2 = new User("sara","rouhani","sa9978","qwer",LocalDate.of(1999,12,20));
-        User user3 = new User("sara","rouhani","qwerty","qwer",LocalDate.of(1999,12,20));
+        User user1 = new User("aida","1","aidawm","asdf", LocalDate.of(2001,3,21));
+        User user2 = new User("sara","2","sa9978","qwer",LocalDate.of(1999,12,20));
+        User user3 = new User("sara","3","qwerty","qwer",LocalDate.of(1999,12,20));
         userManager.addNewUser(user1);
         userManager.addNewUser(user2);
         userManager.addNewUser(user3);
@@ -78,10 +78,25 @@ public class Test {
         userAccount2.addFollowing(user3);
 
         userAccount1.addNewTweet("Hello world");
+        Thread.sleep(1000);
         userAccount3.addNewTweet("HIIIIIIIIIIIIIII^^");
+        Thread.sleep(1000);
         userAccount2.addNewTweet("bye :)");
-        System.out.println("///////////////////////////////timeline user 2");
-        userAccount2.showTimeline();
+        Thread.sleep(1000);
+
+//        userAccount1.retweet(userAccount1.getTweets().get(2), "hello world retweet");
+//        Thread.sleep(1000);
+
+//        Tweet reply1 = new Tweet(user3, "bye reply");
+//        userAccount3.reply(userAccount2.getTweets().get(2), reply1);
+
+        System.out.println("///////////////////////////////timeline user 1");
+        userAccount1.showTimeline();
+
+        userAccount1.removeTweet(userAccount1.getTweets().get(2));
+
+//        System.out.println("///////////////////////////////timeline user 2");
+//        userAccount2.showTimeline();
         System.out.println("///////////////////////////////timeline user 1");
         userAccount1.showTimeline();
     }
