@@ -1,5 +1,6 @@
 package main.java.org.ce.ap.server;
 
+import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import main.java.org.ce.ap.server.exceptions.InvalidDateException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
@@ -29,7 +30,33 @@ public class UserAccount {
         observerService.unSubscribe(user,timelineService);
     }
 
+    public void addNewTweet(User author,String text) throws InvalidCharacterNumberException{
+        tweetingService.addNewTweet(author,text);
+    }
+    public void removeTweet(Tweet tweet){
+        tweetingService.removeTweet(tweet);
+    }
+    public void like(Tweet tweet, User user){
+        tweetingService.like(tweet,user);
+    }
+    public void unLike(Tweet tweet, User user){
+        tweetingService.unLike(tweet,user);
+    }
+    public void reply(Tweet tweet, Tweet replyTweet){
+        tweetingService.reply(tweet,replyTweet);
+    }
+    public void removeReply(Tweet tweet, Tweet replyTweet){
+        tweetingService.removeReply(tweet,replyTweet);
+    }
+    public void retweet(Tweet tweet, User user, String text) throws InvalidCharacterNumberException{
+        tweetingService.retweet(tweet,user,text);
+    }
+    public void removeRetweet(Tweet tweet, Retweet retweet){
+        tweetingService.removeRetweet(tweet,retweet);
+    }
+    public void showTimeline(){
 
+    }
 }
 
 
