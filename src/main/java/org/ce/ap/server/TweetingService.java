@@ -10,5 +10,5 @@ public interface TweetingService {
     void reply(Tweet tweet, Tweet replyTweet);
     void removeReply(Tweet tweet, Tweet replyTweet);
     void retweet(Tweet tweet, User user, String text) throws InvalidCharacterNumberException;
-    void removeRetweet(Tweet tweet, Retweet retweet);
+    void removeRetweet(Tweet tweet,User user, Retweet retweet);
 }

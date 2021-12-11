@@ -53,7 +53,7 @@ public class UserAccount {
         tweetingService.retweet(tweet,user,text);
     }
     public void removeRetweet(Tweet tweet, Retweet retweet){
-        tweetingService.removeRetweet(tweet,retweet);
+        tweetingService.removeRetweet(tweet,user,retweet);
     }
     public void showTimeline(){
         for (Tweet tweet :timelineService.refresh()){

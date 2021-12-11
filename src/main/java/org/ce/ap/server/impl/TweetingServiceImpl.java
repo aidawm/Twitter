@@ -98,7 +98,8 @@ public class TweetingServiceImpl implements TweetingService {
      * @param retweet the retweet  that want to remove it
      */
     @Override
-    public void removeRetweet(Tweet tweet, Retweet retweet) {
+    public void removeRetweet(Tweet tweet,User user, Retweet retweet) {
         tweet.removeRetweet(retweet);
+        tweetManager.removeTweet(tweet, user);
     }
 }

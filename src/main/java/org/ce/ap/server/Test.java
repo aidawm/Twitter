@@ -84,8 +84,10 @@ public class Test {
         userAccount2.addNewTweet("bye :)");
         Thread.sleep(1000);
 
-//        userAccount1.retweet(userAccount1.getTweets().get(2), "hello world retweet");
-//        Thread.sleep(1000);
+        userAccount1.retweet(userAccount1.getTweets().get(2), "hello world retweet");
+        Thread.sleep(1000);
+        userAccount1.like(userAccount1.getTweets().get(2));
+        userAccount1.unLike(userAccount1.getTweets().get(2));
 
 //        Tweet reply1 = new Tweet(user3, "bye reply");
 //        userAccount3.reply(userAccount2.getTweets().get(2), reply1);
