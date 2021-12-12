@@ -52,7 +52,6 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 isValid=true;
                 if(authenticationService instanceof SignUp)
                     userManager.addNewUser(user);
-
             }
 
             catch (Exception e){

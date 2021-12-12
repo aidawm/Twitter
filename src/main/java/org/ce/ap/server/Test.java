@@ -13,15 +13,16 @@ import java.util.Scanner;
 public class Test {
     private static UserAccount userAccount;
     private static UserManager userManager = new UserManager();
+
     /**
      * test authentication service
      */
     public void test_Authentication() throws NoSuchAlgorithmException {
         AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
         UserManager userManager = new UserManager();
-        User user1 = new User("aida","mobli","aidawm","asdf", LocalDate.of(2001,3,21));
-        User user2 = new User("sara","rouhani","sa9978","qwer",LocalDate.of(1999,12,20));
-        User user3 = new User("sara","rouhani","qwerty","qwer",LocalDate.of(1999,12,20));
+        User user1 = new User("aida", "mobli", "aidawm", "asdf", LocalDate.of(2001, 3, 21));
+        User user2 = new User("sara", "rouhani", "sa9978", "qwer", LocalDate.of(1999, 12, 20));
+        User user3 = new User("sara", "rouhani", "qwerty", "qwer", LocalDate.of(1999, 12, 20));
         userManager.addNewUser(user1);
         userManager.addNewUser(user2);
         userManager.addNewUser(user3);
@@ -33,73 +34,62 @@ public class Test {
     /**
      * print a format of inputs
      */
-    private static void printFirstMenu(){
+    private static void printFirstMenu() {
         System.out.println("1 ) sign up");
         System.out.println("2 ) sign in");
     }
-    private static void signInMenu()
-    {
+
+    private static void signInMenu() {
         System.out.println("1 ) manage tweets ");
         System.out.println("2 ) manage followers & followings ");
     }
-    private  static void manageTweetsMenu() {
+
+    private static void manageTweetsMenu() {
+        userAccount.showTimeline();
         System.out.println("1 ) new tweet");
         System.out.println("2 ) new retweet");
         System.out.println("3 ) new reply");
         System.out.println("4 ) like a tweet");
         Scanner scanner = new Scanner(System.in);
-        while (true)
-        {
+        while (true) {
             int input = scanner.nextInt();
-            if (input == 1)
-            {
+            if (input == 1) {
                 System.out.println("pls enter the text :");
                 try {
                     userAccount.addNewTweet(scanner.nextLine());
-                }
-                catch (InvalidCharacterNumberException e)
-                {
+                } catch (InvalidCharacterNumberException e) {
                     System.out.println(e.getMessage());
                 }
-            }
-            else if (input == 2)
-            {
+            } else if (input == 2) {
                 userAccount.showTimeline();
                 System.out.println("pls enter the number of tweet that you want to retweet it : ");
-                int tweetNumber =scanner.nextInt();
+                int tweetNumber = scanner.nextInt();
                 System.out.println("pls enter the text : ");
                 String text = scanner.nextLine();
                 try {
                     userAccount.retweet(userAccount.getTweets().get(tweetNumber - 1), text);
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
 
-            }
-            else if (input == 3)
-            {
+            } else if (input == 3) {
                 userAccount.showTimeline();
                 System.out.println("pls enter the number of tweet that you want to reply it : ");
-                int tweetNumber =scanner.nextInt();
+                int tweetNumber = scanner.nextInt();
                 System.out.println("pls enter the text : ");
                 String text = scanner.nextLine();
                 try {
                     userAccount.reply(userAccount.getTweets().get(tweetNumber - 1), new Tweet(userAccount.getUser(), text));
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-            }
-            else if (input == 4)
-            {
+            } else if (input == 4) {
                 userAccount.showTimeline();
                 System.out.println("pls enter the number of tweet that you want to like it : ");
-                int tweetNumber =scanner.nextInt();
+                int tweetNumber = scanner.nextInt();
                 try {
                     userAccount.like(userAccount.getTweets().get(tweetNumber));
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
 
@@ -107,8 +97,8 @@ public class Test {
         }
 
     }
-    private static void manageFollowers()
-    {
+
+    private static void manageFollowers() {
         System.out.println("1 ) follow a user");
         System.out.println("2 ) unfollow a user");
         Scanner scanner = new Scanner(System.in);
@@ -119,16 +109,17 @@ public class Test {
                 printUser(userManager.getUsers().get(1));
                 printUser(userManager.getUsers().get(2));
                 System.out.println("pls enter the number of user : ");
-                int userNumber =  scanner.nextInt();
+                int userNumber = scanner.nextInt();
                 userAccount.addFollowing(userManager.getUsers().get(userNumber));
             }
 
         }
     }
+
     public static void defaultUsers() throws InvalidCharacterNumberException {
-        User user1 = new User("aida","1","aidawm","asdf", LocalDate.of(2001,3,21));
-        User user2 = new User("sara","2","sa9978","qwer",LocalDate.of(1999,12,20));
-        User user3 = new User("sara","3","qwerty","qwer",LocalDate.of(1999,12,20));
+        User user1 = new User("aida", "1", "aidawm", "asdf", LocalDate.of(2001, 3, 21));
+        User user2 = new User("sara", "2", "sa9978", "qwer", LocalDate.of(1999, 12, 20));
+        User user3 = new User("sara", "3", "qwerty", "qwer", LocalDate.of(1999, 12, 20));
         userManager.addNewUser(user1);
         userManager.addNewUser(user2);
         userManager.addNewUser(user3);
@@ -139,27 +130,28 @@ public class Test {
         userAccount3.addNewTweet("HIIIIIIIIIIIIIII^^");
         userAccount2.addNewTweet("bye :)");
     }
-    public static void printUser(User user)
-    {
-        System.out.println(user.getFirstName() + " " +user.getLastName()+ "\t@" + user.getUsername());
+
+    public static void printUser(User user) {
+        System.out.println(user.getFirstName() + " " + user.getLastName() + "\t@" + user.getUsername());
     }
 
     /**
      * test the tweeting service
      */
     public void test_tweeting() {
-        User user1 = new User("aida","mobli","aidawm","asdf", LocalDate.of(2001,3,21));
-        User user2 = new User("sara","rouhani","sa9978","qwer",LocalDate.of(1999,12,20));
-        TweetingServiceImpl tweetingService=new TweetingServiceImpl();
-        tweetingService.addNewTweet(user1,"Hello world");
+        User user1 = new User("aida", "mobli", "aidawm", "asdf", LocalDate.of(2001, 3, 21));
+        User user2 = new User("sara", "rouhani", "sa9978", "qwer", LocalDate.of(1999, 12, 20));
+        TweetingServiceImpl tweetingService = new TweetingServiceImpl();
+        tweetingService.addNewTweet(user1, "Hello world");
 //        tweetingService.retweet(tweetingService.tweet,user2,"hi^^");
 
     }
+
     public void test_timeline() throws InvalidCharacterNumberException, InterruptedException {
         UserManager userManager = new UserManager();
-        User user1 = new User("aida","1","aidawm","asdf", LocalDate.of(2001,3,21));
-        User user2 = new User("sara","2","sa9978","qwer",LocalDate.of(1999,12,20));
-        User user3 = new User("sara","3","qwerty","qwer",LocalDate.of(1999,12,20));
+        User user1 = new User("aida", "1", "aidawm", "asdf", LocalDate.of(2001, 3, 21));
+        User user2 = new User("sara", "2", "sa9978", "qwer", LocalDate.of(1999, 12, 20));
+        User user3 = new User("sara", "3", "qwerty", "qwer", LocalDate.of(1999, 12, 20));
         userManager.addNewUser(user1);
         userManager.addNewUser(user2);
         userManager.addNewUser(user3);
@@ -204,44 +196,34 @@ public class Test {
         AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
         Scanner scanner = new Scanner(System.in);
         int state;
-        while (true)
-        {
-            while (true)
-            {
+        while (true) {
+            while (true) {
                 printFirstMenu();
                 state = scanner.nextInt();
-                if (state == 1)
-                {
+                if (state == 1) {
                     userAccount = new UserAccount(authenticationService.signUp());
                     userAccount = new UserAccount(authenticationService.signIn());
                     break;
-                }
-                else if (state == 2)
-                {
+                } else if (state == 2) {
                     userAccount = new UserAccount(authenticationService.signIn());
                     break;
-                }
-                else {
-                    System.out.println("invalid input");
+                } else {
+                    System.out.println("invalid input?");
                 }
             }
-            while (true)
-            {
-                if (state == 2)
-                {
-                    signInMenu();
-                    int signinInput = scanner.nextInt();
-                    if (signinInput == 1)
-                    {
-                        manageTweetsMenu();
-                    }
-                    else if (signinInput == 2)
-                    {
-                        manageFollowers();
-                    }
-                }
-                else {
-                    System.out.println("invalid input");
+            while (true) {
+
+                signInMenu();
+                scanner = new Scanner(System.in);
+                int signinInput = scanner.nextInt();
+                if (signinInput == 1) {
+                    manageTweetsMenu();
+                    break;
+                } else if (signinInput == 2) {
+                    manageFollowers();
+                    break;
+                } else {
+                    System.out.println("invalid input!!!!!!!!!!!!!!!");
                 }
             }
         }

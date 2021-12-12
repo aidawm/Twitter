@@ -46,7 +46,7 @@ public class SignUp implements AuthenticationService{
      * @param username the user's username
      * @throws InvalidUsernameException
      */
-    private String checkUsername(String username){
+    private String checkUsername(String username) {
         if(username.length()<4 || username.length()>15)
             return "the username must be greater than 4 and less than 15";
         username=username.toLowerCase(Locale.ROOT);
@@ -54,7 +54,12 @@ public class SignUp implements AuthenticationService{
             if (!((c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9')))
                 return "the username must have A-Z , 0-9 character ";
         }
-        userManager.isNotUsernameExist(username);
+        try {
+            userManager.isNotUsernameExist(username);
+        }catch (Exception e){
+            return "username is exist!";
+        }
+
         return null;
     }
     /**
@@ -95,7 +100,8 @@ public class SignUp implements AuthenticationService{
         }
         if(isExeption)
             throw new IllegalStateException("signUp exception");
-        return new User (firstName, lastName, username, password, birthDate);
+        User user =new User (firstName, lastName, username, password, birthDate);
+        return user;
     }
 
 }

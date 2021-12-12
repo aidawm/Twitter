@@ -11,16 +11,16 @@ import java.util.HashMap;
  */
 public class UserManager {
 
-    private ArrayList<User> users;
+    public static ArrayList<User> users=new ArrayList<>();
     private SubscribersManager subscribersManager;
 
-    static HashMap<String,String> database=new HashMap<>();
+    public static HashMap<String,String> database=new HashMap<>();
 
     /**
      * create a new object from UserManager class
      */
     public UserManager(){
-        users=new ArrayList<>();
+//        users=new ArrayList<>();
         getDataFromDatabase();
         subscribersManager =new SubscribersManager(users);
     }
@@ -87,13 +87,13 @@ public class UserManager {
      * @param username the username
      * @return true if it is not taken
      */
-    public boolean isNotUsernameExist(String username){
+    public boolean isNotUsernameExist(String username) throws InvalidUsernameException{
         try {
             findUser(username);
-            throw new InvalidUsernameException("the username is exist now!");
         }catch (InvalidUsernameException e){
             return true;
         }
+        throw new InvalidUsernameException("the username is exist now!");
     }
 //    private int findIndex(UserAccount user)
 //    {

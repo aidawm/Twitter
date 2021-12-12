@@ -53,9 +53,11 @@ public class UserAccount {
         tweetingService.removeRetweet(tweet,user,retweet);
     }
     public void showTimeline(){
+        System.out.println("TIMELINE->");
         for (Tweet tweet :timelineService.refresh()){
             System.out.println(tweet);
         }
+        System.out.println("---------------------");
     }
     public ArrayList<Tweet> getTweets()
     {
