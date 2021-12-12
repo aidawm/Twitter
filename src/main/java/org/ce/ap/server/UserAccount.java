@@ -1,14 +1,11 @@
 package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import main.java.org.ce.ap.server.exceptions.InvalidDateException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class UserAccount {
 
@@ -63,6 +60,10 @@ public class UserAccount {
     public ArrayList<Tweet> getTweets()
     {
         return timelineService.refresh();
+    }
+
+    public User getUser() {
+        return user;
     }
 }
 

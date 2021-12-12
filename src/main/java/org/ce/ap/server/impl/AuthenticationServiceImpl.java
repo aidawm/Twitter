@@ -1,13 +1,11 @@
 package main.java.org.ce.ap.server.impl;
 
 import main.java.org.ce.ap.server.*;
-import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
-import main.java.org.ce.ap.server.exceptions.InvalidNameException;
-import main.java.org.ce.ap.server.exceptions.InvalidPasswordException;
-import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class AuthenticationServiceImpl implements AuthenticationService{
     private User user;
@@ -20,14 +18,13 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private String username;
     private String password;
     private LocalDate birthDate;
-    private String realPassword;
 
     /**
      * do signUp process
      */
-    public User signUp(){
-        getData();
-//        password=getHash(password);
+    public User signUp() throws NoSuchAlgorithmException {
+        getData(1);
+        password=getHash(password);
         authenticationService = new SignUp(firstName,  lastName,  username,  password,  birthDate);
         return verify();
     }
@@ -35,11 +32,11 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     /**
      * do sign in process
      */
-    public void signIn(){
-        getData();
-//        password=getHash(password);
+    public User signIn() throws NoSuchAlgorithmException {
+        getData(2);
+        password=getHash(password);
         authenticationService = new SignIn(username,password);
-        verify();
+        return verify();
     }
 
     /**
@@ -61,10 +58,21 @@ public class AuthenticationServiceImpl implements AuthenticationService{
             catch (Exception e){
                 if(authenticationService instanceof SignIn){
                     System.out.println(e.getMessage());
-                    signIn();
+                    try {
+                        signIn();
+                    }
+                    catch (NoSuchAlgorithmException ex){
+                        System.out.println(ex.getMessage());
+                    }
                 }
+
                 if(authenticationService instanceof  SignUp){
-                    signUp();
+                    try {
+                        signUp();
+                    }
+                    catch (NoSuchAlgorithmException ex){
+                        System.out.println(ex.getMessage());
+                    }
                 }
             }
         }
@@ -76,8 +84,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
      * @param password the user's password
      * @return hash code
      */
-    private String getHash(String password){
-        return null;
+    private String getHash(String password) throws NoSuchAlgorithmException {
+
+        return ToHexString.toHexString(ToHexString.getSHA(password));
     }
 
     private void updateSignIn(String username,String password){
@@ -95,20 +104,27 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     /**
      * get data from console
      */
-    private void getData(){
-        String data =Test.getData();
-        String[] dataArray = data.split(" ");
-        if(dataArray.length==2){
-            this.username=dataArray[0];
-            this.password=dataArray[1];
+    public void getData(int state){
+        Scanner scanner = new Scanner(System.in);
+
+        if(state == 2){
+            System.out.println("pls enter your username : ");
+            this.username=scanner.nextLine();
+            System.out.println("pls enter your password : ");
+            this.password=scanner.nextLine();
         }
-        else if(dataArray.length==5){
-            this.firstName=dataArray[0];
-            this.lastName=dataArray[1];
-            this.username=dataArray[2];
-            this.password=dataArray[3];
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
-            this.birthDate= LocalDate.parse(dataArray[4], formatter);
+        else if(state == 1){
+            System.out.println("pls enter your firstname : ");
+            this.firstName=scanner.nextLine();
+            System.out.println("pls enter your lastname : ");
+            this.lastName=scanner.nextLine();
+            System.out.println("pls enter your username : ");
+            this.username=scanner.nextLine();
+            System.out.println("pls enter your password : ");
+            this.password=scanner.nextLine();
+            System.out.println("pls enter your birthdate(dd/MM/yyyy) : ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            this.birthDate= LocalDate.parse(scanner.nextLine(), formatter);
         }
         else {
             System.out.println("enter valid input ^^");

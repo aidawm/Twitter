@@ -126,6 +126,7 @@ public class UserManager {
         SubscribersManager.addNewUser(user);
     }
 
-
-
+    public ArrayList<User> getUsers() {
+        return users;
+    }
 }

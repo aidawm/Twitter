@@ -72,10 +72,7 @@ public class SignUp implements AuthenticationService{
 
     /**
      *
-     * @return a new uder
-     * @throws InvalidNameException if the name is invalid
-     * @throws InvalidUsernameException if the username is invalid
-     * @throws InvalidAgeException if the age is invalid
+     * @return a new user
      */
     public User verify() throws IllegalStateException{
         Boolean isExeption=false;
