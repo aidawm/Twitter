@@ -59,11 +59,21 @@ public class TweetManager extends Publisher{
             throw new InvalidDateException("the chosen date should be before now");
         }
     }
+
+    /**
+     *
+     * @param tweet is using for adding the tweet
+     */
     public void addNewTweet(Tweet tweet){
         tweets.add(tweet);
         notify(tweet, true);
     }
 
+    /**
+     *
+     * @param tweet is using for removing the tweet
+     * @param user is sb that wants to remove the tweet
+     */
     public void removeTweet(Tweet tweet, User user)
     {
         if (user.equals(tweet.getAuthor()))
