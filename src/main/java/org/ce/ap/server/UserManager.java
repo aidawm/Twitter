@@ -11,9 +11,10 @@ import java.util.HashMap;
  */
 public class UserManager {
 
+    ////lis
     public static ArrayList<User> users=new ArrayList<>();
     private SubscribersManager subscribersManager;
-
+    //// for test the authentication service
     public static HashMap<String,String> database=new HashMap<>();
 
     /**
@@ -95,37 +96,21 @@ public class UserManager {
         }
         throw new InvalidUsernameException("the username is exist now!");
     }
-//    private int findIndex(UserAccount user)
-//    {
-//        int i = 0;
-//        for (User temp : users)
-//        {
-//            if (temp.equals(user))
-//            {
-//                return i;
-//            }
-//            i++;
-//        }
-//        return -1;
-//    }
 
-//    private ArrayList<Tweet> followingTweets(UserAccount user)
-//    {
-//        ArrayList<Tweet> followingTweet = new ArrayList<>();
-//        UserAccount userAccount = users.get(findIndex(user));
-//        int i = 0;
-//        for (UserAccount followingUser: userAccount.getFollowing())
-//        {
-//            followingTweet.addAll(followingUser.getTweets());
-//        }
-//        return followingTweet;
-//    }
+    /**
+     * if a new user sign up to twitter
+     * @param user the new user
+     */
     public void addNewUser(User user){
         users.add(user);
         database.put(user.getUsername(),user.getPassword());
         SubscribersManager.addNewUser(user);
     }
 
+    /**
+     * get the list of the users
+     * @return
+     */
     public ArrayList<User> getUsers() {
         return users;
     }
