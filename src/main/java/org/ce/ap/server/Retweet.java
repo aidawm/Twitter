@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 
 public class Retweet extends Tweet{
     private Tweet retweet;
-
-
     /**
      * create a new object from tweet
      *
