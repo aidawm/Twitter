@@ -7,7 +7,7 @@ import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
 
 import java.util.ArrayList;
 
-public class UserAccount {
+public class UserAccount implements Runnable{
     //// the user's information
     private final User user;
     //// to access the tweetingService
@@ -134,11 +134,14 @@ public class UserAccount {
     }
 
     /**
-     * the the user information
+     * the user information
      * @return user
      */
-    public User getUser() {
-        return user;
+    public User getUser() {return user;}
+
+    @Override
+    public void run() {
+
     }
 }
 
