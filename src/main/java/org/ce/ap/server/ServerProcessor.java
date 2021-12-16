@@ -5,11 +5,11 @@ import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
-
-import java.util.ArrayList;
 import org.json.simple.JSONObject;
 
-public class UserAccount{
+import java.util.ArrayList;
+
+public class ServerProcessor {
     //// the user's information
     private final User user;
     //// to access the tweetingService
@@ -23,7 +23,7 @@ public class UserAccount{
      * create a new object from UserAccount
      * @param user the user information
      */
-    public UserAccount(User user) {
+    public ServerProcessor(User user) {
         this.user=user;
         observerService.subscribe(user,timelineService);
     }
@@ -140,7 +140,38 @@ public class UserAccount{
      * @return user
      */
     public User getUser() {return user;}
+    void SwitchCaseUsingJason() throws InvalidCharacterNumberException {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonParameters = (JSONObject) jsonObject.get("parameterValues");
+        ServiceWordsEnum method = (ServiceWordsEnum) jsonObject.get("method");
 
+        switch (method){
+            case TWEET:
+                addNewTweet((String) jsonParameters.get("text"));
+                break;
+            case REMOVETWEET:
+                removeTweet((Tweet) jsonParameters.get("tweet"));
+                break;
+            case RETWEET:
+                retweet((Tweet) jsonParameters.get("tweet"), (String) jsonParameters.get("text"));
+                break;
+            case REMOVERETWEET:
+                removeRetweet((Tweet) jsonParameters.get("tweet"), (Retweet)jsonParameters.get("retweet"));
+                break;
+            case LIKE:
+                like((Tweet) jsonParameters.get("tweet"));
+                break;
+            case DISLIKE:
+                unLike((Tweet) jsonParameters.get("tweet"));
+                break;
+            case REPLY:
+                reply((Tweet) jsonParameters.get("tweet"), (Tweet) jsonParameters.get("replyTweet"));
+                break;
+            case REMOVEREPLY:
+                removeReply((Tweet) jsonParameters.get("tweet"), (Tweet) jsonParameters.get("replyTweet"));
+                break;
+
+        }
+    }
 }
-
 
