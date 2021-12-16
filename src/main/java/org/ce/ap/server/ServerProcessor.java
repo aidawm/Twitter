@@ -5,7 +5,7 @@ import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 

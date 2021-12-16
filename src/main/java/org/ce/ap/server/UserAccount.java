@@ -7,7 +7,7 @@ import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
 
 import java.util.ArrayList;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 public class UserAccount{
     //// the user's information

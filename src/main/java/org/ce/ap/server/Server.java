@@ -1,29 +1,28 @@
 package main.java.org.ce.ap.server;
 
-import org.json.simple.JSONObject;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
     public static void main(String[] args) {
         ExecutorService pool = Executors.newCachedThreadPool();
-        int counter = 0;
-        try (ServerSocket welcomingSocket = new ServerSocket(5757)) {
+        try (ServerSocket welcomingSocket = new ServerSocket(8080)) {
             System.out.print("Server started.\nWaiting for a client ... ");
-            while (counter < 3) {
+            while (true) {
                 Socket connectionSocket = welcomingSocket.accept();
-                counter++;
                 System.out.println("client accepted!");
-                pool.execute(new ClientHandlerr(connectionSocket, counter));
+                pool.execute(new ClientHandler(connectionSocket));
+                System.out.print("done.\nClosing server ... ");
             }
-            pool.shutdown();
-            System.out.print("done.\nClosing server ... ");
         } catch (IOException ex) {
             System.err.println(ex);
         }
@@ -32,14 +31,12 @@ public class Server {
 
 }
 
-class ClientHandlerr implements Runnable {
+class ClientHandler implements Runnable {
 
     private final Socket connectionSocket;
-    private final int clientNum;
 
-    public ClientHandlerr(Socket connectionSocket, int clientNum) {
+    public ClientHandler(Socket connectionSocket) {
         this.connectionSocket = connectionSocket;
-        this.clientNum=clientNum;
     }
 
     @Override
@@ -53,6 +50,7 @@ class ClientHandlerr implements Runnable {
             System.out.println(str);
             JSONObject jsonObject = new JSONObject(str);
             System.out.println(jsonObject.get("key"));
+            out.write(str.getBytes());
             System.out.print("All messages sent.\nClosing client ... ");
         } catch (IOException e) {
             e.printStackTrace();
