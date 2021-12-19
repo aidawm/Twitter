@@ -92,6 +92,7 @@ public class TweetManager extends Publisher{
     public ArrayList<Tweet> getTweets() {
         return tweets;
     }
+
 }
 
 

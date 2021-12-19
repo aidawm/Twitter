@@ -186,6 +186,8 @@ public class User {
         followers.add(user);
     }
 
+    public void removeFollower(User user){followers.remove(user);}
+
     public void addFollowing(User user)
     {
         followings.add(user);
@@ -194,5 +196,13 @@ public class User {
     public void removeFollowing(User user)
     {
         followings.remove(user);
+    }
+
+    public ArrayList<User> getFollowings() {
+        return followings;
+    }
+
+    public ArrayList<User> getFollowers() {
+        return followers;
     }
 }

@@ -27,11 +27,11 @@ public class SubscribersManager {
      * @param subscriber is the user that should follow the given user
      */
     public static void subscribe(User user, Subscriber subscriber, User subscriberUser){
-
         HashMap<User,Subscriber> subscriberList= subscribers.get(user);
         subscriberList.put(subscriberUser,subscriber);
         subscribers.put(user,subscriberList);
         user.addFollowing(subscriberUser);
+        subscriberUser.addFollower(user);
 
     }
 
@@ -45,6 +45,7 @@ public class SubscribersManager {
         subscriberList.remove(subscriberUser);
         subscribers.put(user,subscriberList);
         user.removeFollowing(subscriberUser);
+        subscriberUser.removeFollower(subscriberUser);
     }
 
     /**
