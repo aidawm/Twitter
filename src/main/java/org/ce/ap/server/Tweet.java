@@ -2,12 +2,13 @@ package main.java.org.ce.ap.server;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class Tweet {
+public class Tweet implements JsonInterface{
 
     private final User author;
     private String text;
@@ -176,5 +177,26 @@ public class Tweet {
         }
         str += "----------------------------------------------------\n";
         return str;
+    }
+    public JSONArray toJsonArray(ArrayList<JsonInterface> list){
+        ArrayList<JSONObject> jsonList = new ArrayList<>();
+        for (JsonInterface jsonInterface : list){
+            jsonList.add(jsonInterface.toJson());
+        }
+        JSONArray jsArray = new JSONArray(jsonList);
+        return jsArray;
+    }
+    @Override
+    public JSONObject toJson(){
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("author",author.toJson());
+        jsonObject.put("text",text);
+        jsonObject.put("likes",likes);
+        jsonObject.put("replies",toJsonArray(replies));
+        jsonObject.put("sendDate",sendDate);
+        jsonObject.put("retweets",toJsonArray(retweets));
+
+        return jsonObject;
     }
 }

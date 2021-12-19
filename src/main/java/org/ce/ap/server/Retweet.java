@@ -1,6 +1,8 @@
 package main.java.org.ce.ap.server;
 
+import com.google.gson.JsonArray;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 
@@ -48,5 +50,12 @@ public class Retweet extends Tweet{
         str+="----------------------------------------------------\n";
 
         return str;
+    }
+
+    public JSONObject toJson(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("tweet",retweet.toJson());
+        jsonObject.put("retweet",super.toJson());
+        return jsonObject;
     }
 }

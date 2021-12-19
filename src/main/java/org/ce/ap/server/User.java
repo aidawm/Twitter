@@ -7,6 +7,7 @@ import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import main.java.org.ce.ap.server.exceptions.InvalidNameException;
+import org.json.JSONObject;
 
 public class User {
     private String firstName;
@@ -16,6 +17,8 @@ public class User {
     private LocalDate birthDate;
     private final LocalDate registryDate;
     private String biography;
+
+
 
     /**
      *
@@ -159,5 +162,19 @@ public class User {
     @Override
     public String toString() {
         return "@"+username;
+    }
+
+    public JSONObject toJson(){
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("firstName",firstName);
+        jsonObject.put("lastName",lastName);
+        jsonObject.put("username",username);
+        jsonObject.put("password",password);
+        jsonObject.put("birthDate",birthDate);
+        jsonObject.put("registryDate",registryDate);
+        jsonObject.put("biography",biography);
+
+        return jsonObject;
     }
 }
