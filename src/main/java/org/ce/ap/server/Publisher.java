@@ -15,7 +15,7 @@ public class Publisher {
      */
     public void notify(Tweet tweet, Boolean state){
         User user = tweet.getAuthor();
-        HashSet<Subscriber> subscribers = SubscribersManager.subscribers.get(user);
+        HashSet<Subscriber> subscribers = (HashSet<Subscriber>) SubscribersManager.subscribers.get(user).values();
         for (Subscriber subscriber:subscribers){
             subscriber.update(tweet, state);
         }
