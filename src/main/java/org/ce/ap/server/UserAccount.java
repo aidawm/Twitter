@@ -25,7 +25,7 @@ public class UserAccount{
      */
     public UserAccount(User user) {
         this.user=user;
-        observerService.subscribe(user,timelineService);
+        observerService.subscribe(user,timelineService, this.user);
     }
 
     /**
@@ -34,7 +34,7 @@ public class UserAccount{
      */
     public void addFollowing(User user)
     {
-        observerService.subscribe(user,timelineService);
+        observerService.subscribe(user,timelineService, this.user);
     }
 
     /**
@@ -42,7 +42,7 @@ public class UserAccount{
      * @param user the user
      */
     public void removeFollowing(User user){
-        observerService.unSubscribe(user,timelineService);
+        observerService.unSubscribe(user,timelineService, this.user);
     }
 
     /**

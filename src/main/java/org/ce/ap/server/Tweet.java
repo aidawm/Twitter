@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Tweet implements JsonInterface{
@@ -178,13 +177,23 @@ public class Tweet implements JsonInterface{
         str += "----------------------------------------------------\n";
         return str;
     }
-    public JSONArray toJsonArray(ArrayList<JsonInterface> list){
+    public ArrayList<JSONObject> toJsonArrayTweet(ArrayList<Tweet> list){
         ArrayList<JSONObject> jsonList = new ArrayList<>();
-        for (JsonInterface jsonInterface : list){
-            jsonList.add(jsonInterface.toJson());
+        for (Tweet tweet : list)
+        {
+            jsonList.add((tweet).toJson());
         }
-        JSONArray jsArray = new JSONArray(jsonList);
-        return jsArray;
+
+        return jsonList;
+    }
+    public ArrayList<JSONObject> toJsonArrayRetweet(ArrayList<Retweet> list){
+        ArrayList<JSONObject> jsonList = new ArrayList<>();
+        for (Retweet retweet : list)
+        {
+            jsonList.add((retweet).toJson());
+        }
+
+        return jsonList;
     }
     @Override
     public JSONObject toJson(){
@@ -193,10 +202,9 @@ public class Tweet implements JsonInterface{
         jsonObject.put("author",author.toJson());
         jsonObject.put("text",text);
         jsonObject.put("likes",likes);
-        jsonObject.put("replies",toJsonArray(replies));
+        jsonObject.put("replies",toJsonArrayTweet(replies));
         jsonObject.put("sendDate",sendDate);
-        jsonObject.put("retweets",toJsonArray(retweets));
-
+        jsonObject.put("retweets",toJsonArrayRetweet(retweets));
         return jsonObject;
     }
 }

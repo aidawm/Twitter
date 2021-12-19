@@ -1,6 +1,7 @@
 package main.java.org.ce.ap.server;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
@@ -17,6 +18,8 @@ public class User {
     private LocalDate birthDate;
     private final LocalDate registryDate;
     private String biography;
+    private ArrayList<User> followings = new ArrayList<>();
+    private ArrayList<User> followers = new ArrayList<>();
 
 
 
@@ -176,5 +179,20 @@ public class User {
         jsonObject.put("biography",biography);
 
         return jsonObject;
+    }
+
+    public void addFollower(User user)
+    {
+        followers.add(user);
+    }
+
+    public void addFollowing(User user)
+    {
+        followings.add(user);
+    }
+
+    public void removeFollowing(User user)
+    {
+        followings.remove(user);
     }
 }

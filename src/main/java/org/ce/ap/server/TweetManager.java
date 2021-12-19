@@ -1,6 +1,9 @@
 package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidDateException;
+import netscape.javascript.JSObject;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -86,7 +89,9 @@ public class TweetManager extends Publisher{
 
     }
 
-
+    public ArrayList<Tweet> getTweets() {
+        return tweets;
+    }
 }
 
 

@@ -7,7 +7,7 @@ import java.util.HashSet;
 /**
  * this class notifies all users by update them
  */
-public class  Publisher {
+public class Publisher {
     /**
      *
      * @param tweet is using for update subscribers

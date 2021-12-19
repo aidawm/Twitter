@@ -7,12 +7,13 @@ import main.java.org.ce.ap.server.User;
 
 public class ObserverServiceImpl implements ObserverService {
     @Override
-    public void subscribe(User user, Subscriber subscriber) {
-        SubscribersManager.subscribe(user,subscriber);
+    public void subscribe(User user, Subscriber subscriber, User subscriberUser) {
+        SubscribersManager.subscribe(user,subscriber, subscriberUser);
+
     }
 
     @Override
-    public void unSubscribe(User user, Subscriber subscriber) {
-        SubscribersManager.unSubscribe(user,subscriber);
+    public void unSubscribe(User user, Subscriber subscriber, User subscriberUser) {
+        SubscribersManager.unSubscribe(user,subscriber, subscriberUser);
     }
 }

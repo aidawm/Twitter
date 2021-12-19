@@ -1,6 +1,9 @@
 package main.java.org.ce.ap.server.impl;
 
 import main.java.org.ce.ap.server.*;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class TweetingServiceImpl implements TweetingService {
 
@@ -101,5 +104,15 @@ public class TweetingServiceImpl implements TweetingService {
     public void removeRetweet(Tweet tweet,User user, Retweet retweet) {
         tweet.removeRetweet(retweet);
         tweetManager.removeTweet(tweet, user);
+    }
+
+    public ArrayList<JSONObject> toJsonArrayTweet(){
+        ArrayList<JSONObject> jsonList = new ArrayList<>();
+        for (Tweet tweet : tweetManager.getTweets())
+        {
+            jsonList.add((tweet).toJson());
+        }
+
+        return jsonList;
     }
 }

@@ -22,11 +22,12 @@ public class SubscribersManager {
      * @param user is using for adding subscriber
      * @param subscriber is the user that should follow the given user
      */
-    public static void subscribe(User user,Subscriber subscriber){
+    public static void subscribe(User user, Subscriber subscriber, User subscriberUser){
 
         HashSet<Subscriber> subscriberList= subscribers.get(user);
         subscriberList.add(subscriber);
         subscribers.put(user,subscriberList);
+        user.addFollowing(subscriberUser);
     }
 
     /**
@@ -34,10 +35,11 @@ public class SubscribersManager {
      * @param user is using for adding subscriber
      * @param subscriber is the user that should unfollow the given user
      */
-    public static void unSubscribe(User user,Subscriber subscriber){
+    public static void unSubscribe(User user,Subscriber subscriber, User subscriberUser){
         HashSet<Subscriber> subscriberList= subscribers.get(user);
         subscriberList.remove(subscriber);
         subscribers.put(user,subscriberList);
+        user.removeFollowing(subscriberUser);
     }
 
     /**
@@ -47,4 +49,5 @@ public class SubscribersManager {
     public static void addNewUser(User user){
         subscribers.put(user,new HashSet<>());
     }
+
 }

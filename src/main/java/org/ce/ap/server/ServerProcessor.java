@@ -25,7 +25,7 @@ public class ServerProcessor {
      */
     public ServerProcessor(User user) {
         this.user=user;
-        observerService.subscribe(user,timelineService);
+        observerService.subscribe(user,timelineService, this.user);
     }
 
     /**
@@ -34,7 +34,7 @@ public class ServerProcessor {
      */
     public void addFollowing(User user)
     {
-        observerService.subscribe(user,timelineService);
+        observerService.subscribe(user,timelineService, this.user);
     }
 
     /**
@@ -42,7 +42,7 @@ public class ServerProcessor {
      * @param user the user
      */
     public void removeFollowing(User user){
-        observerService.unSubscribe(user,timelineService);
+        observerService.unSubscribe(user,timelineService, this.user);
     }
 
     /**
@@ -172,6 +172,15 @@ public class ServerProcessor {
                 break;
 
         }
+    }
+
+    public JSONObject toJsonObject()
+    {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("user", user.toJson());
+        jsonObject.put("tweets", tweetingService.toJsonArrayTweet());
+//        jsonObject.put("followers", )
+        return jsonObject;
     }
 }
 
