@@ -1,7 +1,9 @@
 package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
+import org.json.JSONObject;
 
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +12,10 @@ import java.util.HashMap;
  * this class holds the server's user information and process on it
  */
 public class UserManager {
-
+    private static UserManager instance;
+    private static DatabaseHandler databaseHandler;
     ////lis
-    public static ArrayList<User> users=new ArrayList<>();
+    private static ArrayList<User> users;
     private SubscribersManager subscribersManager;
     //// for test the authentication service
     public static HashMap<String,String> database=new HashMap<>();
@@ -20,17 +23,28 @@ public class UserManager {
     /**
      * create a new object from UserManager class
      */
-    public UserManager(){
-//        users=new ArrayList<>();
+    private UserManager(){
+        databaseHandler = new DatabaseHandler(Path.of("./files/model/users"));
+        users=new ArrayList<>();
         getDataFromDatabase();
         subscribersManager =new SubscribersManager(users);
+    }
+
+    public static UserManager getInstance(){
+        if(instance==null){
+            instance= new UserManager();
+        }
+        return instance;
     }
 
     /**
      * get data from database
      */
     private void getDataFromDatabase(){
-
+        ArrayList<JSONObject> userJsonList = databaseHandler.getDirectoryFiles();
+        for (JSONObject user : userJsonList){
+            users.add(new User(user));
+        }
     }
 
     /**
@@ -69,9 +83,8 @@ public class UserManager {
      * @return the user's password
      */
     public String getUserPassword(String username) throws InvalidUsernameException{
-        return database.get(username);
-//        User user = findUser(username);
-//        return user.getPassword();
+        User user = findUser(username);
+        return user.getPassword();
     }
     /**
      *  get the user's birthDate by username
@@ -105,6 +118,7 @@ public class UserManager {
         users.add(user);
         database.put(user.getUsername(),user.getPassword());
         SubscribersManager.addNewUser(user);
+        databaseHandler.writeFile(user.getUsername(),user.toJson());
     }
 
     /**

@@ -7,7 +7,7 @@ import main.java.org.ce.ap.server.*;
 public class SignIn implements AuthenticationService{
     private String username;
     private String password;
-    private UserManager userManager = new UserManager();
+    private UserManager userManager ;
 
     /**
      * get username and password to try signIn
@@ -15,6 +15,7 @@ public class SignIn implements AuthenticationService{
      * @param password the user's password
      */
     public SignIn(String username,String password){
+        this.userManager=UserManager.getInstance();
         this.username=username;
         this.password=password;
     }

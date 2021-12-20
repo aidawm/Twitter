@@ -11,6 +11,7 @@ import main.java.org.ce.ap.server.exceptions.InvalidNameException;
 import org.json.JSONObject;
 
 public class User {
+    JSONObject jsonObject;
     private String firstName;
     private String lastName;
     private String username;
@@ -42,6 +43,15 @@ public class User {
 
     }
 
+    public User(JSONObject jsonObject){
+        this.jsonObject=jsonObject;
+        this.firstName=jsonObject.getString("firstName");
+        this.lastName=jsonObject.getString("lastName");
+        this.username=jsonObject.getString("username");
+        this.password = jsonObject.getString("password");
+        this.birthDate = LocalDate.parse(jsonObject.getString("birthDate"));
+        this.registryDate = LocalDate.parse(jsonObject.getString("registryDate"));
+    }
     /**
      *
      * @return firstName
@@ -168,7 +178,7 @@ public class User {
     }
 
     public JSONObject toJson(){
-        JSONObject jsonObject = new JSONObject();
+        this.jsonObject = new JSONObject();
 
         jsonObject.put("firstName",firstName);
         jsonObject.put("lastName",lastName);

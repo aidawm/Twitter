@@ -13,7 +13,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
+
+    public static void configureServer() {
+        UserManager.getInstance();
+    }
+
     public static void main(String[] args) {
+        configureServer();
         ExecutorService pool = Executors.newCachedThreadPool();
         try (ServerSocket welcomingSocket = new ServerSocket(8080)) {
             System.out.print("Server started.\nWaiting for a client ... ");

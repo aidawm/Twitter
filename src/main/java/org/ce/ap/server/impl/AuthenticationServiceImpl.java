@@ -11,7 +11,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private User user;
     ///// an instance from SignUp or SignIn class
     private AuthenticationService authenticationService;
-    private UserManager userManager =new UserManager();
+    private UserManager userManager ;
     ///// user's information from console
     private String firstName;
     private String lastName;
@@ -19,6 +19,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private String password;
     private LocalDate birthDate;
 
+    public AuthenticationServiceImpl(){
+        this.userManager=UserManager.getInstance();
+    }
     /**
      * do signUp process
      */

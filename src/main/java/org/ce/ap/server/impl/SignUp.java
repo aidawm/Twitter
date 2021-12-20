@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 public class SignUp implements AuthenticationService{
-    private UserManager userManager = new UserManager();
+    private UserManager userManager;
     private String firstName;
     private String lastName;
     private String username;
@@ -23,6 +23,7 @@ public class SignUp implements AuthenticationService{
      * @param birthDate  is using for setting birthDate
      */
     public SignUp(String firstName, String lastName, String username, String password, LocalDate birthDate) {
+        this.userManager=UserManager.getInstance();
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
