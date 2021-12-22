@@ -17,7 +17,7 @@ public class UserAccount{
     //// to access the timelineService
     private TimelineServiceImpl timelineService= new TimelineServiceImpl();
     //// to access the observerService
-    private ObserverService observerService = new ObserverServiceImpl();
+    private ObserverServiceImpl observerService = new ObserverServiceImpl();
 
     /**
      * create a new object from UserAccount

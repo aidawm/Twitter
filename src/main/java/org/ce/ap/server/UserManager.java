@@ -15,7 +15,7 @@ public class UserManager {
     private static UserManager instance;
     private static DatabaseHandler databaseHandler;
     ////lis
-    private static ArrayList<User> users;
+    private static HashMap<String,User> users;
     private SubscribersManager subscribersManager;
     //// for test the authentication service
     public static HashMap<String,String> database=new HashMap<>();
@@ -25,9 +25,9 @@ public class UserManager {
      */
     private UserManager(){
         databaseHandler = new DatabaseHandler(Path.of("./files/model/users"));
-        users=new ArrayList<>();
+        users=new HashMap<>();
         getDataFromDatabase();
-        subscribersManager =new SubscribersManager(users);
+        subscribersManager =new SubscribersManager(new ArrayList<>(users.values()));
     }
 
     public static UserManager getInstance(){
@@ -43,7 +43,8 @@ public class UserManager {
     private void getDataFromDatabase(){
         ArrayList<JSONObject> userJsonList = databaseHandler.getDirectoryFiles();
         for (JSONObject user : userJsonList){
-            users.add(new User(user));
+            String username = user.getString("username");
+            users.put(username,new User(user));
         }
     }
 
@@ -53,10 +54,8 @@ public class UserManager {
      * @return the user
      */
     public User findUser(String username) throws InvalidUsernameException{
-        for (User user:users){
-            if(user.getUsername().equals(username))
-                return user;
-        }
+        if(users.containsKey(username))
+            return users.get(username);
         throw new InvalidUsernameException("the username doesn't exist!!");
     }
 
@@ -102,11 +101,8 @@ public class UserManager {
      * @return true if it is not taken
      */
     public boolean isNotUsernameExist(String username) throws InvalidUsernameException{
-        try {
-            findUser(username);
-        }catch (InvalidUsernameException e){
+        if(!users.containsKey(username))
             return true;
-        }
         throw new InvalidUsernameException("the username is exist now!");
     }
 
@@ -115,7 +111,7 @@ public class UserManager {
      * @param user the new user
      */
     public void addNewUser(User user){
-        users.add(user);
+        users.put(user.getUsername(),user);
         database.put(user.getUsername(),user.getPassword());
         SubscribersManager.addNewUser(user);
         databaseHandler.writeFile(user.getUsername(),user.toJson());
@@ -126,7 +122,7 @@ public class UserManager {
      * @return
      */
     public ArrayList<User> getUsers() {
-        return users;
+        return new ArrayList<>(users.values());
     }
 
 

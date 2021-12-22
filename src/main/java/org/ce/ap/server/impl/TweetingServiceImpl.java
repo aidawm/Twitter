@@ -4,13 +4,14 @@ import main.java.org.ce.ap.server.*;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class TweetingServiceImpl implements TweetingService {
 
 
 //    public Tweet tweet;
 
-    private TweetManager tweetManager =new TweetManager();
+    private TweetManager tweetManager = TweetManager.getInstance();
     /**
      * add a new tweet in Twitter
      * @param author the user that want to tweet
@@ -19,7 +20,7 @@ public class TweetingServiceImpl implements TweetingService {
     @Override
     public void addNewTweet(User author, String text){
         try {
-            Tweet tweet = new Tweet(author, text);
+            Tweet tweet = new Tweet(author, text, tweetManager.makeID());
             tweetManager.addNewTweet(tweet);
         }catch (Exception e){
             e.printStackTrace();
@@ -85,7 +86,7 @@ public class TweetingServiceImpl implements TweetingService {
     @Override
     public void retweet(Tweet tweet, User user, String text)  {
         try {
-            Retweet retweet = new Retweet(tweet, user, text);
+            Retweet retweet = new Retweet(tweet, user, text,tweetManager.makeID());
             tweetManager.addNewTweet(retweet);
             tweet.addRetweet(retweet);
 //            System.out.println(retweet.getRetweet().toString());
@@ -115,4 +116,5 @@ public class TweetingServiceImpl implements TweetingService {
 
         return jsonList;
     }
+
 }

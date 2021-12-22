@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class Test {
     private static UserAccount userAccount;
     private static UserManager userManager;
-
+    private static TweetManager tweetManager;
 
     /**
      * print a format of inputs
@@ -55,7 +55,7 @@ public class Test {
             } else if (input == 2) {
                 userAccount.showTimeline();
                 System.out.println("pls enter the number of tweet that you want to retweet it : ");
-                int tweetNumber = scanner.nextInt();
+                int tweetNumber = Integer.parseInt(scanner.nextLine());
                 System.out.println("pls enter the text : ");
                 String text = scanner.nextLine();
                 try {
@@ -67,18 +67,18 @@ public class Test {
             } else if (input == 3) {
                 userAccount.showTimeline();
                 System.out.println("pls enter the number of tweet that you want to reply it : ");
-                int tweetNumber = scanner.nextInt();
+                int tweetNumber = Integer.parseInt(scanner.nextLine());
                 System.out.println("pls enter the text : ");
                 String text = scanner.nextLine();
                 try {
-                    userAccount.reply(userAccount.getTweets().get(tweetNumber - 1), new Tweet(userAccount.getUser(), text));
+                    userAccount.reply(userAccount.getTweets().get(tweetNumber - 1), new Tweet(userAccount.getUser(), text,tweetManager.makeID()));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             } else if (input == 4) {
                 userAccount.showTimeline();
                 System.out.println("pls enter the number of tweet that you want to like it : ");
-                int tweetNumber = scanner.nextInt();
+                int tweetNumber = Integer.parseInt(scanner.nextLine());
                 try {
                     userAccount.like(userAccount.getTweets().get(tweetNumber));
                 } catch (Exception e) {
@@ -118,6 +118,7 @@ public class Test {
 
     public static void defaultUsers() throws InvalidCharacterNumberException, NoSuchAlgorithmException {
         userManager =UserManager.getInstance();
+        tweetManager = TweetManager.getInstance();
 
 //        User user1 = new User("aida", "mobli", "aidawm", ToHexString.toHexString(ToHexString.getSHA("asdf")), LocalDate.of(2001, 3, 21));
 //        User user2 = new User("sara", "rouhani", "sa9978", ToHexString.toHexString(ToHexString.getSHA("qwer")), LocalDate.of(1999, 12, 20));

@@ -1,5 +1,6 @@
 package main.java.org.ce.ap.server;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,7 +9,8 @@ import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import org.json.JSONObject;
 
 public class Tweet implements JsonInterface{
-
+    JSONObject jsonObject;
+    final long id;
     private final User author;
     private String text;
     private HashSet<User> likes;
@@ -22,14 +24,35 @@ public class Tweet implements JsonInterface{
      * @param author is using for setting the tweet's author
      * @param text   is using for setting the tweet's text
      */
-    public Tweet(User author, String text) throws InvalidCharacterNumberException {
+    public Tweet(User author, String text,long id) throws InvalidCharacterNumberException {
         checkTweetCharacters(text);
         this.author = author;
         this.text = text;
+        this.id =id;
         this.sendDate = LocalDateTime.now();
         this.likes = new HashSet<>();
         this.replies = new ArrayList<>();
         retweets = new ArrayList<>();
+    }
+
+    public Tweet(JSONObject jsonObject,User author){
+        this.jsonObject=jsonObject;
+        this.author=author;
+        this.text=jsonObject.getString("text");
+        this.sendDate = LocalDateTime.parse(jsonObject.getString("sendDate"));
+        this.id=jsonObject.getLong("id");
+    }
+
+    public void setLikes(HashSet<User> likes) {
+        this.likes = likes;
+    }
+
+    public void setReplies(ArrayList<Tweet> replies) {
+        this.replies = replies;
+    }
+
+    public void setRetweets(ArrayList<Retweet> retweets) {
+        this.retweets = retweets;
     }
 
     /**
@@ -177,6 +200,13 @@ public class Tweet implements JsonInterface{
         str += "----------------------------------------------------\n";
         return str;
     }
+    public HashSet<JSONObject> toHashSetLikes(HashSet<User> likes){
+        HashSet<JSONObject> jsonHashSet = new HashSet<>();
+        for(User user : likes){
+            jsonHashSet.add(user.toJson());
+        }
+        return jsonHashSet;
+    }
     public ArrayList<JSONObject> toJsonArrayTweet(ArrayList<Tweet> list){
         ArrayList<JSONObject> jsonList = new ArrayList<>();
         for (Tweet tweet : list)
@@ -195,16 +225,21 @@ public class Tweet implements JsonInterface{
 
         return jsonList;
     }
+
+    public long getId() {
+        return id;
+    }
+
     @Override
     public JSONObject toJson(){
-        JSONObject jsonObject = new JSONObject();
-
+        this.jsonObject = new JSONObject();
+        jsonObject.put("id",id);
         jsonObject.put("author",author.toJson());
         jsonObject.put("text",text);
-        jsonObject.put("likes",likes);
+        jsonObject.put("likes",toHashSetLikes(likes));
         jsonObject.put("replies",toJsonArrayTweet(replies));
         jsonObject.put("sendDate",sendDate);
-        jsonObject.put("retweets",toJsonArrayRetweet(retweets));
+//        jsonObject.put("retweets",toJsonArrayRetweet(retweets));
         return jsonObject;
     }
 }

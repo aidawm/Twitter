@@ -16,6 +16,7 @@ public class Server {
 
     public static void configureServer() {
         UserManager.getInstance();
+        TweetManager.getInstance();
     }
 
     public static void main(String[] args) {
