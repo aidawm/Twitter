@@ -8,11 +8,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+/**
+ * The type Database handler.
+ */
 public class DatabaseHandler {
     private Path path ;
+
+    /**
+     * Instantiates a new Database handler.
+     *
+     * @param path the path
+     */
     public DatabaseHandler(Path path){
         this.path=path;
     }
+
+    /**
+     * Write file.
+     *
+     * @param id         the id
+     * @param jsonObject the json object
+     */
     public void writeFile(String id,JSONObject jsonObject){
         try (BufferedWriter out= new BufferedWriter(new FileWriter(path.toFile().getAbsoluteFile()+File.separator+id))){
             out.write(jsonObject.toString());
@@ -20,6 +36,13 @@ public class DatabaseHandler {
 
         }
     }
+
+    /**
+     * Read file json object.
+     *
+     * @param id the id
+     * @return the json object
+     */
     public JSONObject readFile(String id){
         String fileStr = "";
         try (BufferedReader reader = new BufferedReader(new FileReader(path+File.separator+id))) {
@@ -35,6 +58,11 @@ public class DatabaseHandler {
         return new JSONObject(fileStr);
     }
 
+    /**
+     * Get directory files array list.
+     *
+     * @return the array list
+     */
     public ArrayList<JSONObject> getDirectoryFiles(){
         ArrayList<JSONObject> files = new ArrayList<>();
         if(Files.isDirectory(path)){
@@ -51,6 +79,11 @@ public class DatabaseHandler {
         return files;
     }
 
+    /**
+     * Remove file.
+     *
+     * @param id the id
+     */
     public void removeFile(String id){
         try
         {

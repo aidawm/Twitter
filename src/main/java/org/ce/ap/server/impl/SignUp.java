@@ -6,6 +6,9 @@ import main.java.org.ce.ap.server.*;
 import java.time.LocalDate;
 import java.util.Locale;
 
+/**
+ * The type Sign up.
+ */
 public class SignUp implements AuthenticationService{
     private UserManager userManager;
     private String firstName;
@@ -15,12 +18,13 @@ public class SignUp implements AuthenticationService{
     private LocalDate birthDate;
 
     /**
+     * Instantiates a new Sign up.
      *
      * @param firstName is using for setting firstname
-     * @param lastName is using for setting lastName
-     * @param username is using for setting username
-     * @param password is using for setting password
-     * @param birthDate  is using for setting birthDate
+     * @param lastName  is using for setting lastName
+     * @param username  is using for setting username
+     * @param password  is using for setting password
+     * @param birthDate is using for setting birthDate
      */
     public SignUp(String firstName, String lastName, String username, String password, LocalDate birthDate) {
         this.userManager=UserManager.getInstance();

@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+/**
+ * The type Authentication service.
+ */
 public class AuthenticationServiceImpl implements AuthenticationService{
     private User user;
     ///// an instance from SignUp or SignIn class
@@ -19,11 +22,18 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private String password;
     private LocalDate birthDate;
 
+    /**
+     * Instantiates a new Authentication service.
+     */
     public AuthenticationServiceImpl(){
         this.userManager=UserManager.getInstance();
     }
+
     /**
      * do signUp process
+     *
+     * @return the user
+     * @throws NoSuchAlgorithmException the no such algorithm exception
      */
     public User signUp() throws NoSuchAlgorithmException {
         getData(1);
@@ -34,6 +44,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     /**
      * do sign in process
+     *
+     * @return the user
+     * @throws NoSuchAlgorithmException the no such algorithm exception
      */
     public User signIn() throws NoSuchAlgorithmException {
         getData(2);
@@ -105,6 +118,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     /**
      * get data from console
+     *
+     * @param state the state
      */
     public void getData(int state){
         Scanner scanner = new Scanner(System.in);
