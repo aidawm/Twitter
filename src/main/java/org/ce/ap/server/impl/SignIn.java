@@ -4,6 +4,9 @@ import main.java.org.ce.ap.server.exceptions.*;
 import main.java.org.ce.ap.server.*;
 
 
+/**
+ * The type Sign in.
+ */
 public class SignIn implements AuthenticationService{
     private String username;
     private String password;
@@ -11,6 +14,7 @@ public class SignIn implements AuthenticationService{
 
     /**
      * get username and password to try signIn
+     *
      * @param username the user's username
      * @param password the user's password
      */

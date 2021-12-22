@@ -5,6 +5,9 @@ import main.java.org.ce.ap.server.Subscriber;
 import main.java.org.ce.ap.server.SubscribersManager;
 import main.java.org.ce.ap.server.User;
 
+/**
+ * The type Observer service.
+ */
 public class ObserverServiceImpl implements ObserverService {
     @Override
     public void subscribe(User user, Subscriber subscriber, User subscriberUser) {
