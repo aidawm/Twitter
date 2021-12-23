@@ -10,13 +10,13 @@ import org.json.JSONObject;
 
 public class Tweet implements JsonInterface{
     JSONObject jsonObject;
-    final long id;
+    private final long id;
     private final User author;
     private String text;
-    private HashSet<User> likes;
-    private ArrayList<Tweet> replies;
+    private HashSet<User> likes=new HashSet<>();
+    private ArrayList<Tweet> replies=new ArrayList<>();
     private final LocalDateTime sendDate;
-    private ArrayList<Retweet> retweets;
+    private ArrayList<Retweet> retweets=new ArrayList<>();
 
     /**
      * create a new object from tweet
@@ -30,9 +30,9 @@ public class Tweet implements JsonInterface{
         this.text = text;
         this.id =id;
         this.sendDate = LocalDateTime.now();
-        this.likes = new HashSet<>();
-        this.replies = new ArrayList<>();
-        retweets = new ArrayList<>();
+//        this.likes = new HashSet<>();
+//        this.replies = new ArrayList<>();
+//        retweets = new ArrayList<>();
     }
 
     public Tweet(JSONObject jsonObject,User author){

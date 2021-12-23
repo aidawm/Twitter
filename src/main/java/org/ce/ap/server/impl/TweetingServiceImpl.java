@@ -45,6 +45,7 @@ public class TweetingServiceImpl implements TweetingService {
     @Override
     public void like(Tweet tweet, User user) {
         tweet.likeTweet(user);
+        tweetManager.update(tweet,true);
     }
 
     /**

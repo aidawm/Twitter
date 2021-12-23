@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class TweetManager extends Publisher{
+public class TweetManager extends Publisher implements Subscriber{
     private UserManager userManager;
     private static TweetManager instance;
     private DatabaseHandler databaseHandler;
@@ -165,6 +165,14 @@ public class TweetManager extends Publisher{
             id = Math.abs(rand.nextLong());
         }while (!isNotExistID(id));
         return id;
+    }
+
+    @Override
+    public void update(Tweet tweet, Boolean state) {
+        if(state==true)
+            databaseHandler.writeFile(String.valueOf(tweet.getId()),tweet.toJson());
+        else
+            databaseHandler.readFile(String.valueOf(tweet.getId()));
     }
 }
 
