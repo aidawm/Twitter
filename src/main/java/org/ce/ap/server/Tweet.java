@@ -10,6 +10,8 @@ import org.json.JSONObject;
 public class Tweet implements JsonInterface{
 
     private final User author;
+    private JSONObject jsonObject;
+    private Long id ;
     private String text;
     private HashSet<User> likes;
     private ArrayList<Tweet> replies;
@@ -32,6 +34,13 @@ public class Tweet implements JsonInterface{
         retweets = new ArrayList<>();
     }
 
+    public Tweet(JSONObject jsonObject,User author){
+        this.jsonObject=jsonObject;
+        this.author=author;
+        this.text=jsonObject.getString("text");
+        this.sendDate = LocalDateTime.parse(jsonObject.getString("sendDate"));
+        this.id=jsonObject.getLong("id");
+    }
     /**
      * @param liker is using for adding liker
      */
@@ -206,5 +215,9 @@ public class Tweet implements JsonInterface{
         jsonObject.put("sendDate",sendDate);
         jsonObject.put("retweets",toJsonArrayRetweet(retweets));
         return jsonObject;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

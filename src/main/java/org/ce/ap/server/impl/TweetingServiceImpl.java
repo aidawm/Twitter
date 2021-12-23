@@ -13,7 +13,7 @@ public class TweetingServiceImpl implements TweetingService {
 
 //    public Tweet tweet;
 
-    private TweetManager tweetManager =new TweetManager();
+    private TweetManager tweetManager = TweetManager.getInstance();
     /**
      * add a new tweet in Twitter
      * @param author the user that want to tweet
