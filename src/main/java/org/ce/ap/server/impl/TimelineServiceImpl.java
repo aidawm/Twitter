@@ -7,6 +7,9 @@ import main.java.org.ce.ap.server.Tweet;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * The type Timeline service.
+ */
 public class TimelineServiceImpl implements TimelineService, Subscriber {
     private ArrayList<Tweet> tweets = new ArrayList<>();
 
@@ -33,6 +36,7 @@ public class TimelineServiceImpl implements TimelineService, Subscriber {
     }
 
 }
+
 /**
  * this class can help us to sort the arraylist by date!
  */

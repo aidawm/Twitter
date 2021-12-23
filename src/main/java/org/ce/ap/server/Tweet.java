@@ -9,9 +9,9 @@ import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import org.json.JSONObject;
 
 public class Tweet implements JsonInterface{
-    JSONObject jsonObject;
     private final long id;
     private final User author;
+    private JSONObject jsonObject;
     private String text;
     private HashSet<User> likes=new HashSet<>();
     private ArrayList<Tweet> replies=new ArrayList<>();
@@ -242,4 +242,6 @@ public class Tweet implements JsonInterface{
 //        jsonObject.put("retweets",toJsonArrayRetweet(retweets));
         return jsonObject;
     }
+
+
 }

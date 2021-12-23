@@ -6,6 +6,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The type Tweeting service.
+ */
 public class TweetingServiceImpl implements TweetingService {
 
 
@@ -108,6 +111,11 @@ public class TweetingServiceImpl implements TweetingService {
         tweetManager.removeTweet(tweet, user);
     }
 
+    /**
+     * To json array tweet array list.
+     *
+     * @return the array list
+     */
     public ArrayList<JSONObject> toJsonArrayTweet(){
         ArrayList<JSONObject> jsonList = new ArrayList<>();
         for (Tweet tweet : tweetManager.getTweets())

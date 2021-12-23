@@ -9,6 +9,7 @@ import java.util.HashSet;
  */
 public class Publisher {
     /**
+     * Notify.
      *
      * @param tweet is using for update subscribers
      * @param state is a boolean

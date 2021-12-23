@@ -5,29 +5,40 @@ import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Retweet.
+ */
 public class Retweet extends Tweet{
     private Tweet retweetedTweet;
+
     /**
      * create a new object from tweet
      *
+     * @param retweet       the retweet
      * @param retweetAuthor is using for setting the retweet's author
      * @param retweetText   is using for setting the retweet's text
+     * @throws InvalidCharacterNumberException the invalid character number exception
      */
+
     public Retweet(Tweet retweet, User retweetAuthor, String retweetText,Long id) throws InvalidCharacterNumberException {
-        super(retweetAuthor, retweetText,id);
+        super(retweetAuthor, retweetText, id);
+
         this.retweetedTweet = retweet;
         retweet.addRetweet(this);
+
     }
+
     public Retweet(JSONObject jsonObject ,User auther,Tweet tweet){
         super((JSONObject) jsonObject.get("newTweet"),auther);
         this.retweetedTweet = tweet;
     }
-
     /**
+     * Gets retweet.
      *
-     * @return tweet
+     * @return tweet retweet
      */
-    public Tweet getRetweet() {
+
+    public Tweet getRetweetedTweet() {
         return retweetedTweet;
     }
 
