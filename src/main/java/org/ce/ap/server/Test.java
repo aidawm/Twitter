@@ -102,12 +102,10 @@ public class Test {
             if (input == 1) {
                 for (User user :userManager.getUsers())
                     printUser(user);
-//                printUser(userManager.getUsers().get(0));
-//                printUser(userManager.getUsers().get(1));
-//                printUser(userManager.getUsers().get(2));
                 System.out.println("pls enter the number of user : ");
                 int userNumber = scanner.nextInt();
                 userAccount.addFollowing(userManager.getUsers().get(userNumber));
+                break;
             }
             if(input==0){
                 break;
@@ -237,7 +235,7 @@ public class Test {
                 }
             }
         }
-//        test_file();
+        test_file();
     }
 
 }
