@@ -229,6 +229,7 @@ public class Tweet implements JsonInterface {
      */
     public void removeRetweet(Tweet retweet) {
         retweets.remove(retweet);
+
     }
 
     /**

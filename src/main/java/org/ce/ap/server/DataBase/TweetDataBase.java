@@ -87,9 +87,9 @@ public class TweetDataBase {
      *
      * @param id the id
      */
-    public void removeFile(String id) {
+    public void removeFile(String id, String username) {
         try {
-            File myObj = new File(path + File.separator + id);
+            File myObj = new File(path + File.separator + id + " " + username);
             if (myObj.delete()) {
                 System.out.println("Deleted the file: " + myObj.getName());
             } else {

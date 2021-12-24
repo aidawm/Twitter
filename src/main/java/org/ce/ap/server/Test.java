@@ -200,50 +200,50 @@ public class Test {
 
 
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidCharacterNumberException {
-//        boolean isExit =false;
-//        defaultUsers();
-//        AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
-//        Scanner scanner = new Scanner(System.in);
-//        int state;
-//        while (true) {
-//            while (true) {
-//                printFirstMenu();
-//                state = scanner.nextInt();
-//                if (state == 1) {
-//                    userAccount = new UserAccount(authenticationService.signUp());
-//                    userAccount = new UserAccount(authenticationService.signIn());
-//                    break;
-//                } else if (state == 2) {
-//                    userAccount = new UserAccount(authenticationService.signIn());
-//                    break;
-//                }
-//                else if(state==0){
-//                    isExit=true;
-//                    break;
-//                }else {
-//                    System.out.println("invalid input?");
-//                }
-//            }
-//            if(isExit)
-//                break;
-//            while (true) {
-//
-//                signInMenu();
-//                scanner = new Scanner(System.in);
-//                int signinInput = scanner.nextInt();
-//                if (signinInput == 1) {
-//                    manageTweetsMenu();
-//                } else if (signinInput == 2) {
-//                    manageFollowers();
-//                }
-//                else if(signinInput ==0){
-//                    break;
-//                }else {
-//                    System.out.println("invalid input!!!!!!!!!!!!!!!");
-//                }
-//            }
-//        }
-        test_file();
+        boolean isExit =false;
+        defaultUsers();
+        AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
+        Scanner scanner = new Scanner(System.in);
+        int state;
+        while (true) {
+            while (true) {
+                printFirstMenu();
+                state = scanner.nextInt();
+                if (state == 1) {
+                    userAccount = new UserAccount(authenticationService.signUp());
+                    userAccount = new UserAccount(authenticationService.signIn());
+                    break;
+                } else if (state == 2) {
+                    userAccount = new UserAccount(authenticationService.signIn());
+                    break;
+                }
+                else if(state==0){
+                    isExit=true;
+                    break;
+                }else {
+                    System.out.println("invalid input?");
+                }
+            }
+            if(isExit)
+                break;
+            while (true) {
+
+                signInMenu();
+                scanner = new Scanner(System.in);
+                int signinInput = scanner.nextInt();
+                if (signinInput == 1) {
+                    manageTweetsMenu();
+                } else if (signinInput == 2) {
+                    manageFollowers();
+                }
+                else if(signinInput ==0){
+                    break;
+                }else {
+                    System.out.println("invalid input!!!!!!!!!!!!!!!");
+                }
+            }
+        }
+//        test_file();
     }
 
 }
