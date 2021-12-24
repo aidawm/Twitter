@@ -18,6 +18,7 @@ public class Test {
     private static UserManager userManager;
     private static TweetManager tweetManager;
 
+
     /**
      * print a format of inputs
      */
@@ -136,18 +137,18 @@ public class Test {
         System.out.println(user.getFirstName() + " " + user.getLastName() + "\t@" + user.getUsername());
     }
 
-    public static void test_file(){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("hello","bonjour");
-        jsonObject.put("bye","au revoir");
-
-        DatabaseHandler databaseHandler = new DatabaseHandler(Path.of("./files/log"));
-        databaseHandler.writeFile("french_dic",jsonObject);
-        for(JSONObject file:databaseHandler.getDirectoryFiles()){
-            System.out.println(file);
-        }
-        databaseHandler.removeFile("persian.txt");
-    }
+//    public static void test_file(){
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("hello","bonjour");
+//        jsonObject.put("bye","au revoir");
+//
+//        DatabaseHandler databaseHandler = new DatabaseHandler(Path.of("./files/log"));
+//        databaseHandler.writeFile("french_dic",jsonObject);
+//        for(JSONObject file:databaseHandler.getDirectoryFiles()){
+//            System.out.println(file);
+//        }
+//        databaseHandler.removeFile("persian.txt");
+//    }
     public void test_timeline() throws InvalidCharacterNumberException, InterruptedException {
         User user1 = new User("aida", "1", "aidawm", "asdf", LocalDate.of(2001, 3, 21));
         User user2 = new User("sara", "2", "sa9978", "qwer", LocalDate.of(1999, 12, 20));
@@ -235,7 +236,7 @@ public class Test {
                 }
             }
         }
-        test_file();
+//        test_file();
     }
 
 }

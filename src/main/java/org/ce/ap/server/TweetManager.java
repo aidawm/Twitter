@@ -6,9 +6,9 @@ import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import main.java.org.ce.ap.server.DataBase.TweetDataBase;
 
 import org.json.JSONObject;
+
 import java.time.LocalDateTime;
 import java.util.*;
-
 
 
 /**
@@ -43,10 +43,30 @@ public class TweetManager extends Publisher implements Subscriber {
     /**
      * get data from database
      */
-    public void getDataFromDatabase(User user) {
-        ArrayList<JSONObject> tweetJsonList = database.getDirectoryFiles(user);
+    public void getDataFromDatabase(User user) throws InvalidUsernameException {
+        HashMap<Long, JSONObject> tweetJsonList = database.getDirectoryFiles(user);
+        for (Long tweetID : tweetJsonList.keySet()) {
+            if (tweets.containsKey(tweetID))
+                continue;
+            JSONObject tweet = tweetJsonList.get(tweetID);
+            if (tweet.keySet().contains("retweetedTweet") && tweet.keySet().contains("newTweet")) {
+                JSONObject retweetedTweetJson = new JSONObject(tweet.get("retweetedTweet"));
+                long retweetedID = retweetedTweetJson.getLong("id");
 
-//        for (JSONObject tweet : tweetJsonList) {
+                if (tweets.containsKey(retweetedID)) {
+                    tweets.put(tweetID, new Retweet(tweet, getAuthor(tweet), tweets.get(retweetedID)));
+                } else {
+                    Tweet retweetedTweet = new Tweet(retweetedTweetJson, getAuthor(retweetedTweetJson));
+                    tweets.put(retweetedTweet.getId(), retweetedTweet);
+                    tweets.put(tweetID, new Retweet(tweet, getAuthor(tweet), retweetedTweet));
+                }
+            }
+            else {
+                tweets.put(tweetID,new Tweet(tweet,getAuthor(tweet)));
+            }
+
+        }
+//
 //            System.out.println(tweet);
 //            if (tweet.keySet().contains("retweetedTweet") && tweet.keySet().contains("newTweet")) {
 //                reTweetMakeList.add(tweet);
@@ -91,7 +111,7 @@ public class TweetManager extends Publisher implements Subscriber {
      */
     public ArrayList findTweetsByAuthor(User author) {
         ArrayList<Tweet> tweetArrayList = new ArrayList<>();
-        for (Tweet tweet1 : tweets) {
+        for (Tweet tweet1 : tweets.values()) {
             if (tweet1.getAuthor().equals(author))
                 tweetArrayList.add(tweet1);
         }
@@ -108,7 +128,7 @@ public class TweetManager extends Publisher implements Subscriber {
     public ArrayList findTweetsByTime(LocalDateTime date) throws InvalidDateException {
         checkDate(date);
         ArrayList<Tweet> tweetArrayList = new ArrayList<>();
-        for (Tweet tweet1 : tweets) {
+        for (Tweet tweet1 : tweets.values()) {
             if (tweet1.getSendDate().isAfter(date))
                 tweetArrayList.add(tweet1);
         }
@@ -131,8 +151,8 @@ public class TweetManager extends Publisher implements Subscriber {
      * @param tweet is using for adding the tweet
      */
     public void addNewTweet(Tweet tweet) {
-        tweets.add(tweet);
-        databaseHandler.writeFile(String.valueOf(tweet.getId()), tweet.getAuthor().getUsername(), tweet.toJson());
+        tweets.put(tweet.getId(),tweet);
+        database.writeFile(String.valueOf(tweet.getId()), tweet.getAuthor().getUsername(), tweet.toJson());
         notify(tweet, true);
     }
 
@@ -157,7 +177,7 @@ public class TweetManager extends Publisher implements Subscriber {
      * @return the tweets
      */
     public ArrayList<Tweet> getTweets() {
-        return tweets;
+        return new ArrayList<>(tweets.values());
     }
 
     /**
@@ -167,10 +187,12 @@ public class TweetManager extends Publisher implements Subscriber {
      * @return the tweet
      */
     public Tweet findTweet(Long id) {
-        for (Tweet tweet : tweets) {
-            if (tweet.getId() == id)
-                return tweet;
-        }
+//        for (Tweet tweet : tweets) {
+//            if (tweet.getId() == id)
+//                return tweet;
+//        }
+        if(tweets.containsKey(id))
+            return tweets.get(id);
         return null;
     }
 
@@ -203,9 +225,9 @@ public class TweetManager extends Publisher implements Subscriber {
     @Override
     public void update(Tweet tweet, Boolean state) {
         if (state)
-            databaseHandler.writeFile(String.valueOf(tweet.getId()), tweet.getAuthor().getUsername(), tweet.toJson());
+            database.writeFile(String.valueOf(tweet.getId()), tweet.getAuthor().getUsername(), tweet.toJson());
         else
-            databaseHandler.readFile(String.valueOf(tweet.getId()), tweet.getAuthor().getUsername());
+            database.readFile(String.valueOf(tweet.getId()), tweet.getAuthor().getUsername());
     }
 }
 

@@ -3,7 +3,10 @@ package main.java.org.ce.ap.server.DataBase;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class UserDataBase {
     private Path path;
@@ -48,6 +51,27 @@ public class UserDataBase {
             e.printStackTrace();
         }
         return new JSONObject(fileStr);
+    }
+
+    /**
+     * Get directory files array list.
+     *
+     * @return the array list
+     */
+    public ArrayList<JSONObject> getDirectoryFiles(){
+        ArrayList<JSONObject> files = new ArrayList<>();
+        if(Files.isDirectory(path)){
+            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)){
+                for (Path p: directoryStream){
+                    files.add(readFile(p.getFileName().toString()));
+                }
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+
+        }
+        return files;
     }
 
     /**

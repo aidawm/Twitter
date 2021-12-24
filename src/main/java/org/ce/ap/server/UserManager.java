@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import org.json.JSONObject;
+import main.java.org.ce.ap.server.DataBase.UserDataBase;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.HashMap;
  */
 public class UserManager {
     private static UserManager instance;
-    private static DatabaseHandler databaseHandler;
+    private static UserDataBase databaseHandler;
     ////lis
     private static HashMap<String,User> users;
     private SubscribersManager subscribersManager;
@@ -24,7 +25,7 @@ public class UserManager {
      * create a new object from UserManager class
      */
     private UserManager(){
-        databaseHandler = new DatabaseHandler(Path.of("./files/model/users"));
+        databaseHandler = new UserDataBase();
         users=new HashMap<>();
         getDataFromDatabase();
         subscribersManager =new SubscribersManager(new ArrayList<>(users.values()));

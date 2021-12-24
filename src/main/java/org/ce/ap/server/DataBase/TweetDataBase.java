@@ -29,8 +29,8 @@ public class TweetDataBase {
      * @param username   the username
      * @param jsonObject the json object
      */
-    public void writeFile(String id, String retweetedId, String username, JSONObject jsonObject) {
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(path.toFile().getAbsoluteFile() + File.separator + id + " " + retweetedId + " " + username))) {
+    public void writeFile(String id, String username, JSONObject jsonObject) {
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(path.toFile().getAbsoluteFile() + File.separator + id  + " " + username))) {
             out.write(jsonObject.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,9 +44,9 @@ public class TweetDataBase {
      * @param username the username
      * @return the json object
      */
-    public Map<Long, JSONObject> readFile(String id, String username) {
+    public JSONObject readFile(String id, String username) {
         String fileStr = "";
-        try (BufferedReader reader = new BufferedReader(new FileReader(path + File.separator + id + " " + retweetedId + " " + username))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path + File.separator + id + " " + username))) {
             int count;
             char[] buffer = new char[20];
             while (reader.ready()) {
@@ -56,8 +56,8 @@ public class TweetDataBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JSONObject jsonObject= new JSONObject(fileStr);
-        return new Map<Long, JSONObject> ;
+
+        return  new JSONObject(fileStr);
     }
 
     /**
@@ -65,15 +65,15 @@ public class TweetDataBase {
      *
      * @return the array list
      */
-    public HashMap<Map<Long, Long>, JSONObject> getDirectoryFiles(User user) {
-        ArrayList<JSONObject> files = new ArrayList<>();
+    public HashMap<Long, JSONObject> getDirectoryFiles(User user) {
+        HashMap<Long, JSONObject> files = new HashMap<>();
         if (Files.isDirectory(path)) {
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
                 for (Path p : directoryStream) {
                     String[] words = p.getFileName().toString().split("\\s");
                     System.out.println(words[1]);
                     if (user.getFollowings().contains(words[1]))
-                        files.add(readFile(p.getFileName().toString(), user.getUsername()));
+                        files.put(Long.parseLong(words[0]),readFile(p.getFileName().toString(),user.getUsername()));
                 }
             } catch (IOException e) {
                 e.printStackTrace();

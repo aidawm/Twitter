@@ -20,7 +20,7 @@ public class Tweet implements JsonInterface {
     private String text;
     private HashSet<User> likes = new HashSet<>();
     private ArrayList<Tweet> replies = new ArrayList<>();
-    private ArrayList<Tweet> retweets = new ArrayList<>();
+    private ArrayList<Retweet> retweets = new ArrayList<>();
     private final LocalDateTime sendDate;
 
     /**
@@ -81,7 +81,7 @@ public class Tweet implements JsonInterface {
      *
      * @param retweets the retweets
      */
-    public void setRetweets(ArrayList<Tweet> retweets) {
+    public void setRetweets(ArrayList<Retweet> retweets) {
         this.retweets = retweets;
     }
 
@@ -199,7 +199,7 @@ public class Tweet implements JsonInterface {
      *
      * @param retweet is the tweet that we want to publish this tweet again
      */
-    public void addRetweet(Tweet retweet) {
+    public void addRetweet(Retweet retweet) {
         if (!retweets.contains(retweet))
             retweets.add(retweet);
     }

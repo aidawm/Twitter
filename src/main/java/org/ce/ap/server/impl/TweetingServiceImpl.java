@@ -95,7 +95,7 @@ public class TweetingServiceImpl implements TweetingService {
     public void retweet(Tweet tweet, User user, String text)  {
         try {
 //            Retweet retweet = new Retweet(tweet, user, text,tweetManager.makeID());
-            Tweet retweet = new Tweet(user, text, tweetManager.makeID());
+            Retweet retweet = new Retweet(tweet,user,text,tweetManager.makeID());
             retweet.setRetweetedId(tweet.getId());
             tweetManager.addNewTweet(retweet);
             tweet.addRetweet(retweet);
