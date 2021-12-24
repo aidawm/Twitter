@@ -2,12 +2,15 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import main.java.org.ce.ap.server.impl.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 /**
@@ -137,18 +140,21 @@ public class Test {
         System.out.println(user.getFirstName() + " " + user.getLastName() + "\t@" + user.getUsername());
     }
 
-//    public static void test_file(){
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("hello","bonjour");
-//        jsonObject.put("bye","au revoir");
-//
-//        DatabaseHandler databaseHandler = new DatabaseHandler(Path.of("./files/log"));
-//        databaseHandler.writeFile("french_dic",jsonObject);
-//        for(JSONObject file:databaseHandler.getDirectoryFiles()){
-//            System.out.println(file);
-//        }
-//        databaseHandler.removeFile("persian.txt");
-//    }
+    public static void test_file(){
+        JSONObject jsonObject = new JSONObject();
+        HashSet<Integer> ints = new HashSet<>();
+        ints.add(1);
+        ints.add(2);
+        ints.add(7);
+        ints.add(10);
+        jsonObject.put("array",ints);
+        System.out.println(jsonObject.get("array").getClass());
+        JSONArray jsonArray = (JSONArray)jsonObject.get("array");
+        for (int i=0;i<jsonArray.length();i++){
+            System.out.println(jsonArray.get(i));
+        }
+
+    }
     public void test_timeline() throws InvalidCharacterNumberException, InterruptedException {
         User user1 = new User("aida", "1", "aidawm", "asdf", LocalDate.of(2001, 3, 21));
         User user2 = new User("sara", "2", "sa9978", "qwer", LocalDate.of(1999, 12, 20));
@@ -192,51 +198,52 @@ public class Test {
         userAccount1.showTimeline();
     }
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidCharacterNumberException {
-        boolean isExit =false;
-        defaultUsers();
-        AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
-        Scanner scanner = new Scanner(System.in);
-        int state;
-        while (true) {
-            while (true) {
-                printFirstMenu();
-                state = scanner.nextInt();
-                if (state == 1) {
-                    userAccount = new UserAccount(authenticationService.signUp());
-                    userAccount = new UserAccount(authenticationService.signIn());
-                    break;
-                } else if (state == 2) {
-                    userAccount = new UserAccount(authenticationService.signIn());
-                    break;
-                }
-                else if(state==0){
-                    isExit=true;
-                    break;
-                }else {
-                    System.out.println("invalid input?");
-                }
-            }
-            if(isExit)
-                break;
-            while (true) {
 
-                signInMenu();
-                scanner = new Scanner(System.in);
-                int signinInput = scanner.nextInt();
-                if (signinInput == 1) {
-                    manageTweetsMenu();
-                } else if (signinInput == 2) {
-                    manageFollowers();
-                }
-                else if(signinInput ==0){
-                    break;
-                }else {
-                    System.out.println("invalid input!!!!!!!!!!!!!!!");
-                }
-            }
-        }
-//        test_file();
+    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidCharacterNumberException {
+//        boolean isExit =false;
+//        defaultUsers();
+//        AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
+//        Scanner scanner = new Scanner(System.in);
+//        int state;
+//        while (true) {
+//            while (true) {
+//                printFirstMenu();
+//                state = scanner.nextInt();
+//                if (state == 1) {
+//                    userAccount = new UserAccount(authenticationService.signUp());
+//                    userAccount = new UserAccount(authenticationService.signIn());
+//                    break;
+//                } else if (state == 2) {
+//                    userAccount = new UserAccount(authenticationService.signIn());
+//                    break;
+//                }
+//                else if(state==0){
+//                    isExit=true;
+//                    break;
+//                }else {
+//                    System.out.println("invalid input?");
+//                }
+//            }
+//            if(isExit)
+//                break;
+//            while (true) {
+//
+//                signInMenu();
+//                scanner = new Scanner(System.in);
+//                int signinInput = scanner.nextInt();
+//                if (signinInput == 1) {
+//                    manageTweetsMenu();
+//                } else if (signinInput == 2) {
+//                    manageFollowers();
+//                }
+//                else if(signinInput ==0){
+//                    break;
+//                }else {
+//                    System.out.println("invalid input!!!!!!!!!!!!!!!");
+//                }
+//            }
+//        }
+        test_file();
     }
 
 }

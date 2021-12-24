@@ -42,7 +42,7 @@ public class ServerProcessor {
         switch (method) {
             case SIGNIN:
                 userAccount = new UserAccount(authenticationService.signIn());
-                tweetManager.getDataFromDatabase(userAccount.getUser());
+//                tweetManager.getDataFromDatabase(userAccount.getUser());
             case SIGNUP:
                 userAccount = new UserAccount(authenticationService.signUp());
             case TWEET:

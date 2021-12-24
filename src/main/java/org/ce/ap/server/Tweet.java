@@ -267,10 +267,10 @@ public class Tweet implements JsonInterface {
      * @param likes the likes
      * @return the hash set
      */
-    public HashSet<JSONObject> toHashSetLikes(HashSet<User> likes) {
-        HashSet<JSONObject> jsonHashSet = new HashSet<>();
+    public HashSet<String> toHashSetLikes(HashSet<User> likes) {
+        HashSet<String> jsonHashSet = new HashSet<>();
         for (User user : likes) {
-            jsonHashSet.add(user.toJson());
+            jsonHashSet.add(user.getUsername());
         }
         return jsonHashSet;
     }
@@ -318,12 +318,12 @@ public class Tweet implements JsonInterface {
     public JSONObject toJson() {
         this.jsonObject = new JSONObject();
         jsonObject.put("id", id);
-        jsonObject.put("author", author.toJson());
+        jsonObject.put("author", author.getUsername());
         jsonObject.put("text", text);
         jsonObject.put("likes", toHashSetLikes(likes));
         jsonObject.put("replies", toJsonArrayTweet(replies));
         jsonObject.put("sendDate", sendDate);
-//        jsonObject.put("retweets",toJsonArrayRetweet(retweets));
+        jsonObject.put("retweets",toJsonArrayRetweet(retweets));
         return jsonObject;
     }
 

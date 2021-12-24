@@ -5,6 +5,7 @@ import main.java.org.ce.ap.server.exceptions.InvalidDateException;
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import main.java.org.ce.ap.server.DataBase.TweetDataBase;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
@@ -54,32 +55,56 @@ public class TweetManager extends Publisher implements Subscriber {
                 long retweetedID = retweetedTweetJson.getLong("id");
 
                 if (tweets.containsKey(retweetedID)) {
-                    tweets.put(tweetID, new Retweet(tweet, getAuthor(tweet), tweets.get(retweetedID)));
+                    tweets.put(tweetID, new Retweet(tweet, getAuthor(tweet.getString("author")), tweets.get(retweetedID)));
                 } else {
-                    Tweet retweetedTweet = new Tweet(retweetedTweetJson, getAuthor(retweetedTweetJson));
+                    Tweet retweetedTweet = new Tweet(retweetedTweetJson, getAuthor(retweetedTweetJson.getString("author")));
                     tweets.put(retweetedTweet.getId(), retweetedTweet);
-                    tweets.put(tweetID, new Retweet(tweet, getAuthor(tweet), retweetedTweet));
+                    tweets.put(tweetID, new Retweet(tweet, getAuthor(tweet.getString("author")), retweetedTweet));
+                    addReplies(retweetedTweetJson);
+                    addLikes(retweetedTweetJson);
+                    addRetweets(retweetedTweetJson);
                 }
+            } else {
+                tweets.put(tweetID, new Tweet(tweet, getAuthor(tweet.getString("author"))));
             }
-            else {
-                tweets.put(tweetID,new Tweet(tweet,getAuthor(tweet)));
-            }
-
+            addReplies(tweet);
+            addLikes(tweet);
+            addRetweets(tweet);
         }
-//
-//            System.out.println(tweet);
-//            if (tweet.keySet().contains("retweetedTweet") && tweet.keySet().contains("newTweet")) {
-//                reTweetMakeList.add(tweet);
-//                continue;
-//            }
-//
-//            try {
-//                tweets.add(new Tweet(tweet, getAuthor(tweet)));
-//            } catch (InvalidUsernameException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
+
+    private void addReplies(JSONObject tweet) throws InvalidUsernameException {
+        JSONArray jsonArray = (JSONArray) tweet.get("replies");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject reply = (JSONObject) jsonArray.get(i);
+            tweets.get(tweet.getLong("id")).addNewReply(new Tweet(reply,getAuthor(reply.getString("author"))));
+            addReplies(reply);
+            addLikes(reply);
+            addRetweets(reply);
+        }
+
+    }
+    private void addLikes(JSONObject tweet) throws InvalidUsernameException {
+        JSONArray jsonArray = (JSONArray) tweet.get("likes");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            tweets.get(tweet.getLong("id")).likeTweet(getAuthor(String.valueOf(jsonArray.get(i))));
+        }
+    }
+    private void addRetweets(JSONObject tweet) throws InvalidUsernameException {
+        JSONArray jsonArray = (JSONArray) tweet.get("retweets");
+        Long tweetID = tweet.getLong("id");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject retweet = (JSONObject) jsonArray.get(i);
+            Long retweetID = retweet.getLong("id");
+            if(tweets.containsKey(retweetID))
+                continue;
+            tweets.put(retweetID,new Retweet(retweet,getAuthor(retweet.getString("author")),tweets.get(tweetID)));
+            addLikes(retweet);
+            addReplies(retweet);
+            addRetweets(retweet);
+        }
+    }
+
 //
 //    private void handleRetweets() {
 //        while (reTweetMakeList.size() != 0) {
@@ -98,9 +123,8 @@ public class TweetManager extends Publisher implements Subscriber {
 //        }
 //    }
 
-    private User getAuthor(JSONObject tweet) throws InvalidUsernameException {
-        JSONObject author = (JSONObject) tweet.get("author");
-        return userManager.findUser(author.getString("username"));
+    private User getAuthor(String username) throws InvalidUsernameException {
+        return userManager.findUser("username");
     }
 
     /**
@@ -151,7 +175,7 @@ public class TweetManager extends Publisher implements Subscriber {
      * @param tweet is using for adding the tweet
      */
     public void addNewTweet(Tweet tweet) {
-        tweets.put(tweet.getId(),tweet);
+        tweets.put(tweet.getId(), tweet);
         database.writeFile(String.valueOf(tweet.getId()), tweet.getAuthor().getUsername(), tweet.toJson());
         notify(tweet, true);
     }
@@ -191,7 +215,7 @@ public class TweetManager extends Publisher implements Subscriber {
 //            if (tweet.getId() == id)
 //                return tweet;
 //        }
-        if(tweets.containsKey(id))
+        if (tweets.containsKey(id))
             return tweets.get(id);
         return null;
     }
