@@ -14,7 +14,11 @@ public class TweetingServiceImpl implements TweetingService {
 
 //    public Tweet tweet;
 
-    private TweetManager tweetManager = TweetManager.getInstance();
+    private TweetManager tweetManager ;
+    public TweetingServiceImpl(User user)
+    {
+        tweetManager = TweetManager.getInstance();
+    }
     /**
      * add a new tweet in Twitter
      * @param author the user that want to tweet
@@ -82,7 +86,7 @@ public class TweetingServiceImpl implements TweetingService {
     }
 
     /**
-     *publish a tweet again !
+     * publish a tweet again !
      * @param tweet the tweet that want to retweet it
      * @param user the user that want to retweet the tweet
      * @param text the text that user
@@ -90,7 +94,9 @@ public class TweetingServiceImpl implements TweetingService {
     @Override
     public void retweet(Tweet tweet, User user, String text)  {
         try {
-            Retweet retweet = new Retweet(tweet, user, text,tweetManager.makeID());
+//            Retweet retweet = new Retweet(tweet, user, text,tweetManager.makeID());
+            Tweet retweet = new Tweet(user, text, tweetManager.makeID());
+            retweet.setRetweetedId(tweet.getId());
             tweetManager.addNewTweet(retweet);
             tweet.addRetweet(retweet);
 //            System.out.println(retweet.getRetweet().toString());

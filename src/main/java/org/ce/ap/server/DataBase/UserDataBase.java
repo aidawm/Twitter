@@ -1,26 +1,18 @@
-package main.java.org.ce.ap.server;
+package main.java.org.ce.ap.server.DataBase;
 
 import org.json.JSONObject;
 
 import java.io.*;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 
-/**
- * The type Database handler.
- */
-public class DatabaseHandler {
+public class UserDataBase {
     private Path path;
 
     /**
      * Instantiates a new Database handler.
-     *
-     * @param path the path
      */
-    public DatabaseHandler(Path path) {
-        this.path = path;
+    public UserDataBase() {
+        path = Path.of("./files/model/users");
     }
 
     /**
@@ -33,11 +25,9 @@ public class DatabaseHandler {
         try (BufferedWriter out = new BufferedWriter(new FileWriter(path.toFile().getAbsoluteFile() + File.separator + id))) {
             out.write(jsonObject.toString());
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
-
-
 
     /**
      * Read file json object.
@@ -59,9 +49,6 @@ public class DatabaseHandler {
         }
         return new JSONObject(fileStr);
     }
-
-
-
 
     /**
      * Remove file.

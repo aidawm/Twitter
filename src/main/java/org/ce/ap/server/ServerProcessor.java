@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class ServerProcessor {
     AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
+    TweetManager tweetManager = TweetManager.getInstance();
     UserAccount userAccount;
 
     public ArrayList<JSONObject> toJsonArrayTweet(ArrayList<Tweet> list){
@@ -41,6 +42,7 @@ public class ServerProcessor {
         switch (method) {
             case SIGNIN:
                 userAccount = new UserAccount(authenticationService.signIn());
+                tweetManager.getDataFromDatabase(userAccount.getUser());
             case SIGNUP:
                 userAccount = new UserAccount(authenticationService.signUp());
             case TWEET:

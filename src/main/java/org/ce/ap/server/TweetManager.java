@@ -1,15 +1,15 @@
 package main.java.org.ce.ap.server;
 
-import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+
 import main.java.org.ce.ap.server.exceptions.InvalidDateException;
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
-import netscape.javascript.JSObject;
-import org.json.JSONObject;
+import main.java.org.ce.ap.server.DataBase.TweetDataBase;
 
-import java.nio.file.Path;
-import java.time.LocalDate;
+import org.json.JSONObject;
 import java.time.LocalDateTime;
 import java.util.*;
+
+
 
 /**
  * The type Tweet manager.
@@ -17,16 +17,16 @@ import java.util.*;
 public class TweetManager extends Publisher implements Subscriber {
     private UserManager userManager;
     private static TweetManager instance;
-    private DatabaseHandler databaseHandler;
-    private ArrayList<Tweet> tweets;
-    private ArrayList<JSONObject> reTweetMakeList;
+    private TweetDataBase database;
+    private HashMap<Long, Tweet> tweets;
+//    private ArrayList<JSONObject> reTweetMakeList;
 
     private TweetManager() {
         userManager = UserManager.getInstance();
-        databaseHandler = new DatabaseHandler(Path.of("./files/model/tweets"));
-        tweets = new ArrayList<>();
-        reTweetMakeList = new ArrayList<>();
-        getDataFromDatabase();
+        database = new TweetDataBase();
+        tweets = new HashMap<>();
+//        reTweetMakeList = new ArrayList<>();
+//        getDataFromDatabase();
     }
 
     /**
@@ -43,40 +43,40 @@ public class TweetManager extends Publisher implements Subscriber {
     /**
      * get data from database
      */
-    private void getDataFromDatabase() {
-        ArrayList<JSONObject> tweetJsonList = databaseHandler.getDirectoryFiles();
-        for (JSONObject tweet : tweetJsonList) {
-            System.out.println(tweet);
-            if (tweet.keySet().contains("retweetedTweet") && tweet.keySet().contains("newTweet")) {
-                reTweetMakeList.add(tweet);
-                continue;
-            }
+    public void getDataFromDatabase(User user) {
+        ArrayList<JSONObject> tweetJsonList = database.getDirectoryFiles(user);
 
-            try {
-                tweets.add(new Tweet(tweet, getAuthor(tweet)));
-            } catch (InvalidUsernameException e) {
-                e.printStackTrace();
-            }
-        }
-        handleRetweets();
+//        for (JSONObject tweet : tweetJsonList) {
+//            System.out.println(tweet);
+//            if (tweet.keySet().contains("retweetedTweet") && tweet.keySet().contains("newTweet")) {
+//                reTweetMakeList.add(tweet);
+//                continue;
+//            }
+//
+//            try {
+//                tweets.add(new Tweet(tweet, getAuthor(tweet)));
+//            } catch (InvalidUsernameException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
-
-    private void handleRetweets() {
-        while (reTweetMakeList.size() != 0) {
-            try {
-                JSONObject retweetJson = reTweetMakeList.get(0);
-                JSONObject retweetedTweetJson = (JSONObject) retweetJson.get("retweetedTweet");
-                JSONObject newTweet = (JSONObject) retweetJson.get("newTweet");
-                Tweet retweetedTweetObj = findTweet(retweetedTweetJson.getLong("id"));
-                Retweet retweetObj = new Retweet(retweetJson, getAuthor(newTweet), retweetedTweetObj);
-                retweetedTweetObj.addRetweet(retweetObj);
-                tweets.add(retweetObj);
-                reTweetMakeList.remove(retweetJson);
-            } catch (InvalidUsernameException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//
+//    private void handleRetweets() {
+//        while (reTweetMakeList.size() != 0) {
+//            try {
+//                JSONObject retweetJson = reTweetMakeList.get(0);
+//                JSONObject retweetedTweetJson = (JSONObject) retweetJson.get("retweetedTweet");
+//                JSONObject newTweet = (JSONObject) retweetJson.get("newTweet");
+//                Tweet retweetedTweetObj = findTweet(retweetedTweetJson.getLong("id"));
+//                Retweet retweetObj = new Retweet(retweetJson, getAuthor(newTweet), retweetedTweetObj);
+//                retweetedTweetObj.addRetweet(retweetObj);
+//                tweets.add(retweetObj);
+//                reTweetMakeList.remove(retweetJson);
+//            } catch (InvalidUsernameException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     private User getAuthor(JSONObject tweet) throws InvalidUsernameException {
         JSONObject author = (JSONObject) tweet.get("author");
@@ -196,7 +196,7 @@ public class TweetManager extends Publisher implements Subscriber {
         long id;
         do {
             id = Math.abs(rand.nextLong());
-        } while (!isNotExistID(id));
+        } while (!isNotExistID(id) || id == 0);
         return id;
     }
 
