@@ -171,6 +171,13 @@ public class User {
             throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
         }
     }
+    public ArrayList<JSONObject> toJsonArrayUser(ArrayList<User> list) {
+        ArrayList<JSONObject> jsonList = new ArrayList<>();
+        for (User user : list) {
+            jsonList.add((user).toJson());
+        }
+        return jsonList;
+    }
 
     @Override
     public String toString() {
@@ -187,6 +194,8 @@ public class User {
         jsonObject.put("birthDate",birthDate);
         jsonObject.put("registryDate",registryDate);
         jsonObject.put("biography",biography);
+        jsonObject.put("followings", toJsonArrayUser(followings));
+        jsonObject.put("followers", toJsonArrayUser(followers));
 
         return jsonObject;
     }

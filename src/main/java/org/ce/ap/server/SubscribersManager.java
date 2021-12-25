@@ -17,6 +17,8 @@ public class SubscribersManager {
     public SubscribersManager(ArrayList<User> users){
         for (User user:users){
             subscribers.put(user,new HashMap<>());
+//            HashMap<User, Subscriber> userSubscriberHashMap = subscribers.get(user);
+//            userSubscriberHashMap.put(user, )
         }
 
     }
@@ -32,6 +34,7 @@ public class SubscribersManager {
         subscribers.put(user,subscriberList);
         user.addFollowing(subscriberUser);
         subscriberUser.addFollower(user);
+
 
     }
 

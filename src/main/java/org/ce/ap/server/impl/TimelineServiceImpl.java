@@ -18,8 +18,12 @@ public class TimelineServiceImpl implements TimelineService, Subscriber {
      */
     TweetManager tweetManager = TweetManager.getInstance();
 
-    public TimelineServiceImpl(ArrayList<Tweet> tweets){
-        this.tweets=tweets;
+    public TimelineServiceImpl(){
+    }
+
+    public void addTweetsFromFile(ArrayList<Tweet> tweets)
+    {
+        this.tweets = tweets;
     }
 
     /**

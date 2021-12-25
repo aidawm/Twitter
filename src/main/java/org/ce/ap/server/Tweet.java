@@ -302,7 +302,6 @@ public class Tweet implements JsonInterface {
         for (Retweet retweet : list) {
             jsonList.add((retweet).toJson());
         }
-
         return jsonList;
     }
 

@@ -18,7 +18,9 @@ public class Publisher {
         User user = tweet.getAuthor();
 //        HashSet<Subscriber> subscribers = (HashSet<Subscriber>) ;
         HashSet<Subscriber> subscribers = new HashSet<>(SubscribersManager.subscribers.get(user).values());
+        System.out.println("**"+subscribers);
         for (Subscriber subscriber:subscribers){
+            System.out.println(subscribers.size());
             subscriber.update(tweet, state);
         }
     }
