@@ -86,7 +86,10 @@ public class TweetManager extends Publisher implements Subscriber {
             addLikes(tweet);
             addRetweets(tweet);
         }
-        return new ArrayList<>(userToTweets.get(user.getUsername()));
+        if(userToTweets.get(user.getUsername())!=null){
+            return new ArrayList<>(userToTweets.get(user.getUsername()));
+        }
+        return new ArrayList<>();
     }
 
     private void addReplies(JSONObject tweet) throws InvalidUsernameException {
