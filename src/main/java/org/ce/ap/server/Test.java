@@ -47,6 +47,7 @@ public class Test {
             System.out.println("2 ) new retweet");
             System.out.println("3 ) new reply");
             System.out.println("4 ) like a tweet");
+            System.out.println("5 ) show timeline");
             System.out.println("0 ) exit");
             int input = Integer.parseInt(scanner.nextLine());
             if (input == 1) {
@@ -89,6 +90,10 @@ public class Test {
                     System.out.println(e.getMessage());
                 }
 
+            }
+            else if (input == 5)
+            {
+                userAccount.showTimeline();
             }
             else if(input==0)
                 break;

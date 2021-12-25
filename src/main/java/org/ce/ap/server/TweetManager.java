@@ -21,7 +21,7 @@ public class TweetManager extends Publisher implements Subscriber {
     private static TweetManager instance;
     private TweetDataBase database;
     private HashMap<Long, Tweet> tweets;
-    public HashMap<String, HashSet<Tweet>> userToTweets;
+    private HashMap<String, HashSet<Tweet>> userToTweets;
 //    private HashMap<User, ArrayList<Tweet>> timeLine;
 //    private ArrayList<JSONObject> reTweetMakeList;
 
@@ -29,6 +29,7 @@ public class TweetManager extends Publisher implements Subscriber {
         userManager = UserManager.getInstance();
         database = new TweetDataBase();
         tweets = new HashMap<>();
+        userToTweets = new HashMap<>();
 //        reTweetMakeList = new ArrayList<>();
 //        getDataFromDatabase();
     }
@@ -121,7 +122,12 @@ public class TweetManager extends Publisher implements Subscriber {
     }
 
 
-    private void addToUserToTweets(Tweet tweet) {
+    /**
+     * Add to user to tweets.
+     *
+     * @param tweet the tweet
+     */
+    public ArrayList<Tweet> addToUserToTweets(Tweet tweet) {
         String username = tweet.getAuthor().getUsername();
         if (userToTweets.containsKey(username)) {
             HashSet<Tweet> tweets = userToTweets.get(username);
@@ -132,6 +138,32 @@ public class TweetManager extends Publisher implements Subscriber {
             tweets.add(tweet);
             userToTweets.put(username, tweets);
         }
+        return HashSetToArrayList(username);
+    }
+
+    /**
+     * Remove from user to tweets.
+     *
+     * @param tweet the tweet
+     */
+    public ArrayList<Tweet> removeFromUserToTweets(Tweet tweet) {
+        String username = tweet.getAuthor().getUsername();
+        HashSet<Tweet> tweets = new HashSet<>();
+        tweets = userToTweets.get(username);
+        tweets.remove(tweet);
+        userToTweets.replace(username, tweets);
+        return HashSetToArrayList(username);
+    }
+
+    /**
+     * Hash set to array list array list.
+     *
+     * @param username the username
+     * @return the array list
+     */
+    public ArrayList<Tweet> HashSetToArrayList(String username) {
+        HashSet<Tweet> tweets = userToTweets.get(username);
+        return new ArrayList<>(tweets);
     }
 
     private User getAuthor(String username) throws InvalidUsernameException {
@@ -189,7 +221,6 @@ public class TweetManager extends Publisher implements Subscriber {
         tweets.put(tweet.getId(), tweet);
         database.writeFile(String.valueOf(tweet.getId()), tweet.getAuthor().getUsername(), tweet.toJson());
         notify(tweet, true);
-
     }
 
     /**
@@ -265,6 +296,7 @@ public class TweetManager extends Publisher implements Subscriber {
         else
             database.removeFile(String.valueOf(tweet.getId()), tweet.getAuthor().getUsername());
     }
+
 
 }
 

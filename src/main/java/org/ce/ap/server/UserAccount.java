@@ -132,6 +132,7 @@ public class UserAccount {
      */
     public void showTimeline() {
         System.out.println("TIMELINE->");
+        System.out.println("tweet size is : "+ timelineService.refresh().size());
         for (Tweet tweet : timelineService.refresh()) {
             System.out.println(tweet);
         }
