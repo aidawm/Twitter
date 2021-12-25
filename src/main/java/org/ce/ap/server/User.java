@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Locale;
 
 import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
@@ -19,8 +20,8 @@ public class User {
     private LocalDate birthDate;
     private final LocalDate registryDate;
     private String biography;
-    private ArrayList<User> followings = new ArrayList<>();
-    private ArrayList<User> followers = new ArrayList<>();
+    private HashSet<User> followings = new HashSet<>();
+    private HashSet<User> followers = new HashSet<>();
 
 
 
@@ -171,7 +172,7 @@ public class User {
             throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
         }
     }
-    public ArrayList<JSONObject> toJsonArrayUser(ArrayList<User> list) {
+    public ArrayList<JSONObject> toJsonArrayUser(HashSet<User> list) {
         ArrayList<JSONObject> jsonList = new ArrayList<>();
         for (User user : list) {
             jsonList.add((user).toJson());
@@ -218,10 +219,10 @@ public class User {
     }
 
     public ArrayList<User> getFollowings() {
-        return followings;
+        return new ArrayList<>(followings);
     }
 
     public ArrayList<User> getFollowers() {
-        return followers;
+        return new ArrayList<>(followers);
     }
 }

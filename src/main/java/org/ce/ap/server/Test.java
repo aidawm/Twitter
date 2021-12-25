@@ -77,7 +77,7 @@ public class Test {
                 System.out.println("pls enter the text : ");
                 String text = scanner.nextLine();
                 try {
-                    userAccount.reply(userAccount.getTweets().get(tweetNumber - 1), new Tweet(userAccount.getUser(), text,tweetManager.makeID()));
+                    userAccount.reply(userAccount.getTweets().get(tweetNumber - 1), new Tweet(userAccount.getUser(), text, tweetManager.makeID()));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -91,12 +91,9 @@ public class Test {
                     System.out.println(e.getMessage());
                 }
 
-            }
-            else if (input == 5)
-            {
+            } else if (input == 5) {
                 userAccount.showTimeline();
-            }
-            else if(input==0)
+            } else if (input == 0)
                 break;
         }
 
@@ -114,14 +111,14 @@ public class Test {
         while (true) {
             int input = scanner.nextInt();
             if (input == 1) {
-                for (User user :userManager.getUsers())
+                for (User user : userManager.getUsers())
                     printUser(user);
                 System.out.println("pls enter the number of user : ");
                 int userNumber = scanner.nextInt();
                 userAccount.addFollowing(userManager.getUsers().get(userNumber));
                 break;
             }
-            if(input==0){
+            if (input == 0) {
                 break;
             }
 
@@ -129,7 +126,7 @@ public class Test {
     }
 
     public static void defaultUsers() throws InvalidCharacterNumberException, NoSuchAlgorithmException {
-        userManager =UserManager.getInstance();
+        userManager = UserManager.getInstance();
         tweetManager = TweetManager.getInstance();
 
 //        User user1 = new User("aida", "mobli", "aidawm", ToHexString.toHexString(ToHexString.getSHA("asdf")), LocalDate.of(2001, 3, 21));
@@ -150,21 +147,22 @@ public class Test {
         System.out.println(user.getFirstName() + " " + user.getLastName() + "\t@" + user.getUsername());
     }
 
-    public static void test_file(){
+    public static void test_file() {
         JSONObject jsonObject = new JSONObject();
         HashSet<Integer> ints = new HashSet<>();
         ints.add(1);
         ints.add(2);
         ints.add(7);
         ints.add(10);
-        jsonObject.put("array",ints);
+        jsonObject.put("array", ints);
         System.out.println(jsonObject.get("array").getClass());
-        JSONArray jsonArray = (JSONArray)jsonObject.get("array");
-        for (int i=0;i<jsonArray.length();i++){
+        JSONArray jsonArray = (JSONArray) jsonObject.get("array");
+        for (int i = 0; i < jsonArray.length(); i++) {
             System.out.println(jsonArray.get(i));
         }
 
     }
+
     public void test_timeline() throws InvalidCharacterNumberException, InterruptedException, InvalidUsernameException {
         User user1 = new User("aida", "1", "aidawm", "asdf", LocalDate.of(2001, 3, 21));
         User user2 = new User("sara", "2", "sa9978", "qwer", LocalDate.of(1999, 12, 20));
@@ -210,7 +208,7 @@ public class Test {
 
 
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidCharacterNumberException, InvalidUsernameException {
-        boolean isExit =false;
+        boolean isExit = false;
         defaultUsers();
         AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
         Scanner scanner = new Scanner(System.in);
@@ -226,15 +224,14 @@ public class Test {
                 } else if (state == 2) {
                     userAccount = new UserAccount(authenticationService.signIn());
                     break;
-                }
-                else if(state==0){
-                    isExit=true;
+                } else if (state == 0) {
+                    isExit = true;
                     break;
-                }else {
+                } else {
                     System.out.println("invalid input?");
                 }
             }
-            if(isExit)
+            if (isExit)
                 break;
             while (true) {
 
@@ -245,10 +242,9 @@ public class Test {
                     manageTweetsMenu();
                 } else if (signinInput == 2) {
                     manageFollowers();
-                }
-                else if(signinInput ==0){
+                } else if (signinInput == 0) {
                     break;
-                }else {
+                } else {
                     System.out.println("invalid input!!!!!!!!!!!!!!!");
                 }
             }
