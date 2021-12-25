@@ -44,6 +44,7 @@ public class UserAccount {
      */
     public void addFollowing(User user) {
         observerService.subscribe(user, timelineService, this.user);
+
     }
 
     /**

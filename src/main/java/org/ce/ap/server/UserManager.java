@@ -46,32 +46,41 @@ public class UserManager {
         ArrayList<JSONObject> userJsonList = databaseHandler.getDirectoryFiles();
         for (JSONObject user : userJsonList) {
             String username = user.getString("username");
+            if(users.containsKey(username))
+                continue;
             User user1 = new User(user);
             users.put(username, user1);
-            JSONArray followings = user.getJSONArray("followings");
-            for (int i = 0; i < followings.length(); i++) {
-                String followingUsername = (String) ((JSONObject)followings.get(i)).get("username");
-                if (users.containsKey(followingUsername))
-                    continue;
-                else {
-                    User followingUser = new User((JSONObject)followings.get(i));
-                    users.put(followingUsername, followingUser);
-                    user1.addFollowing(followingUser);
-                }
-            }
-            JSONArray followers = user.getJSONArray("followers");
-            for (int i = 0; i < followers.length(); i++) {
-                String followerUsername = (String) ((JSONObject)followers.get(i)).get("username");
-                if (users.containsKey(followerUsername))
-                    continue;
-                else {
-                    User followerUser = new User((JSONObject)followers.get(i));
-                    users.put(followerUsername, followerUser);
-                    user1.addFollowing(followerUser);
-                }
-            }
+            addFollowing(user);
+//            JSONArray followers = user.getJSONArray("followers");
+//            for (int i = 0; i < followers.length(); i++) {
+//                String followerUsername = (String) ((JSONObject)followers.get(i)).get("username");
+//                if (users.containsKey(followerUsername))
+//                    continue;
+//                else {
+//                    User followerUser = new User((JSONObject)followers.get(i));
+//                    users.put(followerUsername, followerUser);
+//                    user1.addFollowing(followerUser);
+//                }
+//            }
         }
         System.out.println("users count is :" + users.size());
+    }
+
+    private void addFollowing(JSONObject user){
+        JSONArray followings = user.getJSONArray("followings");
+        for (int i = 0; i < followings.length(); i++) {
+            String followingUsername = (String) ((JSONObject)followings.get(i)).get("username");
+            if (users.containsKey(followingUsername)){
+                users.get(user.getString("username")).addFollowing(users.get(followingUsername));
+            }
+            else {
+                JSONObject following = (JSONObject)followings.get(i);
+                User followingUser = new User(following);
+                addFollowing(following);
+                users.put(followingUsername, followingUser);
+                users.get(user.getString("username")).addFollowing(followingUser);
+            }
+        }
     }
 
     /**
@@ -159,5 +168,8 @@ public class UserManager {
         return new ArrayList<>(users.values());
     }
 
+    public void update(User user){
+        databaseHandler.writeFile(user.getUsername(),user.toJson());
+    }
 
 }

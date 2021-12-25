@@ -60,7 +60,7 @@ public class TweetManager extends Publisher implements Subscriber {
                 continue;
             JSONObject tweet = tweetJsonList.get(tweetID);
             if (tweet.keySet().contains("retweetedTweet") && tweet.keySet().contains("newTweet")) {
-                JSONObject retweetedTweetJson = new JSONObject(tweet.get("retweetedTweet"));
+                JSONObject retweetedTweetJson = (JSONObject)  tweet.get("retweetedTweet");
                 long retweetedID = retweetedTweetJson.getLong("id");
 
                 if (tweets.containsKey(retweetedID)) {
@@ -76,7 +76,7 @@ public class TweetManager extends Publisher implements Subscriber {
                     addToUserToTweets(retweet1);
                     addReplies(retweetedTweetJson);
                     addLikes(retweetedTweetJson);
-                    addRetweets(retweetedTweetJson);
+//                    addRetweets(retweetedTweetJson);
                 }
             } else {
                 Tweet tweet1 = new Tweet(tweet, getAuthor(tweet.getString("author")));
@@ -85,14 +85,15 @@ public class TweetManager extends Publisher implements Subscriber {
             }
             addReplies(tweet);
             addLikes(tweet);
-            addRetweets(tweet);
+//            addRetweets(tweet);
         }
         if (userToTweets.get(user.getUsername()) != null) {
-            tweetArrayList = new ArrayList<>(userToTweets.get(user.getUsername()));
-            int i = 0;
-            for (Tweet tweet : userToTweets.get(user.getFollowings().get(i).getUsername())) {
-                tweetArrayList.add(tweet);
-                i++;
+//            tweetArrayList = new ArrayList<>(userToTweets.get(user.getUsername()));
+            for (User us :user.getFollowings()){
+                System.out.println("following!: "+user.getFollowings().size());
+                for (Tweet tweet : userToTweets.get(us.getUsername())) {
+                    tweetArrayList.add(tweet);
+                }
             }
         }
 
@@ -106,7 +107,7 @@ public class TweetManager extends Publisher implements Subscriber {
             tweets.get(tweet.getLong("id")).addNewReply(new Tweet(reply, getAuthor(reply.getString("author"))));
             addReplies(reply);
             addLikes(reply);
-            addRetweets(reply);
+//            addRetweets(reply);
         }
 
     }
@@ -118,20 +119,20 @@ public class TweetManager extends Publisher implements Subscriber {
         }
     }
 
-    private void addRetweets(JSONObject tweet) throws InvalidUsernameException {
-        JSONArray jsonArray = (JSONArray) tweet.get("retweets");
-        Long tweetID = tweet.getLong("id");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject retweet = (JSONObject) jsonArray.get(i);
-            Long retweetID = retweet.getLong("id");
-            if (tweets.containsKey(retweetID))
-                continue;
-            tweets.put(retweetID, new Retweet(retweet, getAuthor(retweet.getString("author")), tweets.get(tweetID)));
-            addLikes(retweet);
-            addReplies(retweet);
-            addRetweets(retweet);
-        }
-    }
+//    private void addRetweets(JSONObject tweet) throws InvalidUsernameException {
+//        JSONArray jsonArray = (JSONArray) tweet.get("retweets");
+//        Long tweetID = tweet.getLong("id");
+//        for (int i = 0; i < jsonArray.length(); i++) {
+//            JSONObject retweet = (JSONObject) jsonArray.get(i);
+//            Long retweetID = retweet.getLong("id");
+//            if (tweets.containsKey(retweetID))
+//                continue;
+//            tweets.put(retweetID, new Retweet(retweet, getAuthor(retweet.getString("author")), tweets.get(tweetID)));
+//            addLikes(retweet);
+//            addReplies(retweet);
+//            addRetweets(retweet);
+//        }
+//    }
 
 
     /**

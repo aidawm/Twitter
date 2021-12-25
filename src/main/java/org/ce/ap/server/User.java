@@ -172,9 +172,19 @@ public class User {
             throw new InvalidCharacterNumberException("The number of characters is invalid, it should be lower than 256 characters!");
         }
     }
+    public ArrayList<String> toJsonArrayUserStr(HashSet<User> list) {
+        ArrayList<String> jsonList = new ArrayList<>();
+        for (User user : list) {
+            jsonList.add(user.getUsername());
+        }
+        return jsonList;
+    }
     public ArrayList<JSONObject> toJsonArrayUser(HashSet<User> list) {
+        System.out.println("LIST= "+list);
         ArrayList<JSONObject> jsonList = new ArrayList<>();
         for (User user : list) {
+            if (user.equals(this))
+                continue;
             jsonList.add((user).toJson());
         }
         return jsonList;
@@ -196,7 +206,7 @@ public class User {
         jsonObject.put("registryDate",registryDate);
         jsonObject.put("biography",biography);
         jsonObject.put("followings", toJsonArrayUser(followings));
-        jsonObject.put("followers", toJsonArrayUser(followers));
+        jsonObject.put("followers", toJsonArrayUserStr(followers));
 
         return jsonObject;
     }

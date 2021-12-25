@@ -32,9 +32,8 @@ public class SubscribersManager {
         HashMap<User,Subscriber> subscriberList= subscribers.get(user);
         subscriberList.put(subscriberUser,subscriber);
         subscribers.put(user,subscriberList);
-        user.addFollowing(subscriberUser);
-        subscriberUser.addFollower(user);
-
+        user.addFollower(subscriberUser);
+        subscriberUser.addFollowing(user);
 
     }
 
@@ -47,8 +46,8 @@ public class SubscribersManager {
         HashMap<User,Subscriber> subscriberList= subscribers.get(user);
         subscriberList.remove(subscriberUser);
         subscribers.put(user,subscriberList);
-        user.removeFollowing(subscriberUser);
-        subscriberUser.removeFollower(subscriberUser);
+        user.removeFollower(subscriberUser);
+        subscriberUser.removeFollowing(subscriberUser);
     }
 
     /**

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -20,7 +21,7 @@ public class Tweet implements JsonInterface {
     private String text;
     private HashSet<User> likes = new HashSet<>();
     private ArrayList<Tweet> replies = new ArrayList<>();
-    private ArrayList<Retweet> retweets = new ArrayList<>();
+    private HashSet<JSONObject> retweets = new HashSet<>();
     private final LocalDateTime sendDate;
 
     /**
@@ -56,6 +57,10 @@ public class Tweet implements JsonInterface {
         this.text = jsonObject.getString("text");
         this.sendDate = LocalDateTime.parse(jsonObject.getString("sendDate"));
         this.id = jsonObject.getLong("id");
+        JSONArray jsonArray = (JSONArray) jsonObject.get("retweets");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            retweets.add((JSONObject) jsonArray.get(i));
+        }
     }
 
     /**
@@ -76,14 +81,6 @@ public class Tweet implements JsonInterface {
         this.replies = replies;
     }
 
-    /**
-     * Sets retweets.
-     *
-     * @param retweets the retweets
-     */
-    public void setRetweets(ArrayList<Retweet> retweets) {
-        this.retweets = retweets;
-    }
 
     /**
      * Like tweet.
@@ -200,8 +197,12 @@ public class Tweet implements JsonInterface {
      * @param retweet is the tweet that we want to publish this tweet again
      */
     public void addRetweet(Retweet retweet) {
-        if (!retweets.contains(retweet))
-            retweets.add(retweet);
+        JSONObject retweetJson = new JSONObject();
+        retweetJson.put("user",retweet.getAuthor());
+        retweetJson.put("text",retweet.getText());
+        retweetJson.put("sendDate",retweet.getSendDate());
+        if (!retweets.contains(retweetJson))
+            retweets.add(retweetJson);
     }
 
     /**
@@ -297,10 +298,10 @@ public class Tweet implements JsonInterface {
      * @param list the list
      * @return the array list
      */
-    public ArrayList<JSONObject> toJsonArrayRetweet(ArrayList<Retweet> list) {
-        ArrayList<JSONObject> jsonList = new ArrayList<>();
-        for (Retweet retweet : list) {
-            jsonList.add((retweet).toJson());
+    public JSONArray toJsonArrayRetweet(HashSet<JSONObject> list) {
+        JSONArray jsonList = new JSONArray();
+        for (JSONObject retweet : list) {
+            jsonList.put(retweet);
         }
         return jsonList;
     }
