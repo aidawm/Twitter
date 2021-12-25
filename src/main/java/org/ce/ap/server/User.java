@@ -49,8 +49,8 @@ public class User {
         this.lastName=jsonObject.getString("lastName");
         this.username=jsonObject.getString("username");
         this.password = jsonObject.getString("password");
-        this.birthDate = LocalDate.parse(jsonObject.getString("birthDate"));
-        this.registryDate = LocalDate.parse(jsonObject.getString("registryDate"));
+        this.birthDate=(LocalDate)  jsonObject.get("birthDate");
+        this.registryDate = (LocalDate)  jsonObject.get("registryDate");;
     }
     /**
      *

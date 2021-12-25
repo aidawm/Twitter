@@ -17,7 +17,7 @@ public class UserAccount {
     //// to access the tweetingService
     private TweetingServiceImpl tweetingService;
     //// to access the timelineService
-    private TimelineServiceImpl timelineService = new TimelineServiceImpl();
+    private TimelineServiceImpl timelineService;
     //// to access the observerService
     private ObserverServiceImpl observerService = new ObserverServiceImpl();
 
@@ -31,10 +31,11 @@ public class UserAccount {
         observerService.subscribe(user, timelineService, this.user);
         tweetingService = new TweetingServiceImpl(user);
         getTweetsFromDataBase(user);
+
     }
 
     private void getTweetsFromDataBase(User user) throws InvalidUsernameException {
-        TweetManager.getInstance().getDataFromDatabase(user);
+        timelineService= new TimelineServiceImpl(TweetManager.getInstance().getDataFromDatabase(user));
     }
     /**
      * subscribe a user

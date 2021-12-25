@@ -12,11 +12,15 @@ import java.util.Comparator;
  * The type Timeline service.
  */
 public class TimelineServiceImpl implements TimelineService, Subscriber {
-    private ArrayList<Tweet> tweets = new ArrayList<>();
+    private ArrayList<Tweet> tweets ;
     /**
      * The Tweet manager.
      */
     TweetManager tweetManager = TweetManager.getInstance();
+
+    public TimelineServiceImpl(ArrayList<Tweet> tweets){
+        this.tweets=tweets;
+    }
 
     /**
      * this class sorts Tweets by time
