@@ -1,6 +1,7 @@
 package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import main.java.org.ce.ap.server.impl.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -105,6 +106,10 @@ public class Test {
         System.out.println("1 ) follow a user");
         System.out.println("2 ) unfollow a user");
         System.out.println("0 ) exit");
+        System.out.println("FOLLOWERS:");
+        System.out.println(userAccount.getUser().getFollowers());
+        System.out.println("FOLLOWINGS:");
+        System.out.println(userAccount.getUser().getFollowings());
         Scanner scanner = new Scanner(System.in);
         while (true) {
             int input = scanner.nextInt();
@@ -160,7 +165,7 @@ public class Test {
         }
 
     }
-    public void test_timeline() throws InvalidCharacterNumberException, InterruptedException {
+    public void test_timeline() throws InvalidCharacterNumberException, InterruptedException, InvalidUsernameException {
         User user1 = new User("aida", "1", "aidawm", "asdf", LocalDate.of(2001, 3, 21));
         User user2 = new User("sara", "2", "sa9978", "qwer", LocalDate.of(1999, 12, 20));
         User user3 = new User("sara", "3", "qwerty", "qwer", LocalDate.of(1999, 12, 20));
@@ -204,7 +209,7 @@ public class Test {
     }
 
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidCharacterNumberException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidCharacterNumberException, InvalidUsernameException {
         boolean isExit =false;
         defaultUsers();
         AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();

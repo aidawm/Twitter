@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.ServiceWordsEnum;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
@@ -25,12 +26,16 @@ public class UserAccount {
      *
      * @param user the user information
      */
-    public UserAccount(User user) {
+    public UserAccount(User user) throws InvalidUsernameException {
         this.user = user;
         observerService.subscribe(user, timelineService, this.user);
         tweetingService = new TweetingServiceImpl(user);
+        getTweetsFromDataBase(user);
     }
 
+    private void getTweetsFromDataBase(User user) throws InvalidUsernameException {
+        TweetManager.getInstance().getDataFromDatabase(user);
+    }
     /**
      * subscribe a user
      *

@@ -71,14 +71,21 @@ public class TweetDataBase {
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
                 for (Path p : directoryStream) {
                     String[] words = p.getFileName().toString().split("\\s");
-                    System.out.println(words[1]);
-                    if (user.getFollowings().contains(words[1]))
-                        files.put(Long.parseLong(words[0]),readFile(p.getFileName().toString(),user.getUsername()));
+                    ArrayList<String> followings = new ArrayList<>();
+                    for (User u : user.getFollowings())
+                    {
+                        followings.add(u.getUsername());
+                    }
+                    System.out.println(followings);
+                    if (followings.contains(words[1])) {
+                        files.put(Long.parseLong(words[0]), readFile(words[0], words[1]));
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println("file size" +files.size());
         return files;
     }
 

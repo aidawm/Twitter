@@ -51,8 +51,9 @@ public class TweetManager extends Publisher implements Subscriber {
      * @param user the user
      * @throws InvalidUsernameException the invalid username exception
      */
-    public void getDataFromDatabase(User user) throws InvalidUsernameException {
+    public ArrayList<Tweet> getDataFromDatabase(User user) throws InvalidUsernameException {
         HashMap<Long, JSONObject> tweetJsonList = database.getDirectoryFiles(user);
+        System.out.println(tweetJsonList.size());
         for (Long tweetID : tweetJsonList.keySet()) {
             if (tweets.containsKey(tweetID))
                 continue;
@@ -85,6 +86,7 @@ public class TweetManager extends Publisher implements Subscriber {
             addLikes(tweet);
             addRetweets(tweet);
         }
+        return new ArrayList<>(userToTweets.get(user.getUsername()));
     }
 
     private void addReplies(JSONObject tweet) throws InvalidUsernameException {
@@ -167,7 +169,7 @@ public class TweetManager extends Publisher implements Subscriber {
     }
 
     private User getAuthor(String username) throws InvalidUsernameException {
-        return userManager.findUser("username");
+        return userManager.findUser(username);
     }
 
     /**

@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.ServiceWordsEnum;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
@@ -35,7 +36,7 @@ public class ServerProcessor {
         return ids;
     }
 
-    void SwitchCaseUsingJason() throws InvalidCharacterNumberException, NoSuchAlgorithmException {
+    void SwitchCaseUsingJason() throws InvalidCharacterNumberException, NoSuchAlgorithmException, InvalidUsernameException {
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonParameters = (JSONObject) jsonObject.get("parameterValues");
         ServiceWordsEnum method = (ServiceWordsEnum) jsonObject.get("method");
