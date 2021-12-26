@@ -60,18 +60,21 @@ public class TweetManager extends Publisher implements Subscriber {
                 continue;
             JSONObject tweet = tweetJsonList.get(tweetID);
             if (tweet.keySet().contains("retweetedTweet") && tweet.keySet().contains("newTweet")) {
-                JSONObject retweetedTweetJson = (JSONObject)  tweet.get("retweetedTweet");
+//                System.out.println(tweet);
+                JSONObject retweetedTweetJson = (JSONObject) tweet.get("retweetedTweet");
                 long retweetedID = retweetedTweetJson.getLong("id");
 
                 if (tweets.containsKey(retweetedID)) {
-                    Retweet retweet = new Retweet(tweet, getAuthor(tweet.getString("author")), tweets.get(retweetedID));
+//                    System.out.println(tweet.get("retweetedTweet"));
+//                    System.out.println(((JSONObject) tweet.get("retweetedTweet")).getString("author"));
+                    Retweet retweet = new Retweet(tweet, getAuthor(((JSONObject) tweet.get("retweetedTweet")).getString("author")), tweets.get(retweetedID));
                     tweets.put(tweetID, retweet);
                     addToUserToTweets(retweet);
                 } else {
-                    Tweet retweetedTweet = new Tweet(retweetedTweetJson, getAuthor(retweetedTweetJson.getString("author")));
+                    Tweet retweetedTweet = new Tweet(retweetedTweetJson, getAuthor(((JSONObject) tweet.get("retweetedTweet")).getString("author")));
                     tweets.put(retweetedTweet.getId(), retweetedTweet);
                     addToUserToTweets(retweetedTweet);
-                    Retweet retweet1 = new Retweet(tweet, getAuthor(tweet.getString("author")), retweetedTweet);
+                    Retweet retweet1 = new Retweet(tweet, getAuthor(((JSONObject) tweet.get("retweetedTweet")).getString("author")), retweetedTweet);
                     tweets.put(tweetID, retweet1);
                     addToUserToTweets(retweet1);
                     addReplies(retweetedTweetJson);
@@ -89,8 +92,9 @@ public class TweetManager extends Publisher implements Subscriber {
         }
         if (userToTweets.get(user.getUsername()) != null) {
 //            tweetArrayList = new ArrayList<>(userToTweets.get(user.getUsername()));
-            for (User us :user.getFollowings()){
-                System.out.println("following!: "+user.getFollowings().size());
+            for (User us : user.getFollowings()) {
+                System.out.println("following!: " + user.getFollowings().size());
+                System.out.println("userToTweets.get(us.getUsername()) is : "+userToTweets.get(us.getUsername()));
                 for (Tweet tweet : userToTweets.get(us.getUsername())) {
                     tweetArrayList.add(tweet);
                 }
@@ -101,7 +105,13 @@ public class TweetManager extends Publisher implements Subscriber {
     }
 
     private void addReplies(JSONObject tweet) throws InvalidUsernameException {
-        JSONArray jsonArray = (JSONArray) tweet.get("replies");
+//        System.out.println("**" + tweet);
+        JSONArray jsonArray ;
+        if (tweet.keySet().contains("retweetedTweet")) {
+            jsonArray = (JSONArray) ((JSONObject) tweet.get("retweetedTweet")).get("replies");
+        } else {
+            jsonArray = (JSONArray) tweet.get("replies");
+        }
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject reply = (JSONObject) jsonArray.get(i);
             tweets.get(tweet.getLong("id")).addNewReply(new Tweet(reply, getAuthor(reply.getString("author"))));
@@ -113,7 +123,12 @@ public class TweetManager extends Publisher implements Subscriber {
     }
 
     private void addLikes(JSONObject tweet) throws InvalidUsernameException {
-        JSONArray jsonArray = (JSONArray) tweet.get("likes");
+        JSONArray jsonArray ;
+        if (tweet.keySet().contains("retweetedTweet")) {
+            jsonArray = (JSONArray) ((JSONObject) tweet.get("retweetedTweet")).get("likes");
+        } else {
+            jsonArray = (JSONArray) tweet.get("likes");
+        }
         for (int i = 0; i < jsonArray.length(); i++) {
             tweets.get(tweet.getLong("id")).likeTweet(getAuthor(String.valueOf(jsonArray.get(i))));
         }
