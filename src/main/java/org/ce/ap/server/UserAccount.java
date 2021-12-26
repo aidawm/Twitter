@@ -32,6 +32,11 @@ public class UserAccount {
         tweetingService = new TweetingServiceImpl(user);
         getTweetsFromDataBase(user);
 //        user.addFollowing(user);
+        ArrayList<User> users = user.getFollowings();
+        for (int i = 0 ; i < users.size(); i++)
+        {
+            observerService.subscribe(users.get(i), timelineService, this.user);
+        }
     }
 
     private void getTweetsFromDataBase(User user) throws InvalidUsernameException {
@@ -42,9 +47,9 @@ public class UserAccount {
      *
      * @param user the user that want to subscribe it
      */
-    public void addFollowing(User user) {
+    public void addFollowing(User user) throws InvalidUsernameException {
         observerService.subscribe(user, timelineService, this.user);
-
+        getTweetsFromDataBase(user);
     }
 
     /**

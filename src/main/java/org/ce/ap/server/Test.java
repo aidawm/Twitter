@@ -99,7 +99,7 @@ public class Test {
 
     }
 
-    private static void manageFollowers() {
+    private static void manageFollowers() throws InvalidUsernameException {
         System.out.println("1 ) follow a user");
         System.out.println("2 ) unfollow a user");
         System.out.println("0 ) exit");

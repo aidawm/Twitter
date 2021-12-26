@@ -20,8 +20,8 @@ public class TweetManager extends Publisher implements Subscriber {
     private UserManager userManager;
     private static TweetManager instance;
     private TweetDataBase database;
-    private HashMap<Long, Tweet> tweets;
-    private HashMap<String, HashSet<Tweet>> userToTweets;
+    private static HashMap<Long, Tweet> tweets;
+    private static HashMap<String, HashSet<Tweet>> userToTweets;
 //    private HashMap<User, ArrayList<Tweet>> timeLine;
 //    private ArrayList<JSONObject> reTweetMakeList;
 
@@ -42,6 +42,7 @@ public class TweetManager extends Publisher implements Subscriber {
     public static TweetManager getInstance() {
         if (instance == null)
             instance = new TweetManager();
+        System.out.println(tweets.size());
         return instance;
     }
 
@@ -90,15 +91,13 @@ public class TweetManager extends Publisher implements Subscriber {
             addLikes(tweet);
 //            addRetweets(tweet);
         }
-        if (userToTweets.get(user.getUsername()) != null) {
-//            tweetArrayList = new ArrayList<>(userToTweets.get(user.getUsername()));
-            for (User us : user.getFollowings()) {
-                System.out.println("following!: " + user.getFollowings().size());
-                System.out.println("userToTweets.get(us.getUsername()) is : "+userToTweets.get(us.getUsername()));
-                for (Tweet tweet : userToTweets.get(us.getUsername())) {
-                    tweetArrayList.add(tweet);
-                }
+        System.out.println("FOLLOWINGS");
+        System.out.println((user.getFollowings()));
+        for (User us : user.getFollowings()) {
+            if (userToTweets.get(us.getUsername()) == null) {
+                continue;
             }
+            tweetArrayList.addAll(userToTweets.get(us.getUsername()));
         }
 
         return tweetArrayList;
@@ -106,7 +105,7 @@ public class TweetManager extends Publisher implements Subscriber {
 
     private void addReplies(JSONObject tweet) throws InvalidUsernameException {
 //        System.out.println("**" + tweet);
-        JSONArray jsonArray ;
+        JSONArray jsonArray;
         if (tweet.keySet().contains("retweetedTweet")) {
             jsonArray = (JSONArray) ((JSONObject) tweet.get("retweetedTweet")).get("replies");
         } else {
@@ -123,7 +122,7 @@ public class TweetManager extends Publisher implements Subscriber {
     }
 
     private void addLikes(JSONObject tweet) throws InvalidUsernameException {
-        JSONArray jsonArray ;
+        JSONArray jsonArray;
         if (tweet.keySet().contains("retweetedTweet")) {
             jsonArray = (JSONArray) ((JSONObject) tweet.get("retweetedTweet")).get("likes");
         } else {
