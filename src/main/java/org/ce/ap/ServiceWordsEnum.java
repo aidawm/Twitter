@@ -11,5 +11,9 @@ public enum ServiceWordsEnum {
     DISLIKE,
     REPLY,
     REMOVEREPLY,
+    EXIT,
+    MANAGE_TWEETS,
+    MANAGE_FOLLOWS,
+
 }
 
