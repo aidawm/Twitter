@@ -3,6 +3,7 @@ package main.java.org.ce.ap.client.impl;
 import main.java.org.ce.ap.client.*;
 import main.java.org.ce.ap.*;
 import main.java.org.ce.ap.client.exception.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -193,14 +194,67 @@ public class CommandParserServiceImpl implements CommandParserService {
                     if (response.getString("hasError").equals("false"))
                         isValid = true;
                 }
-            } else if (command.equals(ServiceWordsEnum.REMOVETWEET)){
-                JSONObject request = new JSONObject();
-                request.put("method", ServiceWordsEnum.SHOW_MY_TWEETS);
-                JSONObject response = connectionService.request(request);
+            } else if (command.equals(ServiceWordsEnum.REMOVETWEET)) {
+                JSONArray tweets = showTimeLineTweets();
+                Scanner scanner1 = new Scanner(System.in);
+                boolean isValid = false;
+                while (!isValid) {
+                    JSONObject requestTweet = new JSONObject();
+                    System.out.println("pls enter the number of tweet to remove it :");
+                    int tweetNum = scanner1.nextInt();
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("tweet", tweets.get(tweetNum - 1));
+                    requestTweet.put("method", ServiceWordsEnum.REMOVETWEET);
+                    requestTweet.put("parameterValues", jsonObject);
+                    JSONObject responseTweet = connectionService.request(requestTweet);
+                    consoleViewService.processServerResponse(responseTweet);
+                    if (responseTweet.getString("hasError").equals("false"))
+                        isValid = true;
+                }
 
+            } else if (command.equals(ServiceWordsEnum.RETWEET)) {
+                JSONArray tweets = showTimeLineTweets();
+
+                boolean isValid = false;
+                while (!isValid) {
+                    Scanner scanner1 = new Scanner(System.in);
+                    System.out.println("pls enter the number of tweet to retweet it :");
+                    int tweetNum = scanner1.nextInt();
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("tweet", tweets.get(tweetNum - 1));
+                    System.out.println("pls enter the text :");
+                    jsonObject.put("text", scanner.next());
+                    JSONObject requestTweet = new JSONObject();
+                    requestTweet.put("method", ServiceWordsEnum.RETWEET);
+                    requestTweet.put("parameterValues", jsonObject);
+                    JSONObject responseTweet = connectionService.request(requestTweet);
+                    consoleViewService.processServerResponse(responseTweet);
+                    if (responseTweet.getString("hasError").equals("false"))
+                        isValid = true;
+                }
+            } else if (command.equals(ServiceWordsEnum.REPLY)) {
+                JSONArray tweets = showTimeLineTweets();
+
+                boolean isValid = false;
+                while (!isValid) {
+                    Scanner scanner1 = new Scanner(System.in);
+                    System.out.println("pls enter the number of tweet to reply it :");
+                    int tweetNum = scanner1.nextInt();
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("tweet", tweets.get(tweetNum - 1));
+                    System.out.println("pls enter the text :");
+                    jsonObject.put("text", scanner.next());
+                    JSONObject requestTweet = new JSONObject();
+                    requestTweet.put("method", ServiceWordsEnum.REPLY);
+                    requestTweet.put("parameterValues", jsonObject);
+                    JSONObject responseTweet = connectionService.request(requestTweet);
+                    consoleViewService.processServerResponse(responseTweet);
+                    if (responseTweet.getString("hasError").equals("false"))
+                        isValid = true;
+                }
+//            else
+//                break;
             }
-            else
-                break;
         }
     }
 
@@ -235,6 +289,15 @@ public class CommandParserServiceImpl implements CommandParserService {
                 return ServiceWordsEnum.EXIT;
             System.out.println("enter a valid index");
         }
+    }
+
+    private JSONArray showTimeLineTweets() throws IOException {
+        JSONObject request = new JSONObject();
+        request.put("method", ServiceWordsEnum.SHOW_MY_TWEETS);
+        JSONObject response = connectionService.request(request);
+        JSONArray tweets = (JSONArray) response.get("tweets");
+        consoleViewService.showTimeline(tweets);
+        return tweets;
     }
 
     private void manageFollows() {
