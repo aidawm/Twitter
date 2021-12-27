@@ -12,8 +12,10 @@ public enum ServiceWordsEnum {
     REPLY,
     REMOVEREPLY,
     EXIT,
+    TIMELINE,
     MANAGE_TWEETS,
     MANAGE_FOLLOWS,
+    SHOW_MY_TWEETS,
 
 }
 

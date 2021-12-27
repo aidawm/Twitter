@@ -15,17 +15,12 @@ import java.util.Scanner;
 
 
 public class CommandParserServiceImpl implements CommandParserService {
-    private Socket client;
-    private OutputStream out;
-    private InputStream in;
-    private byte[] buffer = new byte[2048];
     private final ConsoleViewServiceImpl consoleViewService;
+    private ConnectionServiceImpl connectionService;
 
     public CommandParserServiceImpl(Socket client) throws IOException {
-        this.client = client;
-        this.out = client.getOutputStream();
-        this.in = client.getInputStream();
         this.consoleViewService = new ConsoleViewServiceImpl();
+        this.connectionService = new ConnectionServiceImpl(client);
     }
 
     public void run() throws IOException {
@@ -63,8 +58,6 @@ public class CommandParserServiceImpl implements CommandParserService {
                 return ServiceWordsEnum.EXIT;
             else
                 System.out.println("please enter a valid index");
-
-
         }
     }
 
@@ -86,10 +79,8 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = new JSONObject();
             request.put("method", ServiceWordsEnum.SIGNIN);
             request.put("parameterValues", jsonObject);
-            out.write(jsonObject.toString().getBytes());
-            int read = in.read(buffer);
-            String str = new String(buffer, 0, read);
-            JSONObject response = new JSONObject(str);
+
+            JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
             if (response.getString("hasError").equals("false"))
                 isValid = true;
@@ -129,21 +120,24 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = new JSONObject();
             request.put("method", ServiceWordsEnum.SIGNUP);
             request.put("parameterValues", jsonObject);
-            out.write(jsonObject.toString().getBytes());
-            int read = in.read(buffer);
-            String str = new String(buffer, 0, read);
-            JSONObject response = new JSONObject(str);
+            JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
             if (response.getString("hasError").equals("false"))
                 isValid = true;
         }
     }
 
-    private void mainMenu() {
+    private void mainMenu() throws IOException {
         boolean isExit = false;
         while (!isExit) {
             consoleViewService.mainMenu();
             ServiceWordsEnum command = mainMenuCommandAnalyzer();
+            if (command.equals(ServiceWordsEnum.MANAGE_TWEETS))
+                manageTweets();
+            else if (command.equals(ServiceWordsEnum.MANAGE_FOLLOWS))
+                manageFollows();
+            else
+                break;
         }
     }
 
@@ -158,13 +152,92 @@ public class CommandParserServiceImpl implements CommandParserService {
                 System.out.println("please enter a index!");
                 continue;
             }
-            if(index==1)
+            if (index == 1)
                 return ServiceWordsEnum.MANAGE_TWEETS;
-            if(index==2)
+            if (index == 2)
                 return ServiceWordsEnum.MANAGE_FOLLOWS;
-            if(index==0)
+            if (index == 0)
                 return ServiceWordsEnum.EXIT;
             System.out.println("enter a valid index");
         }
+    }
+    /*
+    System.out.println("1 ) new tweet");
+        System.out.println("2 ) remove a tweet");
+        System.out.println("3 ) new retweet");
+        System.out.println("4 ) new reply");
+        System.out.println("5 ) remove a reply");
+        System.out.println("6 ) like a tweet");
+        System.out.println("7 ) unlike a tweet");
+        System.out.println("8 ) show timeline");
+        System.out.println("0 ) exit");
+     */
+
+    private void manageTweets() throws IOException {
+        boolean isExit = false;
+        while (!isExit) {
+            consoleViewService.mainMenu();
+            ServiceWordsEnum command = manageTweetsCommandAnalyzer();
+            Scanner scanner = new Scanner(System.in);
+            if (command.equals(ServiceWordsEnum.TWEET)) {
+                boolean isValid = false;
+                while (!isValid) {
+                    System.out.println("pls enter the text :");
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("text", scanner.next());
+                    JSONObject request = new JSONObject();
+                    request.put("method", ServiceWordsEnum.TWEET);
+                    request.put("parameterValues", jsonObject);
+                    JSONObject response = connectionService.request(request);
+                    consoleViewService.processServerResponse(response);
+                    if (response.getString("hasError").equals("false"))
+                        isValid = true;
+                }
+            } else if (command.equals(ServiceWordsEnum.REMOVETWEET)){
+                JSONObject request = new JSONObject();
+                request.put("method", ServiceWordsEnum.SHOW_MY_TWEETS);
+                JSONObject response = connectionService.request(request);
+
+            }
+            else
+                break;
+        }
+    }
+
+    private ServiceWordsEnum manageTweetsCommandAnalyzer() {
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            String command = scanner.next();
+            int index;
+            try {
+                index = Integer.parseInt(command);
+            } catch (Exception e) {
+                System.out.println("please enter a index!");
+                continue;
+            }
+            if (index == 1)
+                return ServiceWordsEnum.TWEET;
+            if (index == 2)
+                return ServiceWordsEnum.REMOVETWEET;
+            if (index == 3)
+                return ServiceWordsEnum.RETWEET;
+            if (index == 4)
+                return ServiceWordsEnum.REPLY;
+            if (index == 5)
+                return ServiceWordsEnum.REMOVEREPLY;
+            if (index == 6)
+                return ServiceWordsEnum.LIKE;
+            if (index == 7)
+                return ServiceWordsEnum.DISLIKE;
+            if (index == 8)
+                return ServiceWordsEnum.TIMELINE;
+            if (index == 0)
+                return ServiceWordsEnum.EXIT;
+            System.out.println("enter a valid index");
+        }
+    }
+
+    private void manageFollows() {
+
     }
 }
