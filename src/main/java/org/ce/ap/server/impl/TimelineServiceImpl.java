@@ -47,6 +47,7 @@ public class TimelineServiceImpl implements TimelineService, Subscriber {
 
     @Override
     public ArrayList<Tweet> refresh() {
+        sortTweetsByTime();
         return tweets;
     }
 
