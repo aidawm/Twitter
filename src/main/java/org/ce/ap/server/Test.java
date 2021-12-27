@@ -270,7 +270,7 @@ public class Test {
                 state = scanner.nextInt();
                 if (state == 1) {
                     userAccount = new UserAccount(authenticationService.signUp());
-                    userAccount = new UserAccount(authenticationService.signIn());
+//                    userAccount = new UserAccount(authenticationService.signIn());
                     break;
                 } else if (state == 2) {
                     userAccount = new UserAccount(authenticationService.signIn());

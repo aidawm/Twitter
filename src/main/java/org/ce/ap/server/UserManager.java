@@ -20,7 +20,7 @@ public class UserManager {
     private static HashMap<String, User> users;
     private SubscribersManager subscribersManager;
     //// for test the authentication service
-    public static HashMap<String, String> database = new HashMap<>();
+
 
     /**
      * create a new object from UserManager class
@@ -141,8 +141,10 @@ public class UserManager {
      * @return true if it is not taken
      */
     public boolean isNotUsernameExist(String username) throws InvalidUsernameException {
-        if (!users.containsKey(username))
+        if (!users.containsKey(username)){
             return true;
+        }
+
         throw new InvalidUsernameException("the username is exist now!");
     }
 
@@ -153,7 +155,7 @@ public class UserManager {
      */
     public void addNewUser(User user) {
         users.put(user.getUsername(), user);
-        database.put(user.getUsername(), user.getPassword());
+//        database.put(user.getUsername(), user.getPassword());
         SubscribersManager.addNewUser(user);
         databaseHandler.writeFile(user.getUsername(), user.toJson());
     }
