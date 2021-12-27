@@ -50,6 +50,7 @@ public class UserAccount {
     public void addFollowing(User user) throws InvalidUsernameException {
         observerService.subscribe(user, timelineService, this.user);
         getTweetsFromDataBase(user);
+        this.user.addFollowing(user);
     }
 
     /**
@@ -59,6 +60,7 @@ public class UserAccount {
      */
     public void removeFollowing(User user) {
         observerService.unSubscribe(user, timelineService, this.user);
+        this.user.removeFollowing(user);
     }
 
     /**

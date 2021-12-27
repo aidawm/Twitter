@@ -57,6 +57,8 @@ public class TweetingServiceImpl implements TweetingService {
     public void like(Tweet tweet, User user) {
         tweet.likeTweet(user);
         tweetManager.update(tweet, true);
+//        tweetManager.updateLike(tweet);
+        tweetManager.likeSelectedTweet(tweet, user);
     }
 
     /**
@@ -69,6 +71,7 @@ public class TweetingServiceImpl implements TweetingService {
     public void unLike(Tweet tweet, User user) {
         tweet.removeLike(user);
         tweetManager.update(tweet, true);
+//        tweetManager.updateLike(tweet);
     }
 
     /**

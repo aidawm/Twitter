@@ -316,6 +316,17 @@ public class TweetManager extends Publisher implements Subscriber {
         return id;
     }
 
+//    public void updateLike(Tweet tweet)
+//    {
+//        notify(tweet, true);
+//
+//    }
+    public void likeSelectedTweet(Tweet tweet, User liker)
+    {
+        tweets.get(tweet.getId()).likeTweet(liker);
+    }
+
+
     @Override
     public void update(Tweet tweet, Boolean state) {
         if (state)

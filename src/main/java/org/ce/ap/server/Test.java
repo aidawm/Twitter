@@ -62,10 +62,10 @@ public class Test {
                 userAccount.showTimeline();
                 System.out.println("pls enter the number of tweet that you want to retweet it : ");
                 int tweetNumber = Integer.parseInt(scanner.nextLine());
-                System.out.println("pls enter the text : ");
+                System.out.println("pls enter the text : (from 0)");
                 String text = scanner.nextLine();
                 try {
-                    userAccount.retweet(userAccount.getTweets().get(tweetNumber - 1), text);
+                    userAccount.retweet(userAccount.getTweets().get(tweetNumber), text);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -86,6 +86,10 @@ public class Test {
                 System.out.println("pls enter the number of tweet that you want to like it : ");
                 int tweetNumber = Integer.parseInt(scanner.nextLine());
                 try {
+                    System.out.println("TWEETS");
+                    System.out.println(userAccount.getTweets());
+                    System.out.println("SELECTED TWEET");
+                    System.out.println(userAccount.getTweets().get(tweetNumber));
                     userAccount.like(userAccount.getTweets().get(tweetNumber));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -113,9 +117,56 @@ public class Test {
             if (input == 1) {
                 for (User user : userManager.getUsers())
                     printUser(user);
-                System.out.println("pls enter the number of user : ");
-                int userNumber = scanner.nextInt();
-                userAccount.addFollowing(userManager.getUsers().get(userNumber));
+                System.out.println("Add a new Following :");
+                System.out.println("pls enter the username of user : ");
+                boolean flag = false;
+                while (!flag) {
+                    System.out.println("the do while loop!");
+                    String username = scanner.next();
+                    for (User user : userManager.getUsers()) {
+                        if (user.getUsername().equals(username)) {
+                            userAccount.addFollowing(user);
+                            System.out.println(username + " followed successfully!");
+                            System.out.println("FOLLOWERS:");
+                            System.out.println(userAccount.getUser().getFollowers());
+                            System.out.println("FOLLOWINGS:");
+                            System.out.println(userAccount.getUser().getFollowings());
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (!flag) {
+                        System.out.println("the username doesn't exist! pls enter a valid username!");
+                    }
+                }
+                break;
+            }
+            else if (input == 2) {
+                for (User user : userAccount.getUser().getFollowings()) {
+                    System.out.println(user.getUsername());
+                }
+                System.out.println("Remove a Following :");
+                System.out.println("pls enter the username of user : ");
+                boolean flag = false;
+                while (!flag)
+                {
+                    String username = scanner.next();
+                    for (User user : userAccount.getUser().getFollowings()) {
+                        if (user.getUsername().equals(username)) {
+                            userAccount.removeFollowing(user);
+                            System.out.println(username + " unfollowed successfully!");
+                            System.out.println("FOLLOWERS:");
+                            System.out.println(userAccount.getUser().getFollowers());
+                            System.out.println("FOLLOWINGS:");
+                            System.out.println(userAccount.getUser().getFollowings());
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (!flag) {
+                        System.out.println("the username doesn't exist! pls enter a valid username!");
+                    }
+                }
                 break;
             }
             if (input == 0) {
