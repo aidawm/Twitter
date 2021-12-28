@@ -2,6 +2,7 @@ package main.java.org.ce.ap.client.impl;
 
 import main.java.org.ce.ap.client.*;
 import main.java.org.ce.ap.server.Tweet;
+import main.java.org.ce.ap.server.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,6 +45,11 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
         System.out.println("0 ) exit");
     }
 
+    public void manageFollowsMenu() {
+        System.out.println("1 ) follow a user");
+        System.out.println("2 ) unfollow a user");
+    }
+
     /**
      * Show timeline.
      *
@@ -54,8 +60,29 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
         for (int i = 0; i < tweets.length(); i++) {
             tweetArrayList.add((Tweet) tweets.get(i));
         }
-        for (int i = 0; i < tweets.length(); i++) {
-            System.out.println(i + " : \n" + tweetArrayList.get(i).toString());
+        for (int i = 0; i < tweetArrayList.size(); i++) {
+            System.out.println(i + 1 + " : \n" + tweetArrayList.get(i).toString());
+        }
+    }
+
+    public void showFollowings(JSONArray followings) {
+        ArrayList<User> followingArrayList = new ArrayList<>();
+        for (int i = 0; i < followings.length(); i++) {
+            followingArrayList.add((User) followings.get(i));
+        }
+        for (int i = 0; i < followingArrayList.size(); i++) {
+            System.out.println(i + 1 + " : \n" + followingArrayList.get(i).toString());
+        }
+    }
+
+    public void showAllUsers(JSONArray users)
+    {
+        ArrayList<User> userArrayList = new ArrayList<>();
+        for (int i = 0; i < users.length(); i++) {
+            userArrayList.add((User) users.get(i));
+        }
+        for (int i = 0; i < userArrayList.size(); i++) {
+            System.out.println(i + 1 + " : \n" + userArrayList.get(i).toString());
         }
     }
 

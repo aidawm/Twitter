@@ -15,15 +15,29 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 
+/**
+ * The type Command parser service.
+ */
 public class CommandParserServiceImpl implements CommandParserService {
     private final ConsoleViewServiceImpl consoleViewService;
     private ConnectionServiceImpl connectionService;
 
+    /**
+     * Instantiates a new Command parser service.
+     *
+     * @param client the client
+     * @throws IOException the io exception
+     */
     public CommandParserServiceImpl(Socket client) throws IOException {
         this.consoleViewService = new ConsoleViewServiceImpl();
         this.connectionService = new ConnectionServiceImpl(client);
     }
 
+    /**
+     * Run.
+     *
+     * @throws IOException the io exception
+     */
     public void run() throws IOException {
         boolean exit = false;
         while (!exit) {
@@ -40,6 +54,11 @@ public class CommandParserServiceImpl implements CommandParserService {
     }
 
 
+    /**
+     * Authentication service words enum.
+     *
+     * @return the service words enum
+     */
     public ServiceWordsEnum authentication() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -62,6 +81,11 @@ public class CommandParserServiceImpl implements CommandParserService {
         }
     }
 
+    /**
+     * Sign in.
+     *
+     * @throws IOException the io exception
+     */
     public void signIn() throws IOException {
         String username, password;
         boolean isValid = false;
@@ -88,6 +112,11 @@ public class CommandParserServiceImpl implements CommandParserService {
         }
     }
 
+    /**
+     * Sign up.
+     *
+     * @throws IOException the io exception
+     */
     public void signUp() throws IOException {
         String username, password, firstName, lastName, birthDateStr;
         LocalDate birthDate;
@@ -128,20 +157,30 @@ public class CommandParserServiceImpl implements CommandParserService {
         }
     }
 
+    /**
+     * the main menu analyzer
+     *
+     * @throws IOException
+     */
     private void mainMenu() throws IOException {
         boolean isExit = false;
         while (!isExit) {
             consoleViewService.mainMenu();
             ServiceWordsEnum command = mainMenuCommandAnalyzer();
-            if (command.equals(ServiceWordsEnum.MANAGE_TWEETS))
+            if (command.equals(ServiceWordsEnum.MANAGE_TWEETS)) {
+                consoleViewService.manageTweetsMenu();
                 manageTweets();
-            else if (command.equals(ServiceWordsEnum.MANAGE_FOLLOWS))
+            } else if (command.equals(ServiceWordsEnum.MANAGE_FOLLOWS)) {
+                consoleViewService.manageFollowsMenu();
                 manageFollows();
-            else
+            } else
                 break;
         }
     }
 
+    /**
+     * @return an enum that cast from an integer command
+     */
     private ServiceWordsEnum mainMenuCommandAnalyzer() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -162,102 +201,49 @@ public class CommandParserServiceImpl implements CommandParserService {
             System.out.println("enter a valid index");
         }
     }
-    /*
-    System.out.println("1 ) new tweet");
-        System.out.println("2 ) remove a tweet");
-        System.out.println("3 ) new retweet");
-        System.out.println("4 ) new reply");
-        System.out.println("5 ) remove a reply");
-        System.out.println("6 ) like a tweet");
-        System.out.println("7 ) unlike a tweet");
-        System.out.println("8 ) show timeline");
-        System.out.println("0 ) exit");
-     */
 
+    /**
+     * this method is using for manage the tweets commands
+     *
+     * @throws IOException
+     */
     private void manageTweets() throws IOException {
         boolean isExit = false;
-        while (!isExit) {
+        while (!isExit) {  //finish the managetweet's loop when one command done successfully
             consoleViewService.mainMenu();
             ServiceWordsEnum command = manageTweetsCommandAnalyzer();
-            Scanner scanner = new Scanner(System.in);
             if (command.equals(ServiceWordsEnum.TWEET)) {
-                boolean isValid = false;
-                while (!isValid) {
-                    System.out.println("pls enter the text :");
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("text", scanner.next());
-                    JSONObject request = new JSONObject();
-                    request.put("method", ServiceWordsEnum.TWEET);
-                    request.put("parameterValues", jsonObject);
-                    JSONObject response = connectionService.request(request);
-                    consoleViewService.processServerResponse(response);
-                    if (response.getString("hasError").equals("false"))
-                        isValid = true;
-                }
+                tweetCommand();
+                isExit = true;
             } else if (command.equals(ServiceWordsEnum.REMOVETWEET)) {
-                JSONArray tweets = showTimeLineTweets();
-                Scanner scanner1 = new Scanner(System.in);
-                boolean isValid = false;
-                while (!isValid) {
-                    JSONObject requestTweet = new JSONObject();
-                    System.out.println("pls enter the number of tweet to remove it :");
-                    int tweetNum = scanner1.nextInt();
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("tweet", tweets.get(tweetNum - 1));
-                    requestTweet.put("method", ServiceWordsEnum.REMOVETWEET);
-                    requestTweet.put("parameterValues", jsonObject);
-                    JSONObject responseTweet = connectionService.request(requestTweet);
-                    consoleViewService.processServerResponse(responseTweet);
-                    if (responseTweet.getString("hasError").equals("false"))
-                        isValid = true;
-                }
-
+                removeTweetCommand();
+                isExit = true;
             } else if (command.equals(ServiceWordsEnum.RETWEET)) {
-                JSONArray tweets = showTimeLineTweets();
-
-                boolean isValid = false;
-                while (!isValid) {
-                    Scanner scanner1 = new Scanner(System.in);
-                    System.out.println("pls enter the number of tweet to retweet it :");
-                    int tweetNum = scanner1.nextInt();
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("tweet", tweets.get(tweetNum - 1));
-                    System.out.println("pls enter the text :");
-                    jsonObject.put("text", scanner.next());
-                    JSONObject requestTweet = new JSONObject();
-                    requestTweet.put("method", ServiceWordsEnum.RETWEET);
-                    requestTweet.put("parameterValues", jsonObject);
-                    JSONObject responseTweet = connectionService.request(requestTweet);
-                    consoleViewService.processServerResponse(responseTweet);
-                    if (responseTweet.getString("hasError").equals("false"))
-                        isValid = true;
-                }
+                retweetCommand();
+                isExit = true;
             } else if (command.equals(ServiceWordsEnum.REPLY)) {
-                JSONArray tweets = showTimeLineTweets();
-
-                boolean isValid = false;
-                while (!isValid) {
-                    Scanner scanner1 = new Scanner(System.in);
-                    System.out.println("pls enter the number of tweet to reply it :");
-                    int tweetNum = scanner1.nextInt();
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("tweet", tweets.get(tweetNum - 1));
-                    System.out.println("pls enter the text :");
-                    jsonObject.put("text", scanner.next());
-                    JSONObject requestTweet = new JSONObject();
-                    requestTweet.put("method", ServiceWordsEnum.REPLY);
-                    requestTweet.put("parameterValues", jsonObject);
-                    JSONObject responseTweet = connectionService.request(requestTweet);
-                    consoleViewService.processServerResponse(responseTweet);
-                    if (responseTweet.getString("hasError").equals("false"))
-                        isValid = true;
-                }
-//            else
-//                break;
-            }
+                replyCommand();
+                isExit = true;
+            } else if (command.equals(ServiceWordsEnum.REMOVEREPLY)) {
+                removeReplyCommand();
+                isExit = true;
+            } else if (command.equals(ServiceWordsEnum.LIKE)) {
+                likeCommand();
+                isExit = true;
+            } else if (command.equals(ServiceWordsEnum.DISLIKE)) {
+                unlikeCommand();
+                isExit = true;
+            } else if (command.equals(ServiceWordsEnum.TIMELINE)) {
+                showTimeLineTweets();
+                isExit = true;
+            } else if (command.equals(ServiceWordsEnum.EXIT))
+                isExit = true;
         }
     }
 
+    /**
+     * @return an enum that cast from an integer command
+     */
     private ServiceWordsEnum manageTweetsCommandAnalyzer() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -291,6 +277,10 @@ public class CommandParserServiceImpl implements CommandParserService {
         }
     }
 
+    /**
+     * @return a JsonArray that contains Timeline's tweets
+     * @throws IOException
+     */
     private JSONArray showTimeLineTweets() throws IOException {
         JSONObject request = new JSONObject();
         request.put("method", ServiceWordsEnum.SHOW_MY_TWEETS);
@@ -300,7 +290,332 @@ public class CommandParserServiceImpl implements CommandParserService {
         return tweets;
     }
 
-    private void manageFollows() {
+    /**
+     * @param serviceWordsEnum is the given command
+     * @param jsonObject       is the request
+     * @return
+     */
+    private JSONObject makeRequest(ServiceWordsEnum serviceWordsEnum, JSONObject jsonObject) {
+        JSONObject request = new JSONObject();
+        request.put("method", serviceWordsEnum);
+        request.put("parameterValues", jsonObject);
+        return request;
+    }
+
+    /**
+     * tweet command
+     *
+     * @throws IOException
+     */
+    private void tweetCommand() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        boolean isValid = false;
+        while (!isValid) {
+            System.out.println("pls enter the text :");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("text", scanner.next());
+
+            JSONObject request = makeRequest(ServiceWordsEnum.TWEET, jsonObject);
+
+            JSONObject response = connectionService.request(request);
+            consoleViewService.processServerResponse(response);
+            if (response.getString("hasError").equals("false"))
+                isValid = true;
+        }
+    }
+
+    /**
+     * remove tweet command
+     *
+     * @throws IOException
+     */
+    private void removeTweetCommand() throws IOException {
+        JSONArray tweets = showTimeLineTweets();
+        Scanner scanner = new Scanner(System.in);
+        boolean isValid = false;
+        while (!isValid) {
+            System.out.println("pls enter the number of tweet to remove it :");
+            int tweetNum = scanner.nextInt();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("tweet", tweets.get(tweetNum - 1));
+
+            JSONObject request = makeRequest(ServiceWordsEnum.REMOVETWEET, jsonObject);
+
+            JSONObject response = connectionService.request(request);
+            consoleViewService.processServerResponse(response);
+            if (response.getString("hasError").equals("false"))
+                isValid = true;
+        }
+    }
+
+    /**
+     * retweet command
+     *
+     * @throws IOException
+     */
+    private void retweetCommand() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        JSONArray tweets = showTimeLineTweets();
+
+        boolean isValid = false;
+        while (!isValid) {
+            System.out.println("pls enter the number of tweet to retweet it :");
+            int tweetNum = scanner.nextInt();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("tweet", tweets.get(tweetNum - 1));
+            System.out.println("pls enter the text :");
+            jsonObject.put("text", scanner.next());
+
+            JSONObject request = makeRequest(ServiceWordsEnum.TWEET, jsonObject);
+
+            JSONObject responseTweet = connectionService.request(request);
+            consoleViewService.processServerResponse(responseTweet);
+            if (responseTweet.getString("hasError").equals("false"))
+                isValid = true;
+        }
+    }
+
+    /**
+     * reply command
+     *
+     * @throws IOException
+     */
+    private void replyCommand() throws IOException {
+        JSONArray tweets = showTimeLineTweets();
+
+        Scanner scanner = new Scanner(System.in);
+        boolean isValid = false;
+        while (!isValid) {
+
+            System.out.println("pls enter the number of tweet to reply it :");
+            int tweetNum = scanner.nextInt();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("tweet", tweets.get(tweetNum - 1));
+            System.out.println("pls enter the text :");
+            jsonObject.put("text", scanner.next());
+
+
+            JSONObject request = makeRequest(ServiceWordsEnum.REPLY, jsonObject);
+
+            JSONObject response = connectionService.request(request);
+            consoleViewService.processServerResponse(response);
+            if (response.getString("hasError").equals("false"))
+                isValid = true;
+        }
 
     }
+
+    /**
+     * remove reply command
+     *
+     * @throws IOException
+     */
+    private void removeReplyCommand() throws IOException {
+        JSONArray tweets = showTimeLineTweets();
+
+        Scanner scanner = new Scanner(System.in);
+        boolean isValid = false;
+        while (!isValid) {
+
+            System.out.println("pls enter the number of tweet to remove reply from it :");
+            int tweetNum = scanner.nextInt();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("tweet", tweets.get(tweetNum - 1));
+
+            JSONObject request = makeRequest(ServiceWordsEnum.REMOVEREPLY, jsonObject);
+
+            JSONObject response = connectionService.request(request);
+            consoleViewService.processServerResponse(response);
+            if (response.getString("hasError").equals("false"))
+                isValid = true;
+        }
+    }
+
+    /**
+     * like command
+     *
+     * @throws IOException
+     */
+    private void likeCommand() throws IOException {
+        JSONArray tweets = showTimeLineTweets();
+
+        Scanner scanner = new Scanner(System.in);
+        boolean isValid = false;
+        while (!isValid) {
+
+            System.out.println("pls enter the number of tweet to like it :");
+            int tweetNum = scanner.nextInt();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("tweet", tweets.get(tweetNum - 1));
+
+            JSONObject request = makeRequest(ServiceWordsEnum.LIKE, jsonObject);
+
+            JSONObject response = connectionService.request(request);
+            consoleViewService.processServerResponse(response);
+            if (response.getString("hasError").equals("false"))
+                isValid = true;
+        }
+    }
+
+    /**
+     * unlike command
+     *
+     * @throws IOException
+     */
+    private void unlikeCommand() throws IOException {
+        JSONArray tweets = showTimeLineTweets();
+
+        Scanner scanner = new Scanner(System.in);
+        boolean isValid = false;
+        while (!isValid) {
+
+            System.out.println("pls enter the number of tweet to unlike it :");
+            int tweetNum = scanner.nextInt();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("tweet", tweets.get(tweetNum - 1));
+
+            JSONObject request = makeRequest(ServiceWordsEnum.DISLIKE, jsonObject);
+
+            JSONObject response = connectionService.request(request);
+            consoleViewService.processServerResponse(response);
+            if (response.getString("hasError").equals("false"))
+                isValid = true;
+        }
+    }
+
+    /**
+     * @return a enum that cast from an integer command
+     */
+    private ServiceWordsEnum manageFollowsCommandAnalyzer() {
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            String command = scanner.next();
+            int index;
+            try {
+                index = Integer.parseInt(command);
+            } catch (Exception e) {
+                System.out.println("please enter a index!");
+                continue;
+            }
+            if (index == 1)
+                return ServiceWordsEnum.FOLLOW;
+            if (index == 2)
+                return ServiceWordsEnum.UNFOLLOW;
+        }
+    }
+
+    /**
+     * @return a jsonArray that contains all users
+     * @throws IOException
+     */
+    private JSONArray showAllUsers() throws IOException {
+        JSONObject request = new JSONObject();
+        request.put("method", ServiceWordsEnum.SHOW_USERS);
+
+        JSONObject response = connectionService.request(request);
+        JSONArray users = (JSONArray) response.get("users");
+
+        consoleViewService.showAllUsers(users);
+        return users;
+    }
+
+    /**
+     * @return a jsonArray that contains followings
+     * @throws IOException
+     */
+    private JSONArray showFollowings() throws IOException {
+        JSONObject request = new JSONObject();
+        request.put("method", ServiceWordsEnum.SHOW_FOLLOWINGS);
+
+        JSONObject response = connectionService.request(request);
+        JSONArray followings = (JSONArray) response.get("followings");
+
+        consoleViewService.showAllUsers(followings);
+        return followings;
+    }
+
+    /**
+     * this method is using for manage the followings commands
+     *
+     * @throws IOException
+     */
+    private void manageFollows() throws IOException {
+        boolean isExit = false;
+        while (!isExit) {  //finish the managetweet's loop when one command done successfully
+            consoleViewService.mainMenu();
+            ServiceWordsEnum command = manageFollowsCommandAnalyzer();
+            if (command.equals(ServiceWordsEnum.FOLLOW)) {
+                followCommand();
+                isExit = true;
+            }
+            if (command.equals(ServiceWordsEnum.UNFOLLOW)) {
+                unfollowCommand();
+                isExit = true;
+            }
+        }
+    }
+
+    /**
+     * this method helps us to select a user between all the users, send a jsonObject to server that contains
+     * the given user and finally follow it
+     *
+     * @throws IOException
+     */
+    private void followCommand() throws IOException {
+        JSONArray users = showAllUsers();
+        Scanner scanner = new Scanner(System.in);
+        boolean isValid = false;
+        while (!isValid) {
+
+            System.out.println("pls enter the number of user to follow it :");
+            int userNum = scanner.nextInt();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("user", users.get(userNum - 1));
+
+            JSONObject request = makeRequest(ServiceWordsEnum.FOLLOW, jsonObject);
+
+            JSONObject response = connectionService.request(request);
+            consoleViewService.processServerResponse(response);
+            if (response.getString("hasError").equals("false"))
+                isValid = true;
+        }
+    }
+
+    /**
+     * this method helps us to select a user between following, send a jsonObject to server that contains
+     * the given user and finally unfollow it
+     *
+     * @throws IOException
+     */
+    private void unfollowCommand() throws IOException {
+        JSONArray followings = showFollowings();
+        Scanner scanner = new Scanner(System.in);
+        boolean isValid = false;
+        while (!isValid) {
+
+            System.out.println("pls enter the number of user to unfollow it :");
+            int userNum = scanner.nextInt();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("user", followings.get(userNum - 1));
+
+            JSONObject request = makeRequest(ServiceWordsEnum.UNFOLLOW, jsonObject);
+
+            JSONObject response = connectionService.request(request);
+            consoleViewService.processServerResponse(response);
+            if (response.getString("hasError").equals("false"))
+                isValid = true;
+        }
+    }
 }
+
+
+
+

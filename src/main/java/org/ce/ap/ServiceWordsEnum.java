@@ -16,6 +16,9 @@ public enum ServiceWordsEnum {
     MANAGE_TWEETS,
     MANAGE_FOLLOWS,
     SHOW_MY_TWEETS,
-
+    FOLLOW,
+    UNFOLLOW,
+    SHOW_FOLLOWINGS,
+    SHOW_USERS,
 }
 
