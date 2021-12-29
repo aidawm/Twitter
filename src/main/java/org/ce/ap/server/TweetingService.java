@@ -8,8 +8,9 @@ public interface TweetingService {
      * @param author is the author of the given tweet
      * @param text is the given tweet's text
      * @throws InvalidCharacterNumberException
+     * @return
      */
-    void addNewTweet(User author,String text) throws InvalidCharacterNumberException;
+    Tweet addNewTweet(User author, String text) throws InvalidCharacterNumberException;
 
     /**
      *
@@ -52,8 +53,9 @@ public interface TweetingService {
      * @param user is sb that wants to retweet the tweet
      * @param text is the retweet text
      * @throws InvalidCharacterNumberException
+     * @return
      */
-    void retweet(Tweet tweet, User user, String text) throws InvalidCharacterNumberException;
+    Retweet retweet(Tweet tweet, User user, String text) throws InvalidCharacterNumberException;
 
     /**
      *
