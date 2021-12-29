@@ -1,6 +1,7 @@
 package main.java.org.ce.ap.server.impl;
 
 import main.java.org.ce.ap.server.*;
+import main.java.org.ce.ap.server.exceptions.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
@@ -37,9 +38,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      * @return the user
      * @throws NoSuchAlgorithmException the no such algorithm exception
      */
-    public User signUp() throws NoSuchAlgorithmException {
+    public User signUp(String firstName, String lastName, String username, String password, LocalDate birthDate) throws NoSuchAlgorithmException, InvalidUsernameException, InvalidPasswordException, SignUpExceptions {
 
-        getData(1);
+//        getData(1);
         password = getHash(password);
         authenticationService = new SignUp(firstName, lastName, username, password, birthDate);
         verify();
@@ -52,8 +53,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      * @return the user
      * @throws NoSuchAlgorithmException the no such algorithm exception
      */
-    public User signIn() throws NoSuchAlgorithmException {
-        getData(2);
+    public User signIn(String username, String password) throws NoSuchAlgorithmException, InvalidUsernameException, InvalidPasswordException, SignUpExceptions {
+//        getData(2);
         password = getHash(password);
         authenticationService = new SignIn(username, password);
         verify();
@@ -66,34 +67,37 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      * @return
      */
     @Override
-    public User verify() {
+    public User verify() throws InvalidUsernameException, InvalidPasswordException, SignUpExceptions {
+        user = authenticationService.verify();
+        if (authenticationService instanceof SignUp)
+            userManager.addNewUser(user);
 
-        while (!state) {
-            try {
-                user = authenticationService.verify();
-                if (authenticationService instanceof SignUp)
-                    userManager.addNewUser(user);
-                state=true;
-            } catch (Exception e) {
-                if (authenticationService instanceof SignIn) {
-                    System.out.println(e.getMessage());
-                    try {
-                        signIn();
-                    } catch (NoSuchAlgorithmException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                }
-
-                if (authenticationService instanceof SignUp) {
-                    System.out.println("sign up exception");
-                    try {
-                        signUp();
-                    } catch (NoSuchAlgorithmException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                }
-            }
-        }
+//        while (!state) {
+//            try {
+//                user = authenticationService.verify();
+//                if (authenticationService instanceof SignUp)
+//                    userManager.addNewUser(user);
+//                state=true;
+//            } catch (Exception e) {
+//                if (authenticationService instanceof SignIn) {
+//                    System.out.println(e.getMessage());
+//                    try {
+//                        signIn();
+//                    } catch (NoSuchAlgorithmException ex) {
+//                        System.out.println(ex.getMessage());
+//                    }
+//                }
+//
+//                if (authenticationService instanceof SignUp) {
+//                    System.out.println("sign up exception");
+//                    try {
+//                        signUp();
+//                    } catch (NoSuchAlgorithmException ex) {
+//                        System.out.println(ex.getMessage());
+//                    }
+//                }
+//            }
+//        }
         return user;
     }
 
@@ -121,33 +125,33 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.birthDate = birthDate;
     }
 
-    /**
-     * get data from console
-     *
-     * @param state the state
-     */
-    public void getData(int state) {
-        Scanner scanner = new Scanner(System.in);
-
-        if (state == 2) {
-            System.out.println("pls enter your username : ");
-            this.username = scanner.nextLine();
-            System.out.println("pls enter your password : ");
-            this.password = scanner.nextLine();
-        } else if (state == 1) {
-            System.out.println("pls enter your firstname : ");
-            this.firstName = scanner.nextLine();
-            System.out.println("pls enter your lastname : ");
-            this.lastName = scanner.nextLine();
-            System.out.println("pls enter your username : ");
-            this.username = scanner.nextLine();
-            System.out.println("pls enter your password : ");
-            this.password = scanner.nextLine();
-            System.out.println("pls enter your birthdate(dd/MM/yyyy) : ");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            this.birthDate = LocalDate.parse(scanner.nextLine(), formatter);
-        } else {
-            System.out.println("enter valid input ^^");
-        }
-    }
+//    /**
+//     * get data from console
+//     *
+//     * @param state the state
+//     */
+//    public void getData(int state) {
+//        Scanner scanner = new Scanner(System.in);
+//
+//        if (state == 2) {
+//            System.out.println("pls enter your username : ");
+//            this.username = scanner.nextLine();
+//            System.out.println("pls enter your password : ");
+//            this.password = scanner.nextLine();
+//        } else if (state == 1) {
+//            System.out.println("pls enter your firstname : ");
+//            this.firstName = scanner.nextLine();
+//            System.out.println("pls enter your lastname : ");
+//            this.lastName = scanner.nextLine();
+//            System.out.println("pls enter your username : ");
+//            this.username = scanner.nextLine();
+//            System.out.println("pls enter your password : ");
+//            this.password = scanner.nextLine();
+//            System.out.println("pls enter your birthdate(dd/MM/yyyy) : ");
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//            this.birthDate = LocalDate.parse(scanner.nextLine(), formatter);
+//        } else {
+//            System.out.println("enter valid input ^^");
+//        }
+//    }
 }

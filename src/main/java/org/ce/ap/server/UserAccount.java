@@ -67,8 +67,9 @@ public class UserAccount {
      * @param text the text of the tweet
      * @throws InvalidCharacterNumberException if the text has more than 256 character
      */
-    public void addNewTweet(String text) throws InvalidCharacterNumberException {
-        tweetingService.addNewTweet(user, text);
+    public Tweet addNewTweet(String text) throws InvalidCharacterNumberException {
+        return tweetingService.addNewTweet(user, text);
+
     }
 
     /**
@@ -125,8 +126,8 @@ public class UserAccount {
      * @param text  the text that want to retweet the tweet with it
      * @throws InvalidCharacterNumberException if the text has more than 256 character
      */
-    public void retweet(Tweet tweet, String text) throws InvalidCharacterNumberException {
-        tweetingService.retweet(tweet, user, text);
+    public Retweet retweet(Tweet tweet, String text) throws InvalidCharacterNumberException {
+        return tweetingService.retweet(tweet, user, text);
     }
 
     /**
