@@ -80,12 +80,15 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
 
     public void showAllUsers(JSONArray users)
     {
-        ArrayList<User> userArrayList = new ArrayList<>();
-        for (int i = 0; i < users.length(); i++) {
-            userArrayList.add((User) users.get(i));
-        }
-        for (int i = 0; i < userArrayList.size(); i++) {
-            System.out.println(i + 1 + " : \n" + userArrayList.get(i).toString());
+//        ArrayList<User> userArrayList = new ArrayList<>();
+//        for (int i = 0; i < users.length(); i++) {
+//            userArrayList.add((User) users.get(i));
+//        }
+//        for (int i = 0; i < userArrayList.size(); i++) {
+//            System.out.println(i + 1 + " : \n" + userArrayList.get(i).toString());
+//        }
+        for (int i = 0 ; i < users.length(); i++){
+            System.out.println(users.get(i));
         }
     }
 

@@ -20,6 +20,7 @@ public class ServerProcessor {
     private AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
     private TweetManager tweetManager = TweetManager.getInstance();
     private static UserAccount userAccount;
+    private UserManager userManager = UserManager.getInstance();
     private JSONObject response = new JSONObject();
 
 
@@ -27,6 +28,14 @@ public class ServerProcessor {
         JSONArray jsonList = new JSONArray();
         for (Tweet tweet : list) {
             jsonList.put(tweet.toJson());
+        }
+        return jsonList;
+    }
+
+    public JSONArray toJsonArrayUser(ArrayList<User> list) {
+        JSONArray jsonList = new JSONArray();
+        for (User user : list) {
+            jsonList.put(user.toJson());
         }
         return jsonList;
     }
@@ -213,6 +222,56 @@ public class ServerProcessor {
                 } catch (Exception e) {
                     response.put("hasError", true);
                     response.put("errorCode", "NotAccessException");
+                } finally {
+                    return response;
+                }
+            case FOLLOW:
+                try {
+                    userAccount.addFollowing(userManager.findUser(((JSONObject) jsonParameters.get("user")).getString("username")));
+                    response.put("hasError", false);
+                    response.put("count", 1);
+                    JSONArray jsonArray = new JSONArray();
+                    jsonArray.put(userAccount.getUser().toJson());
+                    response.put("result", jsonArray);
+                } catch (InvalidUsernameException e) {
+                    response.put("hasError", true);
+                    response.put("errorCode", "NotAccessException");
+                } finally {
+                    return response;
+                }
+            case UNFOLLOW:
+                try {
+                    userAccount.removeFollowing(userManager.findUser(((JSONObject) jsonParameters.get("user")).getString("username")));
+                    response.put("hasError", false);
+                    response.put("count", 1);
+                    JSONArray jsonArray = new JSONArray();
+                    jsonArray.put(userAccount.getUser().toJson());
+                    response.put("result", jsonArray);
+                } catch (InvalidUsernameException e) {
+                    response.put("hasError", true);
+                    response.put("errorCode", "NotAccessException");
+                } finally {
+                    return response;
+                }
+            case SHOW_USERS:
+                try {
+                    ArrayList<User> users = userManager.getUsers();
+                    response.put("hasError", false);
+                    response.put("count", users.size());
+                    response.put("result", toJsonArrayUser(users));
+                } catch (Exception e) {
+                    System.out.println(e);
+                } finally {
+                    return response;
+                }
+            case SHOW_FOLLOWINGS:
+                try {
+                    ArrayList<User> users = userAccount.getUser().getFollowings();
+                    response.put("hasError", false);
+                    response.put("count", users.size());
+                    response.put("result", toJsonArrayUser(users));
+                } catch (Exception e) {
+                    System.out.println(e);
                 } finally {
                     return response;
                 }

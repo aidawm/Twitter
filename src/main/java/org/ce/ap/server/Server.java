@@ -1,6 +1,7 @@
 package main.java.org.ce.ap.server;
 
 
+import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -51,9 +52,9 @@ class ClientHandler implements Runnable {
         try {
             OutputStream out = connectionSocket.getOutputStream();
             InputStream in = connectionSocket.getInputStream();
-            byte[] buffer = new byte[2048];
+            byte[] buffer = new byte[4096];
             ServerProcessor serverProcessor = new ServerProcessor();
-            while (true){
+            while (true) {
                 int read = in.read(buffer);
                 String str = new String(buffer, 0, read);
                 JSONObject jsonObject = new JSONObject(str);

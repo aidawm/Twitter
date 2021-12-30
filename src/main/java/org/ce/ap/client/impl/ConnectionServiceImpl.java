@@ -10,7 +10,7 @@ public class ConnectionServiceImpl {
     private Socket client;
     private OutputStream out;
     private InputStream in;
-    private byte[] buffer = new byte[2048];
+    private byte[] buffer = new byte[4096];
 
     public ConnectionServiceImpl(Socket client) throws IOException {
         this.client = client;

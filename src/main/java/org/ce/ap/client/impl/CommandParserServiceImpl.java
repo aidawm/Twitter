@@ -529,9 +529,10 @@ public class CommandParserServiceImpl implements CommandParserService {
     private JSONArray showAllUsers() throws IOException {
         JSONObject request = new JSONObject();
         request.put("method", ServiceWordsEnum.SHOW_USERS);
-
+        request.put("parameterValues", new JSONObject());
         JSONObject response = connectionService.request(request);
-        JSONArray users = (JSONArray) response.get("users");
+        System.out.println(response);
+        JSONArray users = (JSONArray) response.get("result");
 
         consoleViewService.showAllUsers(users);
         return users;
@@ -544,9 +545,9 @@ public class CommandParserServiceImpl implements CommandParserService {
     private JSONArray showFollowings() throws IOException {
         JSONObject request = new JSONObject();
         request.put("method", ServiceWordsEnum.SHOW_FOLLOWINGS);
-
+        request.put("parameterValues", new JSONObject());
         JSONObject response = connectionService.request(request);
-        JSONArray followings = (JSONArray) response.get("followings");
+        JSONArray followings = (JSONArray) response.get("result");
 
         consoleViewService.showAllUsers(followings);
         return followings;
