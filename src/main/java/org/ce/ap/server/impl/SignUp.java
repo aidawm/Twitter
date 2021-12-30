@@ -86,7 +86,7 @@ public class SignUp implements AuthenticationService {
         for (char c : text.toCharArray()) {
             if (!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z')) {
 //                return "name only can be a string of alphabets!";
-                exceptions.add("InvalidUsernameException");
+                exceptions.add("InvalidNameException");
             }
         }
     }
@@ -95,7 +95,6 @@ public class SignUp implements AuthenticationService {
      * @return a new user
      */
     public User verify() throws SignUpExceptions {
-        ArrayList<String> exceptions = new ArrayList<>();
         checkName(firstName);
         checkName(lastName);
         checkUsername(username);
