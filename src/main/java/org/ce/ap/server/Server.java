@@ -49,17 +49,15 @@ class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("here");
             OutputStream out = connectionSocket.getOutputStream();
             InputStream in = connectionSocket.getInputStream();
             byte[] buffer = new byte[2048];
             ServerProcessor serverProcessor = new ServerProcessor();
             while (true){
-                System.out.println("***");
                 int read = in.read(buffer);
                 String str = new String(buffer, 0, read);
                 JSONObject jsonObject = new JSONObject(str);
-                JSONObject response =serverProcessor.processRequest(jsonObject);
+                JSONObject response = serverProcessor.processRequest(jsonObject);
                 out.write(response.toString().getBytes());
             }
 //            int read = in.read(buffer);

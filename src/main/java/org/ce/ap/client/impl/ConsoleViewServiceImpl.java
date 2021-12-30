@@ -5,7 +5,7 @@ import main.java.org.ce.ap.server.Tweet;
 import main.java.org.ce.ap.server.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import com.google.gson.Gson;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -57,12 +57,15 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
      */
     public void showTimeline(JSONArray tweets) {
         ArrayList<Tweet> tweetArrayList = new ArrayList<>();
+        Gson gson =new Gson();
         for (int i = 0; i < tweets.length(); i++) {
-            tweetArrayList.add((Tweet) tweets.get(i));
-        }
-        for (int i = 0; i < tweetArrayList.size(); i++) {
-            System.out.println(i + 1 + " : \n" + tweetArrayList.get(i).toString());
-        }
+            System.out.println(tweets.get(i).toString());}
+//            tweetArrayList.add(gson.fromJson(tweets.get(i).toString(),Tweet.class));
+//            tweetArrayList.add((Tweet) tweets.get(i));
+//        }
+//        for (int i = 0; i < tweetArrayList.size(); i++) {
+//            System.out.println(i + 1 + " : \n" + tweetArrayList.get(i).toString());
+//        }
     }
 
     public void showFollowings(JSONArray followings) {

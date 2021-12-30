@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.ServiceWordsEnum;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.exceptions.InvalidPasswordException;
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import main.java.org.ce.ap.server.exceptions.SignUpExceptions;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
@@ -22,10 +23,10 @@ public class ServerProcessor {
     private JSONObject response = new JSONObject();
 
 
-    public ArrayList<JSONObject> toJsonArrayTweet(ArrayList<Tweet> list) {
-        ArrayList<JSONObject> jsonList = new ArrayList<>();
+    public JSONArray toJsonArrayTweet(ArrayList<Tweet> list) {
+        JSONArray jsonList = new JSONArray();
         for (Tweet tweet : list) {
-            jsonList.add((tweet).toJson());
+            jsonList.put(tweet.toJson());
         }
         return jsonList;
     }
@@ -38,47 +39,53 @@ public class ServerProcessor {
         return ids;
     }
 
-    public JSONObject processRequest(JSONObject jsonObject) { ;
+    public JSONObject processRequest(JSONObject jsonObject){
+        this.response = new JSONObject();
         JSONObject jsonParameters = (JSONObject) jsonObject.get("parameterValues");
         System.out.println();
         Gson gson = new Gson();
-
         ServiceWordsEnum method = gson.fromJson(jsonObject.getString("method"), ServiceWordsEnum.class);
         System.out.println(method);
 
         switch (method) {
             case SIGNIN:
-                System.out.println("here?");
-                try {
-
-                    User user = authenticationService.signIn(jsonParameters.getString("username"),
-                            jsonParameters.getString("password"));
-
-                    userAccount = new UserAccount(user);
-                    response.put("hasError", false);
-                    response.put("count", 1);
-                    response.put("result", new JSONObject(user.toJson()));
-                } catch (Exception e) {
-                    response.put("hasError", true);
-                    response.put("count",1);
-                    response.put("errorCode", e.getClass().toString());
-                } finally {
-                    return response;
-                }
-
-
+                return signIn(jsonParameters);
 //                tweetManager.getDataFromDatabase(userAccount.getUser());
 
             case SIGNUP:
-                System.out.println("here!?");
                 return signUp(jsonParameters);
 
+            case TIMELINE:
+                try {
+                    ArrayList<Tweet> tweets = userAccount.getTweets();
+                    response.put("hasError", false);
+                    response.put("count", tweets.size());
+                    response.put("result", toJsonArrayTweet(tweets));
+                }catch (Exception e){
+                    System.out.println(e);
+                }
+                finally {
+                    return response;
+                }
+            case SHOW_MY_TWEETS:
+                try {
+                    ArrayList<Tweet> tweets = tweetManager.findTweetsByAuthor(userAccount.getUser());
+                    response.put("hasError", false);
+                    response.put("count", tweets.size());
+                    response.put("result", toJsonArrayTweet(tweets));
+                }catch (Exception e){
+                    System.out.println(e);
+                }finally {
+                    return response;
+                }
             case TWEET:
                 try {
-                    Tweet tweet = userAccount.addNewTweet((String) jsonParameters.get("text"));
+                    Tweet tweet = userAccount.addNewTweet(jsonParameters.getString("text"));
                     response.put("hasError", false);
                     response.put("count", 1);
-                    response.put("result", new JSONObject(tweet.toJson()));
+                    JSONArray jsonArray = new JSONArray();
+                    jsonArray.put(tweet.toJson());
+                    response.put("result", jsonArray);
                 }catch (InvalidCharacterNumberException e){
                     response.put("hasError", true);
                     response.put("errorCode","InvalidCharacterNumberException");
@@ -91,10 +98,13 @@ public class ServerProcessor {
 
             case REMOVETWEET:
                 try {
-                    userAccount.removeTweet((Tweet) jsonParameters.get("tweet"));
+                    long id = ((JSONObject)jsonParameters.get("tweet")).getLong("id");
+                    System.out.println(id);
+                    userAccount.removeTweet(tweetManager.findTweet(id) );
                     response.put("hasError", false);
                     response.put("count",0);
                 }catch (Exception e){
+                    System.err.println(e);
                     response.put("hasError", true);
                     response.put("errorCode","NotAccessException");
                 }finally {
@@ -119,7 +129,9 @@ public class ServerProcessor {
 
             case REMOVERETWEET:
                 try {
-                    userAccount.removeRetweet((Tweet) jsonParameters.get("tweet"), (Retweet) jsonParameters.get("retweet"));
+                    Tweet tweet = gson.fromJson(jsonParameters.getString("tweet"),Tweet.class);
+                    Retweet retweet = gson.fromJson(jsonParameters.getString("retweet"),Retweet.class);
+                    userAccount.removeRetweet(tweet, retweet);
                     response.put("hasError", false);
                     response.put("count",0);
                 }catch (Exception e){
@@ -177,6 +189,29 @@ public class ServerProcessor {
         }
         finally {
             System.out.println(response);
+            return response;
+        }
+    }
+
+    private JSONObject signIn(JSONObject jsonParameters) {
+        try {
+
+            User user = authenticationService.signIn(jsonParameters.getString("username"),
+                    jsonParameters.getString("password"));
+            userAccount = new UserAccount(user);
+            response.put("hasError", false);
+            response.put("count", 1);
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(user.toJson());
+            response.put("result", jsonArray);
+        }
+        catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            response.put("hasError", true);
+            response.put("count",1);
+            response.put("errorCode", e.getClass().toString());
+        }
+       finally {
             return response;
         }
     }

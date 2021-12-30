@@ -204,12 +204,8 @@ public class TweetManager extends Publisher implements Subscriber {
      * @return tweet array list
      */
     public ArrayList findTweetsByAuthor(User author) {
-        ArrayList<Tweet> tweetArrayList = new ArrayList<>();
-        for (Tweet tweet1 : tweets.values()) {
-            if (tweet1.getAuthor().equals(author))
-                tweetArrayList.add(tweet1);
-        }
-        return tweetArrayList;
+        String username =author.getUsername();
+        return new ArrayList<>(userToTweets.get(username));
     }
 
     /**
@@ -260,6 +256,7 @@ public class TweetManager extends Publisher implements Subscriber {
         if (user.equals(tweet.getAuthor())) {
             tweets.remove(tweet);
             notify(tweet, false);
+            database.removeFile(String.valueOf(tweet.getId()),tweet.getAuthor().getUsername());
         } else
             System.out.println("You don't have access to remove another tweet! ");
 

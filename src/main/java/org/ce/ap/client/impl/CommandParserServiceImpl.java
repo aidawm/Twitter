@@ -108,7 +108,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
@@ -153,7 +153,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             request.put("parameterValues", jsonObject);
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
@@ -284,9 +284,10 @@ public class CommandParserServiceImpl implements CommandParserService {
      */
     private JSONArray showTimeLineTweets() throws IOException {
         JSONObject request = new JSONObject();
-        request.put("method", ServiceWordsEnum.SHOW_MY_TWEETS);
+        request.put("method", ServiceWordsEnum.TIMELINE);
+        request.put("parameterValues",new JSONObject());
         JSONObject response = connectionService.request(request);
-        JSONArray tweets = (JSONArray) response.get("tweets");
+        JSONArray tweets = (JSONArray) response.get("result");
         consoleViewService.showTimeline(tweets);
         return tweets;
     }
@@ -314,13 +315,13 @@ public class CommandParserServiceImpl implements CommandParserService {
         while (!isValid) {
             System.out.println("pls enter the text :");
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("text", scanner.next());
+            jsonObject.put("text", scanner.nextLine());
 
             JSONObject request = makeRequest(ServiceWordsEnum.TWEET, jsonObject);
 
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
@@ -345,7 +346,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
@@ -373,7 +374,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject responseTweet = connectionService.request(request);
             consoleViewService.processServerResponse(responseTweet);
-            if (responseTweet.getString("hasError").equals("false"))
+            if (!responseTweet.getBoolean("hasError"))
                 isValid = true;
         }
     }
@@ -403,7 +404,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
 
@@ -431,7 +432,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
@@ -458,7 +459,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
@@ -485,7 +486,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
@@ -584,7 +585,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
@@ -611,7 +612,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject response = connectionService.request(request);
             consoleViewService.processServerResponse(response);
-            if (response.getString("hasError").equals("false"))
+            if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
