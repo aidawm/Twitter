@@ -39,6 +39,17 @@ public class ServerProcessor {
         return ids;
     }
 
+    private Tweet findTweet(JSONObject jsonParameters){
+        long id;
+        if(((JSONObject)jsonParameters.get("tweet")).keySet().contains("retweetedTweet")){
+            id=((JSONObject)((JSONObject)jsonParameters.get("tweet")).get("newTweet")).getLong("id");
+        }
+        else
+            id = ((JSONObject)jsonParameters.get("tweet")).getLong("id");
+
+        return tweetManager.findTweet(id);
+    }
+
     public JSONObject processRequest(JSONObject jsonObject){
         this.response = new JSONObject();
         JSONObject jsonParameters = (JSONObject) jsonObject.get("parameterValues");
@@ -98,9 +109,11 @@ public class ServerProcessor {
 
             case REMOVETWEET:
                 try {
-                    long id = ((JSONObject)jsonParameters.get("tweet")).getLong("id");
-                    System.out.println(id);
-                    userAccount.removeTweet(tweetManager.findTweet(id) );
+                    Tweet tweet = findTweet(jsonParameters);
+                    if(tweet instanceof Retweet)
+                        userAccount.removeRetweet(findTweet((JSONObject)jsonParameters.get("retweetedTweet")),(Retweet) tweet);
+                    else
+                        userAccount.removeTweet(tweet);
                     response.put("hasError", false);
                     response.put("count",0);
                 }catch (Exception e){
@@ -113,10 +126,12 @@ public class ServerProcessor {
 
             case RETWEET:
                 try {
-                    Retweet retweet =userAccount.retweet((Tweet) jsonParameters.get("tweet"), (String) jsonParameters.get("text"));
+                    Retweet retweet =userAccount.retweet(findTweet(jsonParameters), jsonParameters.getString("text"));
                     response.put("hasError", false);
                     response.put("count", 1);
-                    response.put("result", new JSONObject(retweet.toJson()));
+                    JSONArray jsonArray = new JSONArray();
+                    jsonArray.put(retweet.toJson());
+                    response.put("result", jsonArray);
                 }catch (InvalidCharacterNumberException e){
                     response.put("hasError", true);
                     response.put("errorCode","InvalidCharacterNumberException");

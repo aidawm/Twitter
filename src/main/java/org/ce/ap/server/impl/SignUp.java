@@ -47,7 +47,7 @@ public class SignUp implements AuthenticationService {
         if (LocalDate.now().isBefore(birthDate))
 //            return "the birthdate couldn't be after now :)";
             exceptions.add("InvalidDateException");
-        if ((LocalDate.now().getYear() - birthDate.getYear()) < 13)
+        if ((LocalDate.now().getYear() - birthDate.getYear()) < 13 && (LocalDate.now().getYear() - birthDate.getYear())>0)
             exceptions.add("InvalidAgeException");
 //            return "the age must be greater than 13 ;) ";
     }

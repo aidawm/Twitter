@@ -363,14 +363,20 @@ public class CommandParserServiceImpl implements CommandParserService {
         boolean isValid = false;
         while (!isValid) {
             System.out.println("pls enter the number of tweet to retweet it :");
-            int tweetNum = scanner.nextInt();
+            int tweetNum ;
+            try{
+                tweetNum = Integer.parseInt(scanner.nextLine());
+            }catch (Exception e){
+                System.out.println("enter a index number!");
+                continue;
+            }
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("tweet", tweets.get(tweetNum - 1));
             System.out.println("pls enter the text :");
-            jsonObject.put("text", scanner.next());
+            jsonObject.put("text", scanner.nextLine());
 
-            JSONObject request = makeRequest(ServiceWordsEnum.TWEET, jsonObject);
+            JSONObject request = makeRequest(ServiceWordsEnum.RETWEET, jsonObject);
 
             JSONObject responseTweet = connectionService.request(request);
             consoleViewService.processServerResponse(responseTweet);
