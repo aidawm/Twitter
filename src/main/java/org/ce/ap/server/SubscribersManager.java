@@ -43,11 +43,15 @@ public class SubscribersManager {
      * @param subscriber is the user that should unfollow the given user
      */
     public static void unSubscribe(User user,Subscriber subscriber, User subscriberUser){
+        if(user.equals(subscriberUser))
+            return;
         HashMap<User,Subscriber> subscriberList= subscribers.get(user);
         subscriberList.remove(subscriberUser);
         subscribers.put(user,subscriberList);
         user.removeFollower(subscriberUser);
-        subscriberUser.removeFollowing(subscriberUser);
+        subscriberUser.removeFollowing(user);
+        System.out.println("user"+user.toJson());
+        System.out.println("subscriberUser"+subscriberUser.toJson());
     }
 
     /**

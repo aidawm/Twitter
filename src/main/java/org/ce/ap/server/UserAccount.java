@@ -63,6 +63,8 @@ public class UserAccount {
      */
     public void removeFollowing(User user) {
         observerService.unSubscribe(user, timelineService, this.user);
+        System.out.println(this.user.toJson());
+        System.out.println(user.toJson());
     }
 
     /**
