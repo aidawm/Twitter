@@ -8,7 +8,8 @@ import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
 import main.java.org.ce.ap.server.impl.AuthenticationServiceImpl;
-import org.json.JSONObject;
+import org.json.*;
+import com.google.gson.Gson;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
@@ -37,16 +38,22 @@ public class ServerProcessor {
         return ids;
     }
 
-    JSONObject SwitchCaseUsingJason() throws InvalidCharacterNumberException, NoSuchAlgorithmException, InvalidUsernameException {
-        JSONObject jsonObject = new JSONObject();
+    public JSONObject processRequest(JSONObject jsonObject) { ;
         JSONObject jsonParameters = (JSONObject) jsonObject.get("parameterValues");
-        ServiceWordsEnum method = (ServiceWordsEnum) jsonObject.get("method");
+        System.out.println();
+        Gson gson = new Gson();
+
+        ServiceWordsEnum method = gson.fromJson(jsonObject.getString("method"), ServiceWordsEnum.class);
+        System.out.println(method);
 
         switch (method) {
             case SIGNIN:
+                System.out.println("here?");
                 try {
+
                     User user = authenticationService.signIn(jsonParameters.getString("username"),
                             jsonParameters.getString("password"));
+
                     userAccount = new UserAccount(user);
                     response.put("hasError", false);
                     response.put("count", 1);
@@ -59,26 +66,12 @@ public class ServerProcessor {
                     return response;
                 }
 
+
 //                tweetManager.getDataFromDatabase(userAccount.getUser());
 
             case SIGNUP:
-                try {
-                    User user = authenticationService.signUp(jsonParameters.getString("firstName")
-                            , jsonParameters.getString("lastName"), jsonParameters.getString("username"),
-                            jsonParameters.getString("password"),
-                            LocalDate.parse(jsonObject.getString("registryDate")));
-
-                    userAccount = new UserAccount(user);
-                    response.put("hasError", false);
-                    response.put("count", 1);
-                    response.put("result", new JSONObject(user.toJson()));
-                } catch (SignUpExceptions e) {
-                    response.put("hasError", true);
-                    response.put("count",e.getMessages().size());
-                    response.put("errorCode", e.getMessages());
-                } finally {
-                    return response;
-                }
+                System.out.println("here!?");
+                return signUp(jsonParameters);
 
             case TWEET:
                 try {
@@ -109,14 +102,46 @@ public class ServerProcessor {
                 }
 
             case RETWEET:
-                userAccount.retweet((Tweet) jsonParameters.get("tweet"), (String) jsonParameters.get("text"));
-                break;
+                try {
+                    Retweet retweet =userAccount.retweet((Tweet) jsonParameters.get("tweet"), (String) jsonParameters.get("text"));
+                    response.put("hasError", false);
+                    response.put("count", 1);
+                    response.put("result", new JSONObject(retweet.toJson()));
+                }catch (InvalidCharacterNumberException e){
+                    response.put("hasError", true);
+                    response.put("errorCode","InvalidCharacterNumberException");
+                }catch (Exception e){
+                    response.put("hasError", true);
+                    response.put("errorCode","AuthenticationException");
+                }finally {
+                    return response;
+                }
+
             case REMOVERETWEET:
-                userAccount.removeRetweet((Tweet) jsonParameters.get("tweet"), (Retweet) jsonParameters.get("retweet"));
-                break;
+                try {
+                    userAccount.removeRetweet((Tweet) jsonParameters.get("tweet"), (Retweet) jsonParameters.get("retweet"));
+                    response.put("hasError", false);
+                    response.put("count",0);
+                }catch (Exception e){
+                    response.put("hasError", true);
+                    response.put("errorCode","NotAccessException");
+                }finally {
+                    return response;
+                }
+
             case LIKE:
-                userAccount.like((Tweet) jsonParameters.get("tweet"));
-                break;
+                try {
+                    userAccount.like((Tweet) jsonParameters.get("tweet"));
+                    response.put("hasError", false);
+                    response.put("count", 1);
+                    response.put("result", new JSONObject(jsonParameters.get("tweet")));
+                }catch (Exception e){
+                    response.put("hasError", true);
+                    response.put("errorCode","NotAccessException");
+                }finally {
+                    return response;
+                }
+
             case DISLIKE:
                 userAccount.unLike((Tweet) jsonParameters.get("tweet"));
                 break;
@@ -131,6 +156,30 @@ public class ServerProcessor {
         return null;
     }
 
+    private JSONObject signUp(JSONObject jsonParameters){
+        try {
+            User user = authenticationService.signUp(jsonParameters.getString("firstName")
+                    , jsonParameters.getString("lastName"), jsonParameters.getString("username"),
+                    jsonParameters.getString("password"),
+                    LocalDate.parse(jsonParameters.getString("birthDate")));
+            userAccount = new UserAccount(user);
+            response.put("hasError", false);
+            response.put("count", 1);
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(user.toJson());
+            response.put("result", jsonArray);
+        } catch (SignUpExceptions e) {
+            response.put("hasError", true);
+            response.put("count",e.getMessages().size());
+            response.put("errorCode", e.getMessages());
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        finally {
+            System.out.println(response);
+            return response;
+        }
+    }
     public JSONObject toJsonObject() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("user", userAccount.getUser().toJson());

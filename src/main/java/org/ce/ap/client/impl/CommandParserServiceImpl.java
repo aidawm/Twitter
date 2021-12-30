@@ -43,6 +43,7 @@ public class CommandParserServiceImpl implements CommandParserService {
         while (!exit) {
             consoleViewService.welcome();
             ServiceWordsEnum command = authentication();
+            System.out.println(command);
             if (command.equals(ServiceWordsEnum.SIGNIN)) {
                 signIn();
             } else if (command.equals(ServiceWordsEnum.SIGNUP)) {
@@ -89,7 +90,7 @@ public class CommandParserServiceImpl implements CommandParserService {
     public void signIn() throws IOException {
         String username, password;
         boolean isValid = false;
-        while (isValid) {
+        while (!isValid) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("pls enter your username : ");
             username = scanner.nextLine();
@@ -121,7 +122,7 @@ public class CommandParserServiceImpl implements CommandParserService {
         String username, password, firstName, lastName, birthDateStr;
         LocalDate birthDate;
         boolean isValid = false;
-        while (isValid) {
+        while (!isValid) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("pls enter your firstname : ");
             firstName = scanner.nextLine();

@@ -19,10 +19,12 @@ public class ConnectionServiceImpl {
     }
 
     public JSONObject request(JSONObject jsonObject) throws IOException {
+        System.out.println(jsonObject);
         out.write(jsonObject.toString().getBytes());
         int read = in.read(buffer);
         String str = new String(buffer, 0, read);
         JSONObject response = new JSONObject(str);
+        System.out.println(response);
         return response;
     }
 
