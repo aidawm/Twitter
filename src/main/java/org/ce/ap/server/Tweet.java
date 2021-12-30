@@ -198,9 +198,9 @@ public class Tweet implements JsonInterface {
      */
     public void addRetweet(Retweet retweet) {
         JSONObject retweetJson = new JSONObject();
-        retweetJson.put("user",retweet.getAuthor());
-        retweetJson.put("text",retweet.getText());
-        retweetJson.put("sendDate",retweet.getSendDate());
+        retweetJson.put("user", retweet.getAuthor());
+        retweetJson.put("text", retweet.getText());
+        retweetJson.put("sendDate", retweet.getSendDate());
         if (!retweets.contains(retweetJson))
             retweets.add(retweetJson);
     }
@@ -315,6 +315,20 @@ public class Tweet implements JsonInterface {
         return id;
     }
 
+    /**
+     * Find reply tweet.
+     *
+     * @param id the id
+     * @return the tweet
+     */
+    public Tweet findReply(long id) {
+        for (Tweet tweet : replies) {
+            if (tweet.getId() == id)
+                return tweet;
+        }
+        return null;
+    }
+
     @Override
     public JSONObject toJson() {
         this.jsonObject = new JSONObject();
@@ -324,7 +338,7 @@ public class Tweet implements JsonInterface {
         jsonObject.put("likes", toHashSetLikes(likes));
         jsonObject.put("replies", toJsonArrayTweet(replies));
         jsonObject.put("sendDate", sendDate);
-        jsonObject.put("retweets",toJsonArrayRetweet(retweets));
+        jsonObject.put("retweets", toJsonArrayRetweet(retweets));
         return jsonObject;
     }
 

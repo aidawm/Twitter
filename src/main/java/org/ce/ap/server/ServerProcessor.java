@@ -39,18 +39,17 @@ public class ServerProcessor {
         return ids;
     }
 
-    private Tweet findTweet(JSONObject jsonParameters){
+    private Tweet findTweet(JSONObject jsonParameters) {
         long id;
-        if(((JSONObject)jsonParameters.get("tweet")).keySet().contains("retweetedTweet")){
-            id=((JSONObject)((JSONObject)jsonParameters.get("tweet")).get("newTweet")).getLong("id");
-        }
-        else
-            id = ((JSONObject)jsonParameters.get("tweet")).getLong("id");
+        if (((JSONObject) jsonParameters.get("tweet")).keySet().contains("retweetedTweet")) {
+            id = ((JSONObject) ((JSONObject) jsonParameters.get("tweet")).get("newTweet")).getLong("id");
+        } else
+            id = ((JSONObject) jsonParameters.get("tweet")).getLong("id");
 
         return tweetManager.findTweet(id);
     }
 
-    public JSONObject processRequest(JSONObject jsonObject){
+    public JSONObject processRequest(JSONObject jsonObject) {
         this.response = new JSONObject();
         JSONObject jsonParameters = (JSONObject) jsonObject.get("parameterValues");
         System.out.println();
@@ -72,10 +71,9 @@ public class ServerProcessor {
                     response.put("hasError", false);
                     response.put("count", tweets.size());
                     response.put("result", toJsonArrayTweet(tweets));
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println(e);
-                }
-                finally {
+                } finally {
                     return response;
                 }
             case SHOW_MY_TWEETS:
@@ -84,9 +82,9 @@ public class ServerProcessor {
                     response.put("hasError", false);
                     response.put("count", tweets.size());
                     response.put("result", toJsonArrayTweet(tweets));
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println(e);
-                }finally {
+                } finally {
                     return response;
                 }
             case TWEET:
@@ -97,93 +95,133 @@ public class ServerProcessor {
                     JSONArray jsonArray = new JSONArray();
                     jsonArray.put(tweet.toJson());
                     response.put("result", jsonArray);
-                }catch (InvalidCharacterNumberException e){
+                } catch (InvalidCharacterNumberException e) {
                     response.put("hasError", true);
-                    response.put("errorCode","InvalidCharacterNumberException");
-                }catch (Exception e){
+                    response.put("errorCode", "InvalidCharacterNumberException");
+                } catch (Exception e) {
                     response.put("hasError", true);
-                    response.put("errorCode","AuthenticationException");
-                }finally {
+                    response.put("errorCode", "AuthenticationException");
+                } finally {
                     return response;
                 }
 
             case REMOVETWEET:
                 try {
                     Tweet tweet = findTweet(jsonParameters);
-                    if(tweet instanceof Retweet)
-                        userAccount.removeRetweet(findTweet((JSONObject)jsonParameters.get("retweetedTweet")),(Retweet) tweet);
+                    if (tweet instanceof Retweet)
+                        userAccount.removeRetweet(findTweet((JSONObject) jsonParameters.get("retweetedTweet")), (Retweet) tweet);
                     else
                         userAccount.removeTweet(tweet);
                     response.put("hasError", false);
-                    response.put("count",0);
-                }catch (Exception e){
+                    response.put("count", 0);
+                } catch (Exception e) {
                     System.err.println(e);
                     response.put("hasError", true);
-                    response.put("errorCode","NotAccessException");
-                }finally {
+                    response.put("errorCode", "NotAccessException");
+                } finally {
                     return response;
                 }
 
             case RETWEET:
                 try {
-                    Retweet retweet =userAccount.retweet(findTweet(jsonParameters), jsonParameters.getString("text"));
+                    Retweet retweet = userAccount.retweet(findTweet(jsonParameters), jsonParameters.getString("text"));
                     response.put("hasError", false);
                     response.put("count", 1);
                     JSONArray jsonArray = new JSONArray();
                     jsonArray.put(retweet.toJson());
                     response.put("result", jsonArray);
-                }catch (InvalidCharacterNumberException e){
+                } catch (InvalidCharacterNumberException e) {
                     response.put("hasError", true);
-                    response.put("errorCode","InvalidCharacterNumberException");
-                }catch (Exception e){
+                    response.put("errorCode", "InvalidCharacterNumberException");
+                } catch (Exception e) {
                     response.put("hasError", true);
-                    response.put("errorCode","AuthenticationException");
-                }finally {
+                    response.put("errorCode", "AuthenticationException");
+                } finally {
                     return response;
                 }
 
             case REMOVERETWEET:
                 try {
-                    Tweet tweet = gson.fromJson(jsonParameters.getString("tweet"),Tweet.class);
-                    Retweet retweet = gson.fromJson(jsonParameters.getString("retweet"),Retweet.class);
+                    Tweet tweet = gson.fromJson(jsonParameters.getString("tweet"), Tweet.class);
+                    Retweet retweet = gson.fromJson(jsonParameters.getString("retweet"), Retweet.class);
                     userAccount.removeRetweet(tweet, retweet);
                     response.put("hasError", false);
-                    response.put("count",0);
-                }catch (Exception e){
+                    response.put("count", 0);
+                } catch (Exception e) {
                     response.put("hasError", true);
-                    response.put("errorCode","NotAccessException");
-                }finally {
+                    response.put("errorCode", "NotAccessException");
+                } finally {
                     return response;
                 }
 
             case LIKE:
                 try {
-                    userAccount.like((Tweet) jsonParameters.get("tweet"));
+                    Tweet tweet = findTweet(jsonParameters);
+                    userAccount.like(tweet);
                     response.put("hasError", false);
                     response.put("count", 1);
-                    response.put("result", new JSONObject(jsonParameters.get("tweet")));
-                }catch (Exception e){
+                    JSONArray jsonArray = new JSONArray();
+                    jsonArray.put(tweet.toJson());
+                    response.put("result", jsonArray);
+                } catch (Exception e) {
                     response.put("hasError", true);
-                    response.put("errorCode","NotAccessException");
-                }finally {
+                    response.put("errorCode", "NotAccessException");
+                } finally {
                     return response;
                 }
 
             case DISLIKE:
-                userAccount.unLike((Tweet) jsonParameters.get("tweet"));
-                break;
+                try {
+                    Tweet tweet = findTweet(jsonParameters);
+                    userAccount.unLike(tweet);
+                    response.put("hasError", false);
+                    response.put("count", 1);
+                    JSONArray jsonArray = new JSONArray();
+                    jsonArray.put(tweet.toJson());
+                    response.put("result", jsonArray);
+                } catch (Exception e) {
+                    response.put("hasError", true);
+                    response.put("errorCode", "NotAccessException");
+                } finally {
+                    return response;
+                }
             case REPLY:
-                userAccount.reply((Tweet) jsonParameters.get("tweet"), (Tweet) jsonParameters.get("replyTweet"));
-                break;
+                try {
+                    Tweet tweet = findTweet(jsonParameters);
+                    userAccount.reply(tweet, jsonParameters.getString("text"));
+                    response.put("hasError", false);
+                    response.put("count", 1);
+                    JSONArray jsonArray = new JSONArray();
+                    jsonArray.put(tweet.toJson());
+                    response.put("result", jsonArray);
+                } catch (Exception e) {
+                    response.put("hasError", true);
+                    response.put("errorCode", "NotAccessException");
+                } finally {
+                    return response;
+                }
             case REMOVEREPLY:
-                userAccount.removeReply((Tweet) jsonParameters.get("tweet"), (Tweet) jsonParameters.get("replyTweet"));
-                break;
+                try {
+                    Tweet tweet = findTweet(jsonParameters);
+                    long replyId = ((JSONObject) jsonParameters.get("reply")).getLong("id");
+                    userAccount.removeReply(tweet, tweet.findReply(replyId));
+                    response.put("hasError", false);
+                    response.put("count", 1);
+                    JSONArray jsonArray = new JSONArray();
+                    jsonArray.put(tweet.toJson());
+                    response.put("result", jsonArray);
+                } catch (Exception e) {
+                    response.put("hasError", true);
+                    response.put("errorCode", "NotAccessException");
+                } finally {
+                    return response;
+                }
 
         }
         return null;
     }
 
-    private JSONObject signUp(JSONObject jsonParameters){
+    private JSONObject signUp(JSONObject jsonParameters) {
         try {
             User user = authenticationService.signUp(jsonParameters.getString("firstName")
                     , jsonParameters.getString("lastName"), jsonParameters.getString("username"),
@@ -197,12 +235,11 @@ public class ServerProcessor {
             response.put("result", jsonArray);
         } catch (SignUpExceptions e) {
             response.put("hasError", true);
-            response.put("count",e.getMessages().size());
+            response.put("count", e.getMessages().size());
             response.put("errorCode", e.getMessages());
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
-        }
-        finally {
+        } finally {
             System.out.println(response);
             return response;
         }
@@ -219,17 +256,16 @@ public class ServerProcessor {
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(user.toJson());
             response.put("result", jsonArray);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
             response.put("hasError", true);
-            response.put("count",1);
+            response.put("count", 1);
             response.put("errorCode", e.getClass().toString());
-        }
-       finally {
+        } finally {
             return response;
         }
     }
+
     public JSONObject toJsonObject() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("user", userAccount.getUser().toJson());

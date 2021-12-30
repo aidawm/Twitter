@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server.impl;
 
 import main.java.org.ce.ap.server.*;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.exceptions.TweetDoesntExistException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -50,11 +51,10 @@ public class TweetingServiceImpl implements TweetingService {
      * @param user  the user that want to like the tweet
      */
     @Override
-    public void like(Tweet tweet, User user) {
-        tweet.likeTweet(user);
+    public void like(Tweet tweet, User user)  {
+        tweetManager.findTweet(tweet.getId()).likeTweet(user);
         tweetManager.update(tweet, true);
 //        tweetManager.updateLike(tweet);
-        tweetManager.likeSelectedTweet(tweet, user);
     }
 
     /**
@@ -65,7 +65,7 @@ public class TweetingServiceImpl implements TweetingService {
      */
     @Override
     public void unLike(Tweet tweet, User user) {
-        tweet.removeLike(user);
+        tweetManager.findTweet(tweet.getId()).removeLike(user);
         tweetManager.update(tweet, true);
 //        tweetManager.updateLike(tweet);
     }

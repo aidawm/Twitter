@@ -3,6 +3,7 @@ package main.java.org.ce.ap.server;
 import main.java.org.ce.ap.ServiceWordsEnum;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
+import main.java.org.ce.ap.server.exceptions.TweetDoesntExistException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
@@ -20,6 +21,8 @@ public class UserAccount {
     private TimelineServiceImpl timelineService = new TimelineServiceImpl();
     //// to access the observerService
     private ObserverServiceImpl observerService = new ObserverServiceImpl();
+    //// to access the TweetManager
+    private TweetManager tweetManager;
 
     /**
      * create a new object from UserAccount
@@ -30,6 +33,7 @@ public class UserAccount {
         this.user = user;
         observerService.subscribe(user, timelineService, this.user);
         tweetingService = new TweetingServiceImpl(user);
+        tweetManager = TweetManager.getInstance();
         getTweetsFromDataBase(user);
 //        user.addFollowing(user);
         ArrayList<User> users = user.getFollowings();
@@ -86,7 +90,7 @@ public class UserAccount {
      *
      * @param tweet the tweet that want to like it
      */
-    public void like(Tweet tweet) {
+    public void like(Tweet tweet){
         tweetingService.like(tweet, user);
     }
 
@@ -105,7 +109,8 @@ public class UserAccount {
      * @param tweet      the tweet
      * @param replyTweet our reply tweet
      */
-    public void reply(Tweet tweet, Tweet replyTweet) {
+    public void reply(Tweet tweet, String text) throws InvalidCharacterNumberException {
+        Tweet replyTweet = new Tweet(user, text, tweetManager.makeID());
         tweetingService.reply(tweet, replyTweet);
     }
 

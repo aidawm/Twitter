@@ -1,6 +1,7 @@
 package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.exceptions.TweetDoesntExistException;
 
 public interface TweetingService {
     /**
@@ -24,14 +25,14 @@ public interface TweetingService {
      * @param tweet should be liked
      * @param user is sb that wants to like the tweet
      */
-    void like(Tweet tweet, User user);
+    void like(Tweet tweet, User user) throws TweetDoesntExistException;
 
     /**
      *
      * @param tweet should be unliked
      * @param user is sb that wants to unlike the tweet
      */
-    void unLike(Tweet tweet, User user);
+    void unLike(Tweet tweet, User user) throws TweetDoesntExistException;
 
     /**
      *

@@ -1,11 +1,8 @@
 package main.java.org.ce.ap.server;
 
-
-import main.java.org.ce.ap.server.exceptions.InvalidDateException;
-import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
+import main.java.org.ce.ap.server.exceptions.*;
 import main.java.org.ce.ap.server.DataBase.TweetDataBase;
 
-import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -318,10 +315,6 @@ public class TweetManager extends Publisher implements Subscriber {
 //        notify(tweet, true);
 //
 //    }
-    public void likeSelectedTweet(Tweet tweet, User liker)
-    {
-        tweets.get(tweet.getId()).likeTweet(liker);
-    }
 
 
     @Override

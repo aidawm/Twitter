@@ -3,6 +3,7 @@ package main.java.org.ce.ap.client.impl;
 import main.java.org.ce.ap.client.*;
 import main.java.org.ce.ap.*;
 import main.java.org.ce.ap.client.exception.*;
+import main.java.org.ce.ap.server.Tweet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -39,8 +40,7 @@ public class CommandParserServiceImpl implements CommandParserService {
      * @throws IOException the io exception
      */
     public void run() throws IOException {
-        boolean exit = false;
-        while (!exit) {
+        while (true) {
             consoleViewService.welcome();
             ServiceWordsEnum command = authentication();
             System.out.println(command);
@@ -285,7 +285,7 @@ public class CommandParserServiceImpl implements CommandParserService {
     private JSONArray showTimeLineTweets() throws IOException {
         JSONObject request = new JSONObject();
         request.put("method", ServiceWordsEnum.TIMELINE);
-        request.put("parameterValues",new JSONObject());
+        request.put("parameterValues", new JSONObject());
         JSONObject response = connectionService.request(request);
         JSONArray tweets = (JSONArray) response.get("result");
         consoleViewService.showTimeline(tweets);
@@ -433,6 +433,10 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("tweet", tweets.get(tweetNum - 1));
+
+            System.out.println("pls enter the number of reply to remove it :");
+            int replyNum = scanner.nextInt();
+            jsonObject.put("reply", ((JSONArray)((JSONObject)tweets.get(tweetNum - 1)).get("replies")).get(replyNum - 1));
 
             JSONObject request = makeRequest(ServiceWordsEnum.REMOVEREPLY, jsonObject);
 
