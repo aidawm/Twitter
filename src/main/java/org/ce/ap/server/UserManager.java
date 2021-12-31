@@ -16,10 +16,8 @@ import java.util.HashMap;
 public class UserManager {
     private static UserManager instance;
     private static UserDataBase databaseHandler;
-    ////list
     private static HashMap<String, User> users;
     private SubscribersManager subscribersManager;
-    //// for test the authentication service
 
 
     /**
@@ -65,20 +63,6 @@ public class UserManager {
                 System.out.println(followings.get(i));
                 user.addFollowing(users.get(followings.getString(i)));
             }
-
-//        JSONArray followings = user.getJSONArray("followings");
-//        for (int i = 0; i < followings.length(); i++) {
-//            String followingUsername = (String) ((JSONObject)followings.get(i)).get("username");
-//            if (users.containsKey(followingUsername)){
-//                users.get(user.getString("username")).addFollowing(users.get(followingUsername));
-//            }
-//            else {
-//                JSONObject following = (JSONObject)followings.get(i);
-//                User followingUser = new User(following);
-//                addFollowing(following);
-//                users.put(followingUsername, followingUser);
-//                users.get(user.getString("username")).addFollowing(followingUser);
-//            }
         }
     }
 
@@ -92,13 +76,6 @@ public class UserManager {
         if (users.containsKey(username))
             return users.get(username);
         throw new InvalidUsernameException("the username doesn't exist!!");
-    }
-
-    /**
-     * process on data
-     */
-    private void processOnData() {
-
     }
 
     /**
@@ -155,7 +132,6 @@ public class UserManager {
      */
     public void addNewUser(User user) {
         users.put(user.getUsername(), user);
-//        database.put(user.getUsername(), user.getPassword());
         SubscribersManager.addNewUser(user);
         databaseHandler.writeFile(user.getUsername(), user.toJson());
     }

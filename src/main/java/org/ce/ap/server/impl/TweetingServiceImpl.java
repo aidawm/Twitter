@@ -2,7 +2,6 @@ package main.java.org.ce.ap.server.impl;
 
 import main.java.org.ce.ap.server.*;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import main.java.org.ce.ap.server.exceptions.TweetDoesntExistException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -23,15 +22,16 @@ public class TweetingServiceImpl implements TweetingService {
 
     /**
      * add a new tweet in Twitter
-     *  @param author the user that want to tweet
+     *
+     * @param author the user that want to tweet
      * @param text   the text of the tweet
      * @return
      */
     @Override
     public Tweet addNewTweet(User author, String text) throws InvalidCharacterNumberException {
-            Tweet tweet = new Tweet(author, text, tweetManager.makeID());
-            tweetManager.addNewTweet(tweet);
-            return tweet;
+        Tweet tweet = new Tweet(author, text, tweetManager.makeID());
+        tweetManager.addNewTweet(tweet);
+        return tweet;
     }
 
     /**
@@ -51,7 +51,7 @@ public class TweetingServiceImpl implements TweetingService {
      * @param user  the user that want to like the tweet
      */
     @Override
-    public void like(Tweet tweet, User user)  {
+    public void like(Tweet tweet, User user) {
         tweetManager.findTweet(tweet.getId()).likeTweet(user);
         tweetManager.update(tweet, true);
 //        tweetManager.updateLike(tweet);
@@ -94,19 +94,20 @@ public class TweetingServiceImpl implements TweetingService {
 
     /**
      * publish a tweet again !
-     *  @param tweet the tweet that want to retweet it
+     *
+     * @param tweet the tweet that want to retweet it
      * @param user  the user that want to retweet the tweet
      * @param text  the text that user
      * @return
      */
     @Override
     public Retweet retweet(Tweet tweet, User user, String text) throws InvalidCharacterNumberException {
-            Retweet retweet = new Retweet(tweet, user, text, tweetManager.makeID());
-            tweetManager.addNewTweet(retweet);
-            tweet.addRetweet(retweet);
-            tweetManager.update(tweet, true);
-            System.out.println(retweet);
-            return retweet;
+        Retweet retweet = new Retweet(tweet, user, text, tweetManager.makeID());
+        tweetManager.addNewTweet(retweet);
+        tweet.addRetweet(retweet);
+        tweetManager.update(tweet, true);
+        System.out.println(retweet);
+        return retweet;
     }
 
     /**

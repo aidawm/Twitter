@@ -35,7 +35,6 @@ public class UserAccount {
         tweetingService = new TweetingServiceImpl(user);
         tweetManager = TweetManager.getInstance();
         getTweetsFromDataBase(user);
-//        user.addFollowing(user);
         ArrayList<User> users = user.getFollowings();
         for (int i = 0 ; i < users.size(); i++)
         {
@@ -63,8 +62,6 @@ public class UserAccount {
      */
     public void removeFollowing(User user) {
         observerService.unSubscribe(user, timelineService, this.user);
-        System.out.println(this.user.toJson());
-        System.out.println(user.toJson());
     }
 
     /**
@@ -109,7 +106,7 @@ public class UserAccount {
      * reply a tweet
      *
      * @param tweet      the tweet
-     * @param replyTweet our reply tweet
+     * @param text our reply text
      */
     public void reply(Tweet tweet, String text) throws InvalidCharacterNumberException {
         Tweet replyTweet = new Tweet(user, text, tweetManager.makeID());
@@ -145,18 +142,6 @@ public class UserAccount {
      */
     public void removeRetweet(Tweet tweet, Retweet retweet) {
         tweetingService.removeRetweet(tweet, user, retweet);
-    }
-
-    /**
-     * show the timeline's tweet
-     */
-    public void showTimeline() {
-        System.out.println("TIMELINE->");
-        System.out.println("tweet size is : "+ timelineService.refresh().size());
-        for (Tweet tweet : timelineService.refresh()) {
-            System.out.println(tweet);
-        }
-        System.out.println("---------------------");
     }
 
     /**

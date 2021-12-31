@@ -12,17 +12,16 @@ import java.util.Comparator;
  * The type Timeline service.
  */
 public class TimelineServiceImpl implements TimelineService, Subscriber {
-    private ArrayList<Tweet> tweets =new ArrayList<>();
+    private ArrayList<Tweet> tweets = new ArrayList<>();
     /**
      * The Tweet manager.
      */
     TweetManager tweetManager = TweetManager.getInstance();
 
-    public TimelineServiceImpl(){
+    public TimelineServiceImpl() {
     }
 
-    public void addTweetsFromFile(ArrayList<Tweet> tweets)
-    {
+    public void addTweetsFromFile(ArrayList<Tweet> tweets) {
         this.tweets = tweets;
     }
 
@@ -36,10 +35,8 @@ public class TimelineServiceImpl implements TimelineService, Subscriber {
     @Override
     public void update(Tweet tweet, Boolean state) {
         if (state) {
-//            tweets.add(tweet);
             tweets = tweetManager.addToUserToTweets(tweet);
         } else {
-//            tweets.remove(tweet);
             tweets = tweetManager.removeFromUserToTweets(tweet);
         }
         sortTweetsByTime();

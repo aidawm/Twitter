@@ -1,18 +1,10 @@
 package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.ServiceWordsEnum;
-import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import main.java.org.ce.ap.server.exceptions.InvalidPasswordException;
-import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
-import main.java.org.ce.ap.server.exceptions.SignUpExceptions;
-import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
-import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
-import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
+import main.java.org.ce.ap.server.exceptions.*;
 import main.java.org.ce.ap.server.impl.AuthenticationServiceImpl;
 import org.json.*;
 import com.google.gson.Gson;
-
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 

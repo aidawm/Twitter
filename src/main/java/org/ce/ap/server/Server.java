@@ -29,7 +29,7 @@ public class Server {
                 Socket connectionSocket = welcomingSocket.accept();
                 System.out.println("client accepted!");
                 pool.execute(new ClientHandler(connectionSocket));
-                System.out.print("done.\nClosing server ... ");
+
             }
         } catch (IOException ex) {
             System.err.println(ex);
@@ -61,13 +61,7 @@ class ClientHandler implements Runnable {
                 JSONObject response = serverProcessor.processRequest(jsonObject);
                 out.write(response.toString().getBytes());
             }
-//            int read = in.read(buffer);
-//            String str = new String(buffer, 0, read);
-//            System.out.println(str);
-//            JSONObject jsonObject = new JSONObject(str);
-//            System.out.println(jsonObject.get("key"));
-//            out.write(str.getBytes());
-//            System.out.print("All messages sent.\nClosing client ... ");
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

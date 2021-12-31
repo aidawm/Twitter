@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class SubscribersManager {
-//    public static HashMap<User, HashSet<Subscriber>> subscribers=new HashMap<>();
+
     public static HashMap<User, HashMap<User,Subscriber>> subscribers=new HashMap<>();
-    private HashMap<User,HashSet<User>> following;
 
 
     /**
@@ -17,8 +16,6 @@ public class SubscribersManager {
     public SubscribersManager(ArrayList<User> users){
         for (User user:users){
             subscribers.put(user,new HashMap<>());
-//            HashMap<User, Subscriber> userSubscriberHashMap = subscribers.get(user);
-//            userSubscriberHashMap.put(user, )
         }
 
     }

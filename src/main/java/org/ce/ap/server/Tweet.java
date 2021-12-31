@@ -12,10 +12,8 @@ import org.json.JSONObject;
 /**
  * The type Tweet.
  */
-public class Tweet implements JsonInterface {
+public class Tweet{
     private final long id;
-    private long retweetedId;
-    private boolean isRetweet; //0 for tweet & 1 for retweet
     private final User author;
     private JSONObject jsonObject;
     private String text;
@@ -38,11 +36,6 @@ public class Tweet implements JsonInterface {
         this.text = text;
         this.id = id;
         this.sendDate = LocalDateTime.now();
-        retweetedId = 0;
-//        this.isRetweet = isRetweet;
-//        this.likes = new HashSet<>();
-//        this.replies = new ArrayList<>();
-//        retweets = new ArrayList<>();
     }
 
     /**
@@ -233,16 +226,6 @@ public class Tweet implements JsonInterface {
 
     }
 
-    /**
-     * Sets retweeted id.
-     *
-     * @param retweetedId the retweeted id
-     */
-    public void setRetweetedId(long retweetedId) {
-        if (this.retweetedId == 0)
-            this.retweetedId = retweetedId;
-    }
-
     @Override
     public String toString() {
         String str = author + " : \t" + text + "\n";
@@ -329,7 +312,6 @@ public class Tweet implements JsonInterface {
         return null;
     }
 
-    @Override
     public JSONObject toJson() {
         this.jsonObject = new JSONObject();
         jsonObject.put("id", id);
