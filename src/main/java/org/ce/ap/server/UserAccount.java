@@ -119,6 +119,11 @@ public class UserAccount {
         Tweet replyTweet = new Tweet(user, text, tweetManager.makeID());
         tweetingService.reply(tweet, replyTweet);
     }
+//    public void reply(Tweet tweet, Tweet replyTweet,String text) throws InvalidCharacterNumberException {
+//        Tweet replyReplyTweet = new Tweet(user, text, tweetManager.makeID());
+//        tweetingService.reply(replyTweet, replyReplyTweet);
+//
+//    }
 
     /**
      * remove a reply from a tweet

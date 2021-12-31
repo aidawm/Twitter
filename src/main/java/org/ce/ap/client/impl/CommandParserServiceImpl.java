@@ -43,7 +43,6 @@ public class CommandParserServiceImpl implements CommandParserService {
         while (true) {
             consoleViewService.welcome();
             ServiceWordsEnum command = authentication();
-            System.out.println(command);
             if (command.equals(ServiceWordsEnum.SIGNIN)) {
                 signIn();
             } else if (command.equals(ServiceWordsEnum.SIGNUP)) {
@@ -107,7 +106,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             request.put("parameterValues", jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.SIGNIN,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -152,7 +151,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             request.put("method", ServiceWordsEnum.SIGNUP);
             request.put("parameterValues", jsonObject);
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.SIGNUP,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -165,6 +164,7 @@ public class CommandParserServiceImpl implements CommandParserService {
      */
     private void mainMenu() throws IOException {
         boolean isExit = false;
+
         while (!isExit) {
             consoleViewService.mainMenu();
             ServiceWordsEnum command = mainMenuCommandAnalyzer();
@@ -211,7 +211,7 @@ public class CommandParserServiceImpl implements CommandParserService {
     private void manageTweets() throws IOException {
         boolean isExit = false;
         while (!isExit) {  //finish the managetweet's loop when one command done successfully
-            consoleViewService.mainMenu();
+//            consoleViewService.mainMenu();
             ServiceWordsEnum command = manageTweetsCommandAnalyzer();
             if (command.equals(ServiceWordsEnum.TWEET)) {
                 tweetCommand();
@@ -320,7 +320,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.TWEET, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.TWEET,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -345,7 +345,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.REMOVETWEET, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.REMOVETWEET,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -379,7 +379,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.RETWEET, jsonObject);
 
             JSONObject responseTweet = connectionService.request(request);
-            consoleViewService.processServerResponse(responseTweet);
+            consoleViewService.processServerResponse(ServiceWordsEnum.RETWEET,responseTweet);
             if (!responseTweet.getBoolean("hasError"))
                 isValid = true;
         }
@@ -402,6 +402,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("tweet", tweets.get(tweetNum - 1));
+
             System.out.println("pls enter the text :");
             jsonObject.put("text", scanner.next());
 
@@ -409,7 +410,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.REPLY, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.REPLY,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -441,7 +442,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.REMOVEREPLY, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.REMOVEREPLY,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -468,7 +469,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.LIKE, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.LIKE,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -495,7 +496,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.DISLIKE, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.DISLIKE,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -531,10 +532,9 @@ public class CommandParserServiceImpl implements CommandParserService {
         request.put("method", ServiceWordsEnum.SHOW_USERS);
         request.put("parameterValues", new JSONObject());
         JSONObject response = connectionService.request(request);
-        System.out.println(response);
-        JSONArray users = (JSONArray) response.get("result");
 
-        consoleViewService.showAllUsers(users);
+        JSONArray users = (JSONArray) response.get("result");
+        consoleViewService.showUsers(users);
         return users;
     }
 
@@ -549,7 +549,7 @@ public class CommandParserServiceImpl implements CommandParserService {
         JSONObject response = connectionService.request(request);
         JSONArray followings = (JSONArray) response.get("result");
 
-        consoleViewService.showAllUsers(followings);
+        consoleViewService.showUsers(followings);
         return followings;
     }
 
@@ -561,7 +561,7 @@ public class CommandParserServiceImpl implements CommandParserService {
     private void manageFollows() throws IOException {
         boolean isExit = false;
         while (!isExit) {  //finish the managetweet's loop when one command done successfully
-            consoleViewService.mainMenu();
+//            consoleViewService.mainMenu();
             ServiceWordsEnum command = manageFollowsCommandAnalyzer();
             if (command.equals(ServiceWordsEnum.FOLLOW)) {
                 followCommand();
@@ -595,7 +595,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.FOLLOW, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.FOLLOW,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -622,11 +622,12 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.UNFOLLOW, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.UNFOLLOW,response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
     }
+
 }
 
 

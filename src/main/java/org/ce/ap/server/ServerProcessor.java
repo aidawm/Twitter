@@ -399,13 +399,13 @@ public class ServerProcessor {
             logDataBase.writeLogFile(true, username, "Wrong Username");
             response.put("hasError", true);
             response.put("count", 1);
-            response.put("errorCode", e.getClass().toString());
+            response.put("errorCode", "InvalidUsernameException");
         } catch (InvalidPasswordException e) {
             System.out.println(e.getLocalizedMessage());
             logDataBase.writeLogFile(true, username, "Wrong Password");
             response.put("hasError", true);
             response.put("count", 1);
-            response.put("errorCode", e.getClass().toString());
+            response.put("errorCode","InvalidPasswordException");
         } finally {
             return response;
         }
