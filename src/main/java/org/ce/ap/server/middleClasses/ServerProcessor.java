@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.server;
+package main.java.org.ce.ap.server.middleClasses;
 
 import main.java.org.ce.ap.ServiceWordsEnum;
 import main.java.org.ce.ap.server.exceptions.*;
