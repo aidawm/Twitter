@@ -1,2 +1,64 @@
-[INFI] Client@aida, -Attempt LOG_IN
-[INFI] Client@aida, -Successful LOG_IN
+[INFI] Client@aidawm, -Attempt SIGN_UP
+[INFI] Client@aidawm, -Successful SIGN_UP
+[INFI] Client@aidawm, -Attempt TWEET
+[INFI] Client@aidawm, -Successful TWEET
+[INFI] Client@sa9978, -Attempt SIGN_UP
+[INFI] Client@sa9978, -Successful SIGN_UP
+[INFI] Client@sa9978, -Attempt TWEET
+[INFI] Client@sa9978, -Successful TWEET
+[INFI] Client@aidawm, -Attempt LOG_IN
+[INFI] Client@aidawm, -Successful LOG_IN
+[INFI] Client@aidawm, -Attempt SHOW USERS
+[INFI] Client@aidawm, -Successful SHOW USERS
+[INFI] Client@aidawm, -Attempt FOLLOW
+[INFI] Client@aidawm, -Successful FOLLOW
+[INFI] Client@aidawm, -Attempt TIMELINE
+[INFI] Client@aidawm, -Successful TIMELINE
+[INFI] Client@aidawm, -Attempt TIMELINE
+[INFI] Client@aidawm, -Successful TIMELINE
+[INFI] Client@aidawm, -Attempt RETWEET
+[INFI] Client@aidawm, -Successful RETWEET
+[INFI] Client@aidawm, -Attempt TIMELINE
+[INFI] Client@aidawm, -Successful TIMELINE
+[INFI] Client@aidawm, -Attempt TIMELINE
+[INFI] Client@aidawm, -Successful TIMELINE
+[INFI] Client@aidawm, -Attempt LIKE
+[INFI] Client@aidawm, -Successful LIKE
+[INFI] Client@aidawm, -Attempt TIMELINE
+[INFI] Client@aidawm, -Successful TIMELINE
+[INFI] Client@sa9978, -Attempt TIMELINE
+[INFI] Client@sa9978, -Successful TIMELINE
+[INFI] Client@sa9978, -Attempt SHOW USERS
+[INFI] Client@sa9978, -Successful SHOW USERS
+[INFI] Client@sa9978, -Attempt FOLLOW
+[INFI] Client@sa9978, -Successful FOLLOW
+[INFI] Client@sa9978, -Attempt TIMELINE
+[INFI] Client@sa9978, -Successful TIMELINE
+[INFI] Client@aidawm, -Attempt LOG_IN
+[ERROR] Client@aidawm, -Wrong Password
+[INFI] Client@aidawm, -Attempt LOG_IN
+[INFI] Client@aidawm, -Successful LOG_IN
+[INFI] Client@sa9978, -Attempt LOG_IN
+[INFI] Client@sa9978, -Successful LOG_IN
+[INFI] Client@sa9978, -Attempt SHOW USERS
+[INFI] Client@sa9978, -Successful SHOW USERS
+[INFI] Client@sa9978, -Attempt FOLLOW
+[INFI] Client@sa9978, -Successful FOLLOW
+[INFI] Client@sa9978, -Attempt LOG_IN
+[INFI] Client@sa9978, -Successful LOG_IN
+[INFI] Client@aidawm, -Attempt TWEET
+[INFI] Client@aidawm, -Successful TWEET
+[INFI] Client@sa9978, -Attempt TIMELINE
+[INFI] Client@sa9978, -Successful TIMELINE
+[INFI] Client@sa9978, -Attempt RETWEET
+[INFI] Client@sa9978, -Successful RETWEET
+[INFI] Client@sa9978, -Attempt TIMELINE
+[INFI] Client@sa9978, -Successful TIMELINE
+[INFI] Client@sa9978, -Attempt TIMELINE
+[INFI] Client@sa9978, -Successful TIMELINE
+[INFI] Client@sa9978, -Attempt RETWEET
+[INFI] Client@sa9978, -Successful RETWEET
+[INFI] Client@sa9978, -Attempt TIMELINE
+[INFI] Client@sa9978, -Successful TIMELINE
+[INFI] Client@aidawm, -Attempt LOG_IN
+[INFI] Client@aidawm, -Attempt LOG_IN
