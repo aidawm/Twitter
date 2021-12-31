@@ -49,7 +49,7 @@ public class LogDataBase {
                 fileStr.append(new String(buffer, 0, count));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return "";
         }
         return fileStr.toString();
     }

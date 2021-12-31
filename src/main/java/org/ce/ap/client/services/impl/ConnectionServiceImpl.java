@@ -15,7 +15,6 @@ public class ConnectionServiceImpl implements ConnectionService {
     private Socket client;
     private OutputStream out;
     private InputStream in;
-    private byte[] buffer = new byte[4096];
 
     /**
      * Instantiates a new Connection service.
@@ -38,10 +37,12 @@ public class ConnectionServiceImpl implements ConnectionService {
      */
     @Override
     public JSONObject request(JSONObject jsonObject) throws IOException {
+        byte[] buffer = new byte[8192];
         out.write(jsonObject.toString().getBytes());
         int read = in.read(buffer);
         String str = new String(buffer, 0, read);
         JSONObject response = new JSONObject(str);
+        System.out.println(response);
         return response;
     }
 

@@ -517,6 +517,9 @@ public class CommandParserServiceImpl implements CommandParserService {
                 return ServiceWordsEnum.FOLLOW;
             if (index == 2)
                 return ServiceWordsEnum.UNFOLLOW;
+            if (index == 0)
+                return ServiceWordsEnum.EXIT;
+            System.out.println("enter a valid index");
         }
     }
 
@@ -568,6 +571,8 @@ public class CommandParserServiceImpl implements CommandParserService {
                 unfollowCommand();
                 isExit = true;
             }
+            else
+                break;
         }
     }
 

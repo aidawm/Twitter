@@ -22,7 +22,7 @@ public class UserAccount {
     //// to access the tweetingService
     private TweetingServiceImpl tweetingService;
     //// to access the timelineService
-    private TimelineServiceImpl timelineService = new TimelineServiceImpl();
+    private TimelineServiceImpl timelineService ;
     //// to access the observerService
     private ObserverServiceImpl observerService = new ObserverServiceImpl();
     //// to access the TweetManager
@@ -36,6 +36,7 @@ public class UserAccount {
      */
     public UserAccount(User user) throws InvalidUsernameException {
         this.user = user;
+        this.timelineService= new TimelineServiceImpl(user);
         observerService.subscribe(user, timelineService, this.user);
         tweetingService = new TweetingServiceImpl(user);
         tweetManager = TweetManager.getInstance();

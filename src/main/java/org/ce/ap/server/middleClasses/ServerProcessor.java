@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class ServerProcessor {
     private AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
     private TweetManager tweetManager = TweetManager.getInstance();
-    private static UserAccount userAccount;
+    private UserAccount userAccount;
     private UserManager userManager = UserManager.getInstance();
     private JSONObject response = new JSONObject();
     private LogDataBase logDataBase = new LogDataBase();
@@ -160,8 +160,11 @@ public class ServerProcessor {
                 logDataBase.writeLogFile(false, username, "Attempt REMOVE TWEET");
                 try {
                     Tweet tweet = findTweet(jsonParameters);
-                    if (tweet instanceof Retweet)
-                        userAccount.removeRetweet(findTweet((JSONObject) jsonParameters.get("retweetedTweet")), (Retweet) tweet);
+                    if (tweet instanceof Retweet){
+                        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+                        userAccount.removeRetweet(findTweet((JSONObject) ((JSONObject) jsonParameters.get("tweet")).get("retweetedTweet")), (Retweet) tweet);
+                    }
+
                     else
                         userAccount.removeTweet(tweet);
                     logDataBase.writeLogFile(false, username, "Successful REMOVE TWEET");

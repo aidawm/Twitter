@@ -1,5 +1,6 @@
 package main.java.org.ce.ap.server.services.impl;
 
+import main.java.org.ce.ap.server.model.user.User;
 import main.java.org.ce.ap.server.services.observer.Subscriber;
 import main.java.org.ce.ap.server.services.TimelineService;
 import main.java.org.ce.ap.server.model.tweet.Tweet;
@@ -12,6 +13,7 @@ import java.util.Comparator;
  * The type Timeline service.
  */
 public class TimelineServiceImpl implements TimelineService, Subscriber {
+    private User user;
     private ArrayList<Tweet> tweets = new ArrayList<>();
     /**
      * The Tweet manager.
@@ -21,7 +23,8 @@ public class TimelineServiceImpl implements TimelineService, Subscriber {
     /**
      * Instantiates a new Timeline service.
      */
-    public TimelineServiceImpl() {
+    public TimelineServiceImpl(User user) {
+        this.user=user;
     }
 
     /**
@@ -52,6 +55,7 @@ public class TimelineServiceImpl implements TimelineService, Subscriber {
 
     @Override
     public ArrayList<Tweet> refresh() {
+        tweets= tweetManager.getTimeline(user);
         sortTweetsByTime();
         return tweets;
     }

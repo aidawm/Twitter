@@ -40,7 +40,7 @@ public class Server {
             while (true) {
                 Socket connectionSocket = welcomingSocket.accept();
                 System.out.println("client accepted!");
-                pool.execute(new ClientHandler(connectionSocket));
+                pool.execute(new Thread(new ClientHandler(connectionSocket)));
 
             }
         } catch (IOException ex) {

@@ -1,6 +1,7 @@
 package main.java.org.ce.ap.client.services.impl;
 
 import main.java.org.ce.ap.client.services.ConsoleViewService;
+import main.java.org.ce.ap.server.model.tweet.Tweet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -53,6 +54,7 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
     public void manageFollowsMenu() {
         System.out.println("1 ) follow a user");
         System.out.println("2 ) unfollow a user");
+        System.out.println("0 ) exit");
     }
 
     /**
@@ -122,14 +124,14 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
 
             case TIMELINE:
                 if (!response.getBoolean("hasError"))
-                    System.out.println("welcome! timeline attempt is successful");
+                    System.out.println("timeline attempt is successful");
                 else {
                     System.out.println("cant show timeline!");
                 }
                 break;
             case SHOW_MY_TWEETS:
                 if (!response.getBoolean("hasError"))
-                    System.out.println("welcome! show_my_tweets attempt is successful");
+                    System.out.println("show_my_tweets attempt is successful");
                 else {
                     System.out.println("cant show show_my_tweets!");
                 }
@@ -137,7 +139,7 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
 
             case TWEET:
                 if (!response.getBoolean("hasError"))
-                    System.out.println("welcome! add new tweet attempt is successful");
+                    System.out.println("add new tweet attempt is successful");
                 else {
                     System.out.println("the tweet text must be less than 256 character");
                 }
@@ -145,7 +147,7 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
 
             case REMOVETWEET:
                 if (!response.getBoolean("hasError"))
-                    System.out.println("welcome! remove tweet attempt is successful");
+                    System.out.println("remove tweet attempt is successful");
                 else {
                     System.out.println("you havent access to delete this tweet!");
                 }
@@ -153,23 +155,23 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
 
             case RETWEET:
                 if (!response.getBoolean("hasError"))
-                    System.out.println("welcome! add new retweet attempt is successful");
+                    System.out.println("add new retweet attempt is successful");
                 else {
                     System.out.println("the tweet text must be less than 256 character");
                 }
                 break;
 
-            case REMOVERETWEET:
-                if (!response.getBoolean("hasError"))
-                    System.out.println("welcome! remove retweet attempt is successful");
-                else {
-                    System.out.println("you havent access to delete this tweet!");
-                }
-                break;
+//            case REMOVERETWEET:
+//                if (!response.getBoolean("hasError"))
+//                    System.out.println("welcome! remove retweet attempt is successful");
+//                else {
+//                    System.out.println("you havent access to delete this tweet!");
+//                }
+//                break;
 
             case LIKE:
                 if (!response.getBoolean("hasError"))
-                    System.out.println("welcome! like tweet attempt is successful");
+                    System.out.println("like tweet attempt is successful");
                 else {
                     System.out.println("like is failed");
                 }
@@ -231,6 +233,9 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
     }
 
     private String showTweet(JSONObject tweet) {
+        if(tweet.keySet().contains("retweetedTweet")){
+            return showRetweet(tweet);
+        }
         String author = "@" + (tweet.getString("author"));
 
         String text = tweet.getString("text");
@@ -265,6 +270,32 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
         lastName = user.getString("lastName");
 
         return "@" + username + " (" + firstName + " " + lastName + ")";
+    }
+    private String showRetweet(JSONObject retweet){
+        System.out.println(retweet);
+        JSONObject retweetedTweet = (JSONObject) retweet.get("retweetedTweet");
+        JSONObject newTweet = (JSONObject) retweet.get("newTweet");
+        LocalDateTime sendDate = LocalDateTime.parse(newTweet.getString("sendDate"));
+        JSONArray replies = (JSONArray) newTweet.get("replies");
+
+        String str = newTweet.getString("author") + " : \t" + newTweet.getString("text") + "\n";
+
+        str += "\t\t" + retweetedTweet.getString("author")  + " : \t" + retweetedTweet.getString("text")  + "\n";
+
+        str += "retweets: " + ((JSONArray)newTweet.get("retweets")).length() + "\t" + "likes: " + ((JSONArray)newTweet.get("likes")).length()  + "\n";
+        if (LocalDateTime.now().getDayOfYear() - sendDate.getDayOfYear() < 7) {
+            str += sendDate.getDayOfWeek() + "\t" + sendDate.getHour() + ":" + sendDate.getMinute() + ":" + sendDate.getSecond() + "\n";
+        } else {
+            str += sendDate.getDayOfMonth() + " " + sendDate.getMonth() + "\t" + sendDate.getHour() + "\n";
+        }
+        if (replies.length() != 0) {
+            str += "replies :\n";
+        }
+        for (int i=0;i<replies.length();i++){
+            str = str + "\t" + showTweet((JSONObject) replies.get(i));
+        }
+
+        return str;
     }
 
 }
