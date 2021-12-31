@@ -1,6 +1,6 @@
-package main.java.org.ce.ap.server.impl;
+package main.java.org.ce.ap.server.services.impl;
 
-import main.java.org.ce.ap.server.ObserverService;
+import main.java.org.ce.ap.server.services.ObserverService;
 import main.java.org.ce.ap.server.Subscriber;
 import main.java.org.ce.ap.server.SubscribersManager;
 import main.java.org.ce.ap.server.model.User;

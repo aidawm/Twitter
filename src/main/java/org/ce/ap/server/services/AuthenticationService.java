@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.server;
+package main.java.org.ce.ap.server.services;
 
 import main.java.org.ce.ap.server.exceptions.*;
 import main.java.org.ce.ap.server.model.User;

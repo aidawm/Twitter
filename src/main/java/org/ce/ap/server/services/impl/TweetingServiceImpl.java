@@ -1,10 +1,11 @@
-package main.java.org.ce.ap.server.impl;
+package main.java.org.ce.ap.server.services.impl;
 
 import main.java.org.ce.ap.server.*;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import main.java.org.ce.ap.server.model.Retweet;
 import main.java.org.ce.ap.server.model.Tweet;
 import main.java.org.ce.ap.server.model.User;
+import main.java.org.ce.ap.server.services.TweetingService;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

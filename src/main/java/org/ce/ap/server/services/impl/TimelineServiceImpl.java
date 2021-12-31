@@ -1,7 +1,7 @@
-package main.java.org.ce.ap.server.impl;
+package main.java.org.ce.ap.server.services.impl;
 
 import main.java.org.ce.ap.server.Subscriber;
-import main.java.org.ce.ap.server.TimelineService;
+import main.java.org.ce.ap.server.services.TimelineService;
 import main.java.org.ce.ap.server.model.Tweet;
 import main.java.org.ce.ap.server.TweetManager;
 

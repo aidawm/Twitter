@@ -2,7 +2,7 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.ServiceWordsEnum;
 import main.java.org.ce.ap.server.exceptions.*;
-import main.java.org.ce.ap.server.impl.AuthenticationServiceImpl;
+import main.java.org.ce.ap.server.services.impl.AuthenticationServiceImpl;
 import main.java.org.ce.ap.server.model.Retweet;
 import main.java.org.ce.ap.server.model.Tweet;
 import main.java.org.ce.ap.server.model.User;
