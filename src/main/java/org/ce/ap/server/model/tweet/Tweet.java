@@ -1,18 +1,18 @@
-package main.java.org.ce.ap.server.model;
+package main.java.org.ce.ap.server.model.tweet;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.model.user.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  * The type Tweet.
  */
-public class Tweet{
+public class Tweet {
     private final long id;
     private final User author;
     private JSONObject jsonObject;
@@ -267,7 +267,6 @@ public class Tweet{
      * @return the array list
      */
     public ArrayList<JSONObject> toJsonArrayTweet(ArrayList<Tweet> list) {
-        sortTweetsByTime(list);
         ArrayList<JSONObject> jsonList = new ArrayList<>();
         for (Tweet tweet : list) {
             jsonList.add((tweet).toJson());
@@ -331,20 +330,4 @@ public class Tweet{
     }
 
 
-    /**
-     * this class sorts Tweets by time
-     */
-    private void sortTweetsByTime(ArrayList<Tweet> tweets) {
-        tweets.sort(new dateSorter());
-    }
-
-}
-/**
- * this class can help us to sort the arraylist by date!
- */
-class dateSorter implements Comparator<Tweet> {
-    @Override
-    public int compare(Tweet o1, Tweet o2) {
-        return o2.getSendDate().compareTo(o1.getSendDate());
-    }
 }

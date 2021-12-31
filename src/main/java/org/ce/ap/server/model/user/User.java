@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.server.model;
+package main.java.org.ce.ap.server.model.user;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

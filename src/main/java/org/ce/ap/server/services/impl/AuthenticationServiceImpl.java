@@ -2,7 +2,8 @@ package main.java.org.ce.ap.server.services.impl;
 
 import main.java.org.ce.ap.server.*;
 import main.java.org.ce.ap.server.exceptions.*;
-import main.java.org.ce.ap.server.model.User;
+import main.java.org.ce.ap.server.model.user.ToHexString;
+import main.java.org.ce.ap.server.model.user.User;
 import main.java.org.ce.ap.server.services.AuthenticationService;
 
 import java.security.NoSuchAlgorithmException;

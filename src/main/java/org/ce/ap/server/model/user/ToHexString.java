@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.server;
+package main.java.org.ce.ap.server.model.user;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

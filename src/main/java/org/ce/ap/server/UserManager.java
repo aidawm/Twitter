@@ -1,7 +1,8 @@
 package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
-import main.java.org.ce.ap.server.model.User;
+import main.java.org.ce.ap.server.model.user.User;
+import main.java.org.ce.ap.server.services.observer.SubscribersManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import main.java.org.ce.ap.server.DataBase.UserDataBase;

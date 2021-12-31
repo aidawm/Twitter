@@ -1,6 +1,6 @@
-package main.java.org.ce.ap.server;
+package main.java.org.ce.ap.server.services.observer;
 
-import main.java.org.ce.ap.server.model.User;
+import main.java.org.ce.ap.server.model.user.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;

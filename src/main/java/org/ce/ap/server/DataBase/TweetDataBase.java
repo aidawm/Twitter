@@ -1,6 +1,6 @@
 package main.java.org.ce.ap.server.DataBase;
 
-import main.java.org.ce.ap.server.model.User;
+import main.java.org.ce.ap.server.model.user.User;
 import org.json.JSONObject;
 
 import java.io.*;

@@ -8,9 +8,9 @@ import main.java.org.ce.ap.server.services.impl.TweetingServiceImpl;
 
 import java.util.ArrayList;
 
-import main.java.org.ce.ap.server.model.Retweet;
-import main.java.org.ce.ap.server.model.Tweet;
-import main.java.org.ce.ap.server.model.User;
+import main.java.org.ce.ap.server.model.tweet.Retweet;
+import main.java.org.ce.ap.server.model.tweet.Tweet;
+import main.java.org.ce.ap.server.model.user.User;
 
 /**
  * The type User account.
