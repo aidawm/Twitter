@@ -38,6 +38,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Override
     public JSONObject request(JSONObject jsonObject) throws IOException {
         byte[] buffer = new byte[8192];
+        System.out.println("**" + jsonObject);
         out.write(jsonObject.toString().getBytes());
         int read = in.read(buffer);
         String str = new String(buffer, 0, read);

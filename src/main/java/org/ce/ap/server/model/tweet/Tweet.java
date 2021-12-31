@@ -194,6 +194,7 @@ public class Tweet {
         retweetJson.put("user", retweet.getAuthor());
         retweetJson.put("text", retweet.getText());
         retweetJson.put("sendDate", retweet.getSendDate());
+        retweetJson.put("id", retweet.getId());
         if (!retweets.contains(retweetJson))
             retweets.add(retweetJson);
     }
@@ -222,8 +223,20 @@ public class Tweet {
      * @param retweet is the tweet that we want to remove it
      */
     public void removeRetweet(Tweet retweet) {
-        retweets.remove(retweet);
-
+//        System.out.println("before");
+//        System.out.println(retweets);
+//        System.out.println(retweet.toJson());
+//        retweets.remove(retweet.toJson());
+//        System.out.println("after");
+//        System.out.println(retweets);
+        long id = retweet.getId();
+        for (JSONObject r : retweets)
+        {
+            if(r.getLong("id") == id)
+            {
+                retweets.remove(r);
+            }
+        }
     }
 
     @Override

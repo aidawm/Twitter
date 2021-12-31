@@ -128,9 +128,10 @@ public class TweetingServiceImpl implements TweetingService {
     @Override
     public void removeRetweet(Tweet tweet, User user, Retweet retweet) {
         tweet.removeRetweet(retweet);
-        tweetManager.removeTweet(tweet, user);
+        tweetManager.removeTweet(retweet, user);
+        System.out.println(tweet.toJson());
         tweetManager.update(tweet, true);
-        tweetManager.update(retweet, false);
+//        tweetManager.update(retweet, false);
     }
 
     /**

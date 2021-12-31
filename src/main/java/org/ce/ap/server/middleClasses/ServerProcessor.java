@@ -162,7 +162,14 @@ public class ServerProcessor {
                     Tweet tweet = findTweet(jsonParameters);
                     if (tweet instanceof Retweet){
                         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-                        userAccount.removeRetweet(findTweet((JSONObject) ((JSONObject) jsonParameters.get("tweet")).get("retweetedTweet")), (Retweet) tweet);
+//                        System.out.println(((JSONObject) );
+                        JSONObject removeRetweetJson = new JSONObject();
+                        removeRetweetJson.put("tweet", ((JSONObject) jsonParameters.get("tweet")).get("retweetedTweet"));
+                        System.out.println("find tweet");
+                        System.out.println(findTweet(removeRetweetJson).toJson());
+                        System.out.println("(Retweet) tweet");
+                        System.out.println(((Retweet) tweet).toJson());
+                        userAccount.removeRetweet(findTweet(removeRetweetJson), (Retweet) tweet);
                     }
 
                     else
@@ -415,7 +422,13 @@ public class ServerProcessor {
             response.put("hasError", true);
             response.put("count", 1);
             response.put("errorCode","InvalidPasswordException");
-        } finally {
+        }catch (Exception e){
+
+            response.put("hasError", true);
+            response.put("count", 1);
+            response.put("errorCode",e.getClass().toString());
+        }
+        finally {
             return response;
         }
     }
