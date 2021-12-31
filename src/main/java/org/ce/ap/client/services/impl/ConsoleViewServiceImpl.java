@@ -1,6 +1,6 @@
-package main.java.org.ce.ap.client.impl;
+package main.java.org.ce.ap.client.services.impl;
 
-import main.java.org.ce.ap.client.*;
+import main.java.org.ce.ap.client.services.ConsoleViewService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

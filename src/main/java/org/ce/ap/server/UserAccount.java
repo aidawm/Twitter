@@ -2,6 +2,7 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
+import main.java.org.ce.ap.server.managers.TweetManager;
 import main.java.org.ce.ap.server.services.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.services.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.services.impl.TweetingServiceImpl;

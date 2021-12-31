@@ -1,7 +1,8 @@
 package main.java.org.ce.ap.server;
 
 
-import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
+import main.java.org.ce.ap.server.managers.TweetManager;
+import main.java.org.ce.ap.server.managers.UserManager;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -9,7 +10,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

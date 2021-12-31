@@ -2,6 +2,8 @@ package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.ServiceWordsEnum;
 import main.java.org.ce.ap.server.exceptions.*;
+import main.java.org.ce.ap.server.managers.TweetManager;
+import main.java.org.ce.ap.server.managers.UserManager;
 import main.java.org.ce.ap.server.services.impl.AuthenticationServiceImpl;
 import main.java.org.ce.ap.server.model.tweet.Retweet;
 import main.java.org.ce.ap.server.model.tweet.Tweet;

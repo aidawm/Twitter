@@ -4,7 +4,7 @@ import main.java.org.ce.ap.server.services.ObserverService;
 import main.java.org.ce.ap.server.services.observer.Subscriber;
 import main.java.org.ce.ap.server.services.observer.SubscribersManager;
 import main.java.org.ce.ap.server.model.user.User;
-import main.java.org.ce.ap.server.UserManager;
+import main.java.org.ce.ap.server.managers.UserManager;
 
 /**
  * The type Observer service.

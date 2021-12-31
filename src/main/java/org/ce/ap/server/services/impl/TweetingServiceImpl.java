@@ -1,7 +1,7 @@
 package main.java.org.ce.ap.server.services.impl;
 
-import main.java.org.ce.ap.server.*;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import main.java.org.ce.ap.server.managers.TweetManager;
 import main.java.org.ce.ap.server.model.tweet.Retweet;
 import main.java.org.ce.ap.server.model.tweet.Tweet;
 import main.java.org.ce.ap.server.model.user.User;

@@ -3,7 +3,7 @@ package main.java.org.ce.ap.server.services.impl;
 import main.java.org.ce.ap.server.services.observer.Subscriber;
 import main.java.org.ce.ap.server.services.TimelineService;
 import main.java.org.ce.ap.server.model.tweet.Tweet;
-import main.java.org.ce.ap.server.TweetManager;
+import main.java.org.ce.ap.server.managers.TweetManager;
 
 import java.util.ArrayList;
 import java.util.Comparator;

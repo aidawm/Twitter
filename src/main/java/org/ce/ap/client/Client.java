@@ -1,6 +1,6 @@
 package main.java.org.ce.ap.client;
 
-import main.java.org.ce.ap.client.impl.CommandParserServiceImpl;
+import main.java.org.ce.ap.client.services.impl.CommandParserServiceImpl;
 
 
 import java.io.*;

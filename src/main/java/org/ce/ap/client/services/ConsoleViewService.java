@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.client;
+package main.java.org.ce.ap.client.services;
 
 import main.java.org.ce.ap.ServiceWordsEnum;
 import org.json.JSONArray;

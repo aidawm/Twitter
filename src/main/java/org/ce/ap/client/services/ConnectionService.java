@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.client;
+package main.java.org.ce.ap.client.services;
 
 import org.json.JSONObject;
 
