@@ -2,13 +2,28 @@ package main.java.org.ce.ap.server.exceptions;
 
 import java.util.ArrayList;
 
-public class SignUpExceptions extends Exception{
+/**
+ * The type Sign up exceptions.
+ */
+public class SignUpExceptions extends Exception {
     private ArrayList<String> messages;
-    public SignUpExceptions(ArrayList<String> messages){
-        this.messages=messages;
+
+    /**
+     * Instantiates a new Sign up exceptions.
+     *
+     * @param messages the messages
+     */
+    public SignUpExceptions(ArrayList<String> messages) {
+        this.messages = messages;
     }
 
-    public ArrayList<String> getMessages(){
+    /**
+     * Gets messages.
+     *
+     * @return the messages
+     */
+    public ArrayList<String> getMessages() {
         return messages;
     }
+
 }
