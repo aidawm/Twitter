@@ -183,6 +183,7 @@ public class ServerProcessor {
                 logDataBase.writeLogFile(false, username, "Attempt RETWEET");
                 try {
                     Retweet retweet = userAccount.retweet(findTweet(jsonParameters), jsonParameters.getString("text"));
+                    System.out.println(retweet.toJson());
                     logDataBase.writeLogFile(false, username, "Successful RETWEET");
                     response.put("hasError", false);
                     response.put("count", 1);

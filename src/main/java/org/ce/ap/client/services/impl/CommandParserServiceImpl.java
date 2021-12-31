@@ -420,7 +420,7 @@ public class CommandParserServiceImpl implements CommandParserService {
      * @throws IOException
      */
     private void removeReplyCommand() throws IOException {
-        JSONArray tweets = showTimeLineTweets();
+        JSONArray tweets = showMyTweets();
 
         Scanner scanner = new Scanner(System.in);
         boolean isValid = false;
@@ -574,6 +574,16 @@ public class CommandParserServiceImpl implements CommandParserService {
             else
                 break;
         }
+    }
+
+    private JSONArray showMyTweets() throws IOException {
+        JSONObject request = new JSONObject();
+        request.put("method", ServiceWordsEnum.SHOW_MY_TWEETS);
+        request.put("parameterValues", new JSONObject());
+        JSONObject response = connectionService.request(request);
+        JSONArray tweets = (JSONArray) response.get("result");
+        consoleViewService.showTimeline(tweets);
+        return tweets;
     }
 
     /**

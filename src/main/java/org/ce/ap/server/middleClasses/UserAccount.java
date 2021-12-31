@@ -146,7 +146,9 @@ public class UserAccount {
      * @throws InvalidCharacterNumberException if the text has more than 256 character
      */
     public Retweet retweet(Tweet tweet, String text) throws InvalidCharacterNumberException {
-        return tweetingService.retweet(tweet, user, text);
+        Retweet tweet1 =tweetingService.retweet(tweet, user, text);
+        System.out.println("%%%%%%"+tweet1.toJson());
+        return tweet1;
     }
 
     /**
