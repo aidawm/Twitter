@@ -18,9 +18,17 @@ public class TimelineServiceImpl implements TimelineService, Subscriber {
      */
     TweetManager tweetManager = TweetManager.getInstance();
 
+    /**
+     * Instantiates a new Timeline service.
+     */
     public TimelineServiceImpl() {
     }
 
+    /**
+     * Add tweets from file.
+     *
+     * @param tweets the tweets
+     */
     public void addTweetsFromFile(ArrayList<Tweet> tweets) {
         this.tweets = tweets;
     }

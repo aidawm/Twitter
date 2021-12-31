@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+/**
+ * The type User account.
+ */
 public class UserAccount {
     //// the user's information
     private final User user;
@@ -28,6 +31,7 @@ public class UserAccount {
      * create a new object from UserAccount
      *
      * @param user the user information
+     * @throws InvalidUsernameException the invalid username exception
      */
     public UserAccount(User user) throws InvalidUsernameException {
         this.user = user;
@@ -36,8 +40,7 @@ public class UserAccount {
         tweetManager = TweetManager.getInstance();
         getTweetsFromDataBase(user);
         ArrayList<User> users = user.getFollowings();
-        for (int i = 0 ; i < users.size(); i++)
-        {
+        for (int i = 0; i < users.size(); i++) {
             observerService.subscribe(users.get(i), timelineService, this.user);
         }
     }
@@ -45,10 +48,12 @@ public class UserAccount {
     private void getTweetsFromDataBase(User user) throws InvalidUsernameException {
         timelineService.addTweetsFromFile(TweetManager.getInstance().getDataFromDatabase(user));
     }
+
     /**
      * subscribe a user
      *
      * @param user the user that want to subscribe it
+     * @throws InvalidUsernameException the invalid username exception
      */
     public void addFollowing(User user) throws InvalidUsernameException {
         observerService.subscribe(user, timelineService, this.user);
@@ -68,6 +73,7 @@ public class UserAccount {
      * add a new tweet for this userAccount
      *
      * @param text the text of the tweet
+     * @return the tweet
      * @throws InvalidCharacterNumberException if the text has more than 256 character
      */
     public Tweet addNewTweet(String text) throws InvalidCharacterNumberException {
@@ -89,7 +95,7 @@ public class UserAccount {
      *
      * @param tweet the tweet that want to like it
      */
-    public void like(Tweet tweet){
+    public void like(Tweet tweet) {
         tweetingService.like(tweet, user);
     }
 
@@ -105,8 +111,9 @@ public class UserAccount {
     /**
      * reply a tweet
      *
-     * @param tweet      the tweet
-     * @param text our reply text
+     * @param tweet the tweet
+     * @param text  our reply text
+     * @throws InvalidCharacterNumberException the invalid character number exception
      */
     public void reply(Tweet tweet, String text) throws InvalidCharacterNumberException {
         Tweet replyTweet = new Tweet(user, text, tweetManager.makeID());
@@ -128,6 +135,7 @@ public class UserAccount {
      *
      * @param tweet the tweet
      * @param text  the text that want to retweet the tweet with it
+     * @return the retweet
      * @throws InvalidCharacterNumberException if the text has more than 256 character
      */
     public Retweet retweet(Tweet tweet, String text) throws InvalidCharacterNumberException {
@@ -156,7 +164,7 @@ public class UserAccount {
     /**
      * the user information
      *
-     * @return user
+     * @return user user
      */
     public User getUser() {
         return user;

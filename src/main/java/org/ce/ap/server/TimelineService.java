@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public interface TimelineService {
     /**
+     * Update.
      *
      * @param tweet is the given
      * @param state is a boolean shows that the tweet is in adding progress or not
@@ -14,6 +15,7 @@ public interface TimelineService {
     public void update(Tweet tweet, Boolean state);
 
     /**
+     * Refresh array list.
      *
      * @return a array list of tweets
      */

@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The type Tweet data base.
+ */
 public class TweetDataBase {
     private Path path;
 
@@ -30,7 +33,7 @@ public class TweetDataBase {
      * @param jsonObject the json object
      */
     public void writeFile(String id, String username, JSONObject jsonObject) {
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(path.toFile().getAbsoluteFile() + File.separator + id  + " " + username))) {
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(path.toFile().getAbsoluteFile() + File.separator + id + " " + username))) {
             out.write(jsonObject.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,12 +60,13 @@ public class TweetDataBase {
             e.printStackTrace();
         }
 
-        return  new JSONObject(fileStr);
+        return new JSONObject(fileStr);
     }
 
     /**
      * Get directory files array list.
      *
+     * @param user the user
      * @return the array list
      */
     public HashMap<Long, JSONObject> getDirectoryFiles(User user) {
@@ -72,8 +76,7 @@ public class TweetDataBase {
                 for (Path p : directoryStream) {
                     String[] words = p.getFileName().toString().split("\\s");
                     ArrayList<String> followings = new ArrayList<>();
-                    for (User u : user.getFollowings())
-                    {
+                    for (User u : user.getFollowings()) {
                         followings.add(u.getUsername());
                     }
                     System.out.println(followings);
@@ -85,14 +88,15 @@ public class TweetDataBase {
                 e.printStackTrace();
             }
         }
-        System.out.println("file size" +files.size());
+        System.out.println("file size" + files.size());
         return files;
     }
 
     /**
      * Remove file.
      *
-     * @param id the id
+     * @param id       the id
+     * @param username the username
      */
     public void removeFile(String id, String username) {
         try {

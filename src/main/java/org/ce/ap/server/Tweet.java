@@ -312,6 +312,11 @@ public class Tweet{
         return null;
     }
 
+    /**
+     * To json json object.
+     *
+     * @return the json object
+     */
     public JSONObject toJson() {
         this.jsonObject = new JSONObject();
         jsonObject.put("id", id);

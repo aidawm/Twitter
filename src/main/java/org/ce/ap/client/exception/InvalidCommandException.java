@@ -1,7 +1,15 @@
 package main.java.org.ce.ap.client.exception;
 
-public class InvalidCommandException  extends Exception{
-    public InvalidCommandException(String message){
+/**
+ * The type Invalid command exception.
+ */
+public class InvalidCommandException extends Exception {
+    /**
+     * Instantiates a new Invalid command exception.
+     *
+     * @param message the message
+     */
+    public InvalidCommandException(String message) {
         super(message);
     }
 }

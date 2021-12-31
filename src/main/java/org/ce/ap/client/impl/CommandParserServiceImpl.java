@@ -363,10 +363,10 @@ public class CommandParserServiceImpl implements CommandParserService {
         boolean isValid = false;
         while (!isValid) {
             System.out.println("pls enter the number of tweet to retweet it :");
-            int tweetNum ;
-            try{
+            int tweetNum;
+            try {
                 tweetNum = Integer.parseInt(scanner.nextLine());
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("enter a index number!");
                 continue;
             }
@@ -436,7 +436,7 @@ public class CommandParserServiceImpl implements CommandParserService {
 
             System.out.println("pls enter the number of reply to remove it :");
             int replyNum = scanner.nextInt();
-            jsonObject.put("reply", ((JSONArray)((JSONObject)tweets.get(tweetNum - 1)).get("replies")).get(replyNum - 1));
+            jsonObject.put("reply", ((JSONArray) ((JSONObject) tweets.get(tweetNum - 1)).get("replies")).get(replyNum - 1));
 
             JSONObject request = makeRequest(ServiceWordsEnum.REMOVEREPLY, jsonObject);
 

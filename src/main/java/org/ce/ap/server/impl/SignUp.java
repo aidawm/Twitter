@@ -47,7 +47,7 @@ public class SignUp implements AuthenticationService {
         if (LocalDate.now().isBefore(birthDate))
 //            return "the birthdate couldn't be after now :)";
             exceptions.add("InvalidDateException");
-        if ((LocalDate.now().getYear() - birthDate.getYear()) < 13 && (LocalDate.now().getYear() - birthDate.getYear())>0)
+        if ((LocalDate.now().getYear() - birthDate.getYear()) < 13 && (LocalDate.now().getYear() - birthDate.getYear()) > 0)
             exceptions.add("InvalidAgeException");
 //            return "the age must be greater than 13 ;) ";
     }
@@ -61,10 +61,10 @@ public class SignUp implements AuthenticationService {
     private void checkUsername(String username) {
         if (username.length() < 4 || username.length() > 15)
 //            return "the username must be greater than 4 and less than 15";
-        exceptions.add("InvalidUsernameSizeException");
+            exceptions.add("InvalidUsernameSizeException");
         username = username.toLowerCase(Locale.ROOT);
         for (char c : username.toCharArray()) {
-            if (!((c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9'))){
+            if (!((c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9'))) {
                 exceptions.add("InvalidUsernameCharactersException");
                 break;
             }
@@ -99,7 +99,7 @@ public class SignUp implements AuthenticationService {
         checkName(lastName);
         checkUsername(username);
         checkAge(birthDate);
-        if (exceptions.size()!=0)
+        if (exceptions.size() != 0)
             throw new SignUpExceptions(exceptions);
         User user = new User(firstName, lastName, username, password, birthDate);
         return user;

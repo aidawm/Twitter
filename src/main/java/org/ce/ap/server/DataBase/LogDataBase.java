@@ -21,9 +21,9 @@ public class LogDataBase {
     /**
      * Write log file.
      *
-     * @param detail   the detail
-     * @param username the username
      * @param state    the state
+     * @param username the username
+     * @param detail   the detail
      */
     public void writeLogFile(boolean state, String username, String detail) {
         String file = readLogFile();

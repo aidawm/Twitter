@@ -30,6 +30,11 @@ public class UserManager {
         subscribersManager = new SubscribersManager(new ArrayList<>(users.values()));
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static UserManager getInstance() {
         if (instance == null) {
             instance = new UserManager();
@@ -49,17 +54,15 @@ public class UserManager {
             User user1 = new User(user);
             users.put(username, user1);
         }
-            addFollowing();
+        addFollowing();
         System.out.println("users count is :" + users.size());
     }
 
-    private void addFollowing(){
-        for (User user : users.values())
-        {
+    private void addFollowing() {
+        for (User user : users.values()) {
             JSONObject jsonObject = user.getJsonObject();
             JSONArray followings = (JSONArray) jsonObject.get("followings");
-            for (int i = 0 ; i < followings.length(); i++)
-            {
+            for (int i = 0; i < followings.length(); i++) {
                 System.out.println(followings.get(i));
                 user.addFollowing(users.get(followings.getString(i)));
             }
@@ -71,6 +74,7 @@ public class UserManager {
      *
      * @param username user's username
      * @return the user
+     * @throws InvalidUsernameException the invalid username exception
      */
     public User findUser(String username) throws InvalidUsernameException {
         if (users.containsKey(username))
@@ -83,6 +87,7 @@ public class UserManager {
      *
      * @param username user's username
      * @return the user's name
+     * @throws InvalidUsernameException the invalid username exception
      */
     public String findName(String username) throws InvalidUsernameException {
         User user = findUser(username);
@@ -94,6 +99,7 @@ public class UserManager {
      *
      * @param username user's username
      * @return the user's password
+     * @throws InvalidUsernameException the invalid username exception
      */
     public String getUserPassword(String username) throws InvalidUsernameException {
         User user = findUser(username);
@@ -105,6 +111,7 @@ public class UserManager {
      *
      * @param username user's username
      * @return the user's birthDate
+     * @throws InvalidUsernameException the invalid username exception
      */
     public LocalDate getUserBirthDate(String username) throws InvalidUsernameException {
         User user = findUser(username);
@@ -116,9 +123,10 @@ public class UserManager {
      *
      * @param username the username
      * @return true if it is not taken
+     * @throws InvalidUsernameException the invalid username exception
      */
     public boolean isNotUsernameExist(String username) throws InvalidUsernameException {
-        if (!users.containsKey(username)){
+        if (!users.containsKey(username)) {
             return true;
         }
 
@@ -139,14 +147,19 @@ public class UserManager {
     /**
      * get the list of the users
      *
-     * @return
+     * @return users
      */
     public ArrayList<User> getUsers() {
         return new ArrayList<>(users.values());
     }
 
-    public void update(User user){
-        databaseHandler.writeFile(user.getUsername(),user.toJson());
+    /**
+     * Update.
+     *
+     * @param user the user
+     */
+    public void update(User user) {
+        databaseHandler.writeFile(user.getUsername(), user.toJson());
     }
 
 }

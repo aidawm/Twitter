@@ -12,8 +12,7 @@ public interface AuthenticationService {
       * @return the user
       * @throws InvalidUsernameException the invalid username exception
       * @throws InvalidPasswordException the invalid password exception
-      * @throws InvalidNameException     the invalid name exception
-      * @throws InvalidAgeException      the invalid age exception
+      * @throws SignUpExceptions         the sign up exceptions
       */
      User verify() throws InvalidUsernameException, InvalidPasswordException, SignUpExceptions;
 }

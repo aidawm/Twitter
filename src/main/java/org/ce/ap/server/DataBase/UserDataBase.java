@@ -8,6 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+/**
+ * The type User data base.
+ */
 public class UserDataBase {
     private Path path;
 

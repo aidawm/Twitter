@@ -11,7 +11,7 @@ public interface ObserverService {
      * @param subscriber     the subscriber
      * @param subscriberUser the subscriber user
      */
-    void subscribe(User user, Subscriber subscriber,User subscriberUser);
+    void subscribe(User user, Subscriber subscriber, User subscriberUser);
 
     /**
      * Un subscribe.

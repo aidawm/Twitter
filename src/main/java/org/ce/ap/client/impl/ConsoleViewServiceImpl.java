@@ -6,6 +6,7 @@ import main.java.org.ce.ap.server.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.google.gson.Gson;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -45,6 +46,9 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
         System.out.println("0 ) exit");
     }
 
+    /**
+     * Manage follows menu.
+     */
     public void manageFollowsMenu() {
         System.out.println("1 ) follow a user");
         System.out.println("2 ) unfollow a user");
@@ -57,9 +61,10 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
      */
     public void showTimeline(JSONArray tweets) {
         ArrayList<Tweet> tweetArrayList = new ArrayList<>();
-        Gson gson =new Gson();
+        Gson gson = new Gson();
         for (int i = 0; i < tweets.length(); i++) {
-            System.out.println(tweets.get(i).toString());}
+            System.out.println(tweets.get(i).toString());
+        }
 //            tweetArrayList.add(gson.fromJson(tweets.get(i).toString(),Tweet.class));
 //            tweetArrayList.add((Tweet) tweets.get(i));
 //        }
@@ -68,6 +73,11 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
 //        }
     }
 
+    /**
+     * Show followings.
+     *
+     * @param followings the followings
+     */
     public void showFollowings(JSONArray followings) {
         ArrayList<User> followingArrayList = new ArrayList<>();
         for (int i = 0; i < followings.length(); i++) {
@@ -78,8 +88,12 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
         }
     }
 
-    public void showAllUsers(JSONArray users)
-    {
+    /**
+     * Show all users.
+     *
+     * @param users the users
+     */
+    public void showAllUsers(JSONArray users) {
 //        ArrayList<User> userArrayList = new ArrayList<>();
 //        for (int i = 0; i < users.length(); i++) {
 //            userArrayList.add((User) users.get(i));
@@ -87,7 +101,7 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
 //        for (int i = 0; i < userArrayList.size(); i++) {
 //            System.out.println(i + 1 + " : \n" + userArrayList.get(i).toString());
 //        }
-        for (int i = 0 ; i < users.length(); i++){
+        for (int i = 0; i < users.length(); i++) {
             System.out.println(users.get(i));
         }
     }

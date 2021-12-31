@@ -13,13 +13,24 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The type Server.
+ */
 public class Server {
 
+    /**
+     * Configure server.
+     */
     public static void configureServer() {
         UserManager.getInstance();
         TweetManager.getInstance();
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         configureServer();
         ExecutorService pool = Executors.newCachedThreadPool();
@@ -39,10 +50,18 @@ public class Server {
 
 }
 
+/**
+ * The type Client handler.
+ */
 class ClientHandler implements Runnable {
 
     private final Socket connectionSocket;
 
+    /**
+     * Instantiates a new Client handler.
+     *
+     * @param connectionSocket the connection socket
+     */
     public ClientHandler(Socket connectionSocket) {
         this.connectionSocket = connectionSocket;
     }

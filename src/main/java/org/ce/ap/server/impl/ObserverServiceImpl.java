@@ -11,10 +11,11 @@ import main.java.org.ce.ap.server.UserManager;
  */
 public class ObserverServiceImpl implements ObserverService {
     private UserManager userManager = UserManager.getInstance();
+
     @Override
     public void subscribe(User user, Subscriber subscriber, User subscriberUser) {
-        SubscribersManager.subscribe(user,subscriber, subscriberUser);
-        if(!subscriberUser.equals(user)){
+        SubscribersManager.subscribe(user, subscriber, subscriberUser);
+        if (!subscriberUser.equals(user)) {
             userManager.update(user);
             userManager.update(subscriberUser);
         }
@@ -23,8 +24,8 @@ public class ObserverServiceImpl implements ObserverService {
 
     @Override
     public void unSubscribe(User user, Subscriber subscriber, User subscriberUser) {
-        SubscribersManager.unSubscribe(user,subscriber, subscriberUser);
-        if(!subscriberUser.equals(user)){
+        SubscribersManager.unSubscribe(user, subscriber, subscriberUser);
+        if (!subscriberUser.equals(user)) {
             userManager.update(user);
             userManager.update(subscriberUser);
         }

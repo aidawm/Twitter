@@ -5,9 +5,18 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * The type To hex string.
+ */
 public class ToHexString {
-    public static byte[] getSHA(String input) throws NoSuchAlgorithmException
-    {
+    /**
+     * Get sha byte [ ].
+     *
+     * @param input the input
+     * @return the byte [ ]
+     * @throws NoSuchAlgorithmException the no such algorithm exception
+     */
+    public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
         // Static getInstance method is called with hashing SHA
         MessageDigest md = MessageDigest.getInstance("SHA-256");
 
@@ -17,8 +26,13 @@ public class ToHexString {
         return md.digest(input.getBytes(StandardCharsets.UTF_8));
     }
 
-    public static String toHexString(byte[] hash)
-    {
+    /**
+     * To hex string string.
+     *
+     * @param hash the hash
+     * @return the string
+     */
+    public static String toHexString(byte[] hash) {
         // Convert byte array into signum representation
         BigInteger number = new BigInteger(1, hash);
 
@@ -26,8 +40,7 @@ public class ToHexString {
         StringBuilder hexString = new StringBuilder(number.toString(16));
 
         // Pad with leading zeros
-        while (hexString.length() < 32)
-        {
+        while (hexString.length() < 32) {
             hexString.insert(0, '0');
         }
 

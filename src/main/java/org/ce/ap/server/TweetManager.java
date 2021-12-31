@@ -44,6 +44,7 @@ public class TweetManager extends Publisher implements Subscriber {
      * get data from database
      *
      * @param user the user
+     * @return the data from database
      * @throws InvalidUsernameException the invalid username exception
      */
     public ArrayList<Tweet> getDataFromDatabase(User user) throws InvalidUsernameException {
@@ -125,6 +126,7 @@ public class TweetManager extends Publisher implements Subscriber {
      * Add to user to tweets.
      *
      * @param tweet the tweet
+     * @return the array list
      */
     public ArrayList<Tweet> addToUserToTweets(Tweet tweet) {
         String username = tweet.getAuthor().getUsername();
@@ -144,6 +146,7 @@ public class TweetManager extends Publisher implements Subscriber {
      * Remove from user to tweets.
      *
      * @param tweet the tweet
+     * @return the array list
      */
     public ArrayList<Tweet> removeFromUserToTweets(Tweet tweet) {
         String username = tweet.getAuthor().getUsername();

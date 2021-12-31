@@ -16,6 +16,11 @@ public class TweetingServiceImpl implements TweetingService {
 
     private TweetManager tweetManager;
 
+    /**
+     * Instantiates a new Tweeting service.
+     *
+     * @param user the user
+     */
     public TweetingServiceImpl(User user) {
         tweetManager = TweetManager.getInstance();
     }
