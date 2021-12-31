@@ -34,8 +34,9 @@ public class Server {
      */
     public static void main(String[] args) {
         configureServer();
+        int serverPort = Integer.parseInt(ServerConfig.getProperty("server.port"));
         ExecutorService pool = Executors.newCachedThreadPool();
-        try (ServerSocket welcomingSocket = new ServerSocket(5000)) {
+        try (ServerSocket welcomingSocket = new ServerSocket(serverPort)) {
             System.out.print("Server started.\nWaiting for a client ... ");
             while (true) {
                 Socket connectionSocket = welcomingSocket.accept();

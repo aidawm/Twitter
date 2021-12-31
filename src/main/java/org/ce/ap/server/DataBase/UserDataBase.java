@@ -1,5 +1,6 @@
 package main.java.org.ce.ap.server.DataBase;
 
+import main.java.org.ce.ap.server.ServerConfig;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -18,7 +19,7 @@ public class UserDataBase {
      * Instantiates a new Database handler.
      */
     public UserDataBase() {
-        path = Path.of("./files/model/users");
+        path = Path.of(ServerConfig.getProperty("server.users.file"));
     }
 
     /**

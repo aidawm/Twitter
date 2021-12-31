@@ -1,6 +1,7 @@
 package main.java.org.ce.ap.client;
 
 import main.java.org.ce.ap.client.services.impl.CommandParserServiceImpl;
+import main.java.org.ce.ap.server.Server;
 
 
 import java.io.*;
@@ -17,7 +18,9 @@ public class Client {
      * @param args the input arguments
      */
     public static void main(String[] args) {
-        try (Socket client = new Socket("127.0.0.1", 5000)) {
+        int port = Integer.parseInt(ClientConfig.getProperty("client.port"));
+        String host = ClientConfig.getProperty("server.host");
+        try (Socket client = new Socket(host, port)) {
             System.out.println("Connected to server.");
             CommandParserServiceImpl commandParserService = new CommandParserServiceImpl(client);
             commandParserService.run();

@@ -1,5 +1,6 @@
 package main.java.org.ce.ap.server.DataBase;
 
+import main.java.org.ce.ap.server.ServerConfig;
 import main.java.org.ce.ap.server.model.user.User;
 import org.json.JSONObject;
 
@@ -20,7 +21,7 @@ public class TweetDataBase {
      * Instantiates a new Database handler.
      */
     public TweetDataBase() {
-        path = Path.of("./files/model/tweets");
+        path = Path.of(ServerConfig.getProperty("server.tweets.file"));
     }
 
     /**

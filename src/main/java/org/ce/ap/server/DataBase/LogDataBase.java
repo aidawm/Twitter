@@ -1,5 +1,6 @@
 package main.java.org.ce.ap.server.DataBase;
 
+import main.java.org.ce.ap.server.ServerConfig;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -15,7 +16,7 @@ public class LogDataBase {
      * Instantiates a new Log data base.
      */
     public LogDataBase() {
-        this.path = Path.of("./files/log");
+        this.path = Path.of(ServerConfig.getProperty("server.log.file"));
     }
 
     /**

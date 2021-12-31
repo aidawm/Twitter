@@ -25,7 +25,6 @@ public class Retweet extends Tweet {
         super(retweetAuthor, retweetText, id);
 
         this.retweetedTweet = retweet;
-        retweet.addRetweet(this);
 
     }
 
