@@ -1,11 +1,11 @@
 package main.java.org.ce.ap.server;
 
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
+import main.java.org.ce.ap.server.model.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import main.java.org.ce.ap.server.DataBase.UserDataBase;
 
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;

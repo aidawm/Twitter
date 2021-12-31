@@ -1,8 +1,9 @@
 package main.java.org.ce.ap.server;
 
+import main.java.org.ce.ap.server.model.User;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * The type Subscribers manager.

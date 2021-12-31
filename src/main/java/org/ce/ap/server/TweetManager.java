@@ -3,6 +3,9 @@ package main.java.org.ce.ap.server;
 import main.java.org.ce.ap.server.exceptions.*;
 import main.java.org.ce.ap.server.DataBase.TweetDataBase;
 
+import main.java.org.ce.ap.server.model.Retweet;
+import main.java.org.ce.ap.server.model.Tweet;
+import main.java.org.ce.ap.server.model.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

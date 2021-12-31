@@ -2,14 +2,10 @@ package main.java.org.ce.ap.client.impl;
 
 import main.java.org.ce.ap.client.*;
 import main.java.org.ce.ap.*;
-import main.java.org.ce.ap.client.exception.*;
-import main.java.org.ce.ap.server.Tweet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -39,6 +35,7 @@ public class CommandParserServiceImpl implements CommandParserService {
      *
      * @throws IOException the io exception
      */
+    @Override
     public void run() throws IOException {
         while (true) {
             consoleViewService.welcome();
@@ -59,7 +56,7 @@ public class CommandParserServiceImpl implements CommandParserService {
      *
      * @return the service words enum
      */
-    public ServiceWordsEnum authentication() {
+    private ServiceWordsEnum authentication() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
             String command = scanner.next();
@@ -86,7 +83,7 @@ public class CommandParserServiceImpl implements CommandParserService {
      *
      * @throws IOException the io exception
      */
-    public void signIn() throws IOException {
+    private void signIn() throws IOException {
         String username, password;
         boolean isValid = false;
         while (!isValid) {
@@ -106,7 +103,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             request.put("parameterValues", jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.SIGNIN,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.SIGNIN, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -117,7 +114,7 @@ public class CommandParserServiceImpl implements CommandParserService {
      *
      * @throws IOException the io exception
      */
-    public void signUp() throws IOException {
+    private void signUp() throws IOException {
         String username, password, firstName, lastName, birthDateStr;
         LocalDate birthDate;
         boolean isValid = false;
@@ -151,7 +148,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             request.put("method", ServiceWordsEnum.SIGNUP);
             request.put("parameterValues", jsonObject);
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.SIGNUP,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.SIGNUP, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -320,7 +317,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.TWEET, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.TWEET,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.TWEET, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -345,7 +342,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.REMOVETWEET, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.REMOVETWEET,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.REMOVETWEET, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -379,7 +376,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.RETWEET, jsonObject);
 
             JSONObject responseTweet = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.RETWEET,responseTweet);
+            consoleViewService.processServerResponse(ServiceWordsEnum.RETWEET, responseTweet);
             if (!responseTweet.getBoolean("hasError"))
                 isValid = true;
         }
@@ -410,7 +407,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.REPLY, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.REPLY,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.REPLY, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -442,7 +439,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.REMOVEREPLY, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.REMOVEREPLY,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.REMOVEREPLY, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -469,7 +466,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.LIKE, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.LIKE,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.LIKE, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -496,7 +493,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.DISLIKE, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.DISLIKE,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.DISLIKE, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -595,7 +592,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.FOLLOW, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.FOLLOW,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.FOLLOW, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }
@@ -622,7 +619,7 @@ public class CommandParserServiceImpl implements CommandParserService {
             JSONObject request = makeRequest(ServiceWordsEnum.UNFOLLOW, jsonObject);
 
             JSONObject response = connectionService.request(request);
-            consoleViewService.processServerResponse(ServiceWordsEnum.UNFOLLOW,response);
+            consoleViewService.processServerResponse(ServiceWordsEnum.UNFOLLOW, response);
             if (!response.getBoolean("hasError"))
                 isValid = true;
         }

@@ -1,16 +1,16 @@
 package main.java.org.ce.ap.server;
 
-import main.java.org.ce.ap.ServiceWordsEnum;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
-import main.java.org.ce.ap.server.exceptions.TweetDoesntExistException;
 import main.java.org.ce.ap.server.impl.ObserverServiceImpl;
 import main.java.org.ce.ap.server.impl.TimelineServiceImpl;
 import main.java.org.ce.ap.server.impl.TweetingServiceImpl;
 
 import java.util.ArrayList;
 
-import org.json.JSONObject;
+import main.java.org.ce.ap.server.model.Retweet;
+import main.java.org.ce.ap.server.model.Tweet;
+import main.java.org.ce.ap.server.model.User;
 
 /**
  * The type User account.

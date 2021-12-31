@@ -1,14 +1,11 @@
-package main.java.org.ce.ap.server;
+package main.java.org.ce.ap.server.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Locale;
 
 import main.java.org.ce.ap.server.exceptions.InvalidAgeException;
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
-import main.java.org.ce.ap.server.exceptions.InvalidNameException;
 import org.json.JSONObject;
 
 /**

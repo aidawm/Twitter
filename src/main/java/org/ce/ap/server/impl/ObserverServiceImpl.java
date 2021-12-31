@@ -3,7 +3,7 @@ package main.java.org.ce.ap.server.impl;
 import main.java.org.ce.ap.server.ObserverService;
 import main.java.org.ce.ap.server.Subscriber;
 import main.java.org.ce.ap.server.SubscribersManager;
-import main.java.org.ce.ap.server.User;
+import main.java.org.ce.ap.server.model.User;
 import main.java.org.ce.ap.server.UserManager;
 
 /**

@@ -1,15 +1,10 @@
 package main.java.org.ce.ap.client.impl;
 
 import main.java.org.ce.ap.client.*;
-import main.java.org.ce.ap.server.Retweet;
-import main.java.org.ce.ap.server.Tweet;
-import main.java.org.ce.ap.server.User;
-import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import main.java.org.ce.ap.*;
 
@@ -28,6 +23,7 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
     /**
      * Main menu.
      */
+    @Override
     public void mainMenu() {
         System.out.println("1 ) manage tweets ");
         System.out.println("2 ) manage followers & followings ");
@@ -37,6 +33,7 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
     /**
      * Manage tweets menu.
      */
+    @Override
     public void manageTweetsMenu() {
         System.out.println("1 ) new tweet");
         System.out.println("2 ) remove a tweet");
@@ -52,6 +49,7 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
     /**
      * Manage follows menu.
      */
+    @Override
     public void manageFollowsMenu() {
         System.out.println("1 ) follow a user");
         System.out.println("2 ) unfollow a user");
@@ -62,6 +60,7 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
      *
      * @param tweets the tweets
      */
+    @Override
     public void showTimeline(JSONArray tweets) {
         for (int i = 0; i < tweets.length(); i++) {
             System.out.println(showTweet((JSONObject) tweets.get(i)));
@@ -75,10 +74,11 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
      *
      * @param users the users
      */
+    @Override
     public void showUsers(JSONArray users) {
         for (int i = 0; i < users.length(); i++) {
 
-            System.out.println(showUser((JSONObject)users.get(i)));
+            System.out.println(showUser((JSONObject) users.get(i)));
         }
     }
 
@@ -87,15 +87,16 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
      *
      * @param response the response
      */
+    @Override
     public void processServerResponse(ServiceWordsEnum serviceWordsEnum, JSONObject response) {
         switch (serviceWordsEnum) {
             case SIGNIN:
                 if (!response.getBoolean("hasError"))
                     System.out.println("welcome! sign_in attempt is successful");
                 else {
-                    if(response.get("errorCode").equals("InvalidUsernameException"))
+                    if (response.get("errorCode").equals("InvalidUsernameException"))
                         System.out.println("username is not exist");
-                    else if(response.get("errorCode").equals("InvalidPasswordException"))
+                    else if (response.get("errorCode").equals("InvalidPasswordException"))
                         System.out.println("password is incorrect");
                 }
                 break;
@@ -103,17 +104,17 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
                 if (!response.getBoolean("hasError"))
                     System.out.println("welcome! sign_up attempt is successful");
                 else {
-                    if(response.get("errorCode").equals("InvalidDateException"))
+                    if (response.get("errorCode").equals("InvalidDateException"))
                         System.out.println("the birthdate couldn't be after now :)");
-                    else if(response.get("errorCode").equals("InvalidAgeException"))
+                    else if (response.get("errorCode").equals("InvalidAgeException"))
                         System.out.println("the age must be greater than 13 ;) ");
-                    else if(response.get("errorCode").equals("InvalidUsernameSizeException"))
+                    else if (response.get("errorCode").equals("InvalidUsernameSizeException"))
                         System.out.println("the username must be greater than 4 and less than 15");
-                    else if(response.get("errorCode").equals("InvalidUsernameCharactersException"))
+                    else if (response.get("errorCode").equals("InvalidUsernameCharactersException"))
                         System.out.println("the username must have A-Z , 0-9 character ");
-                    else if(response.get("errorCode").equals("ExistingUsername"))
+                    else if (response.get("errorCode").equals("ExistingUsername"))
                         System.out.println("username is exist!");
-                    else if(response.get("errorCode").equals("InvalidNameException"))
+                    else if (response.get("errorCode").equals("InvalidNameException"))
                         System.out.println("name only can be a string of alphabets!");
                 }
                 break;
@@ -229,8 +230,8 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
         }
     }
 
-    private String showTweet(JSONObject tweet){
-        String author = "@"+(tweet.getString("author"));
+    private String showTweet(JSONObject tweet) {
+        String author = "@" + (tweet.getString("author"));
 
         String text = tweet.getString("text");
         JSONArray retweets = (JSONArray) tweet.get("retweets");
@@ -249,7 +250,7 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
         if (replies.length() != 0) {
             str += "replies :\n";
         }
-        for (int i=0; i<replies.length();i++){
+        for (int i = 0; i < replies.length(); i++) {
             str = str + "\t" + showTweet((JSONObject) replies.get(i));
         }
 
@@ -257,13 +258,13 @@ public class ConsoleViewServiceImpl implements ConsoleViewService {
 
     }
 
-    private String showUser(JSONObject user){
-        String username , firstName , lastName;
+    private String showUser(JSONObject user) {
+        String username, firstName, lastName;
         username = user.getString("username");
         firstName = user.getString("firstName");
         lastName = user.getString("lastName");
 
-        return "@"+username+" ("+firstName+" "+lastName+")";
+        return "@" + username + " (" + firstName + " " + lastName + ")";
     }
 
 }

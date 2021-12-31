@@ -1,5 +1,8 @@
 package main.java.org.ce.ap.server;
 
+import main.java.org.ce.ap.server.model.Tweet;
+import main.java.org.ce.ap.server.model.User;
+
 import java.util.HashSet;
 
 /**

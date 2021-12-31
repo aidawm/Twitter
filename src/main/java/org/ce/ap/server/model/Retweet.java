@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.server;
+package main.java.org.ce.ap.server.model;
 
 import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
 import org.json.JSONObject;

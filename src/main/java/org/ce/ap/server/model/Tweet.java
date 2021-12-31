@@ -1,6 +1,5 @@
-package main.java.org.ce.ap.server;
+package main.java.org.ce.ap.server.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;

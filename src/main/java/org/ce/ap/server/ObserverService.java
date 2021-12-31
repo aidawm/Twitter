@@ -1,5 +1,7 @@
 package main.java.org.ce.ap.server;
 
+import main.java.org.ce.ap.server.model.User;
+
 /**
  * this interface subscribes or unsubscribes the given user
  */

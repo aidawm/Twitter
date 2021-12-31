@@ -5,12 +5,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import main.java.org.ce.ap.client.ConnectionService;
 import org.json.JSONObject;
 
 /**
  * The type Connection service.
  */
-public class ConnectionServiceImpl {
+public class ConnectionServiceImpl implements ConnectionService {
     private Socket client;
     private OutputStream out;
     private InputStream in;
@@ -35,6 +36,7 @@ public class ConnectionServiceImpl {
      * @return the json object
      * @throws IOException the io exception
      */
+    @Override
     public JSONObject request(JSONObject jsonObject) throws IOException {
         out.write(jsonObject.toString().getBytes());
         int read = in.read(buffer);
