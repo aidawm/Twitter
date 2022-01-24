@@ -18,6 +18,7 @@ public class Client {
      * @param args the input arguments
      */
     public static void main(String[] args) {
+
         int port = Integer.parseInt(ClientConfig.getProperty("client.port"));
         String host = ClientConfig.getProperty("server.host");
         try (Socket client = new Socket(host, port)) {
