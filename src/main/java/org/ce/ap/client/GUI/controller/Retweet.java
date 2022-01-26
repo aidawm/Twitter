@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
-import org.ce.ap.client.GUI.ClientConfig;
+import org.ce.ap.client.ClientConfig;
 import org.json.JSONObject;
 
 import java.io.File;

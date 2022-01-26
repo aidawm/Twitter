@@ -12,7 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.ce.ap.ServiceWordsEnum;
-import org.ce.ap.client.GUI.ClientConfig;
+import org.ce.ap.client.ClientConfig;
 import org.ce.ap.client.GUI.ConnectionServiceImpl;
 import org.ce.ap.client.GUI.GraphicConfig;
 import org.ce.ap.client.GUI.ViewService;

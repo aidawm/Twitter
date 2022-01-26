@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.ce.ap.ServiceWordsEnum;
-import org.ce.ap.client.GUI.ClientConfig;
+import org.ce.ap.client.ClientConfig;
 import org.ce.ap.client.GUI.ConnectionServiceImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -89,7 +89,7 @@ public class Tweet {
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(new File(ClientConfig.getProperty("reply.page")).toURI().toURL());
         Parent root = fxmlLoader.load();
-        replyController reply = fxmlLoader.getController();
+        ReplyController reply = fxmlLoader.getController();
         reply.update(tweetJson);
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -101,7 +101,7 @@ public class Tweet {
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader =new FXMLLoader(new File(ClientConfig.getProperty("newRetweet.page")).toURI().toURL());
         Parent root = fxmlLoader.load();
-        newRetweetController retweetController = (newRetweetController)fxmlLoader.getController();
+        NewRetweetController retweetController = (NewRetweetController)fxmlLoader.getController();
         retweetController.update(tweetJson);
         Scene scene = new Scene(root);
         stage.setScene(scene);

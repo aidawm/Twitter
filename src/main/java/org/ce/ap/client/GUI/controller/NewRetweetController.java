@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import org.ce.ap.ServiceWordsEnum;
-import org.ce.ap.client.GUI.ClientConfig;
 import org.ce.ap.client.GUI.ConnectionServiceImpl;
 import org.ce.ap.client.GUI.ViewService;
 import org.json.JSONObject;

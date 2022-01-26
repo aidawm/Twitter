@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.ce.ap.client.GUI.ClientConfig;
+import org.ce.ap.client.ClientConfig;
 import org.ce.ap.client.GUI.ViewService;
 import org.json.JSONArray;
 import org.json.JSONObject;
