@@ -20,7 +20,7 @@ import java.io.File;
  * controller for newRetweet.fxml file
  * make a new retweet
  */
-public class NewRetweetController {
+public class NewRetweetController implements Updater{
     ////the tweet that want to retweet it
     private JSONObject tweetJSon;
     ////// the text of the tweet that is retweeted
@@ -47,6 +47,7 @@ public class NewRetweetController {
      * update the retweeted tweet information
      * @param tweet
      */
+    @Override
     public void update(JSONObject tweet){
         this.tweetJSon=tweet;
         this.retweetedTweet.setText(tweet.getString("text"));
@@ -59,8 +60,7 @@ public class NewRetweetController {
      */
     @FXML
     void sendNewRetweet(ActionEvent event) throws Exception{
-        JSONObject request = toJson();
-        JSONObject response = ConnectionServiceImpl.getConnectionService().request(request);
+        JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.RETWEET,toJson());
         if (!response.getBoolean("hasError")){
             Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
             ViewService.showScene(stage,"timeline.page");
@@ -75,12 +75,6 @@ public class NewRetweetController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("tweet", tweetJSon);
         jsonObject.put("text", text.getText());
-
-        JSONObject request= new JSONObject();
-        request.put("method", ServiceWordsEnum.RETWEET);
-        request.put("parameterValues", jsonObject);
-        return request;
-
-
+        return jsonObject;
     }
 }

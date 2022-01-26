@@ -13,9 +13,11 @@ import javafx.stage.Stage;
 import org.ce.ap.ServiceWordsEnum;
 import org.ce.ap.client.ClientConfig;
 import org.ce.ap.client.GUI.ConnectionServiceImpl;
+import org.ce.ap.client.GUI.ViewService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.swing.text.View;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -51,34 +53,22 @@ public class Tweet {
     }
     @FXML
     void goToProfile(MouseEvent event) throws Exception{
-        JSONObject request = new JSONObject();
-        request.put("method", ServiceWordsEnum.USER_INFO);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", username.getText());
-        request.put("parameterValues", jsonObject);
-        JSONObject response = ConnectionServiceImpl.getConnectionService().request(request);
+        JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.USER_INFO,jsonObject);
         if(!response.getBoolean("hasError")){
             Stage stage = (Stage) ((Label)event.getSource()).getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(new File(ClientConfig.getProperty("profile.page")).toURI().toURL());
-            Parent root = fxmlLoader.load();
-            ProfileController profileController = (ProfileController) fxmlLoader.getController();
-            profileController.update((JSONObject)((JSONArray) response.get("result")).get(0));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            ViewService.showScene(stage,"profile.page",(JSONObject)((JSONArray) response.get("result")).get(0));
         }
     }
     @FXML
     void like(ActionEvent event) throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("tweet", tweetJson);
-        JSONObject request = new JSONObject();
-        request.put("method", ServiceWordsEnum.LIKE);
-        request.put("parameterValues", jsonObject);
-
-        JSONObject response = ConnectionServiceImpl.getConnectionService().request(request);
+        JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.LIKE,jsonObject);
         if (!response.getBoolean("hasError")){
-            System.out.println((JSONObject)((JSONArray)response.get("result")).get(0));
+            int likes = response.getJSONArray("likes").length();
+            likeNumber.setText(String.valueOf(likes));
 //            update((JSONObject)((JSONArray)response.get("result")).get(0));
         }
 
@@ -87,25 +77,13 @@ public class Tweet {
     @FXML
     void reply(ActionEvent event) throws Exception{
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(new File(ClientConfig.getProperty("reply.page")).toURI().toURL());
-        Parent root = fxmlLoader.load();
-        ReplyController reply = fxmlLoader.getController();
-        reply.update(tweetJson);
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        ViewService.showScene(stage,"reply.page",tweetJson);
     }
 
     @FXML
     void retweet(ActionEvent event) throws Exception{
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader =new FXMLLoader(new File(ClientConfig.getProperty("newRetweet.page")).toURI().toURL());
-        Parent root = fxmlLoader.load();
-        NewRetweetController retweetController = (NewRetweetController)fxmlLoader.getController();
-        retweetController.update(tweetJson);
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        ViewService.showScene(stage,"newRetweet.page",tweetJson);
     }
 
 }

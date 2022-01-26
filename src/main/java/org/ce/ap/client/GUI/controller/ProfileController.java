@@ -23,7 +23,7 @@ import java.io.IOException;
  * controller for profilePage.fxml file
  * create user profile
  */
-public class ProfileController {
+public class ProfileController implements Updater{
     ///// user's biography
     @FXML
     private Label biography;
@@ -63,6 +63,7 @@ public class ProfileController {
      * @param userInfo
      * @throws Exception
      */
+    @Override
     public void update(JSONObject userInfo) throws Exception {
         JSONObject user = userInfo.getJSONObject("user");
         JSONArray tweets = userInfo.getJSONArray("tweets");
@@ -70,29 +71,7 @@ public class ProfileController {
         name.setText(user.getString("firstName")+" "+user.getString("lastName"));
         username.setText(user.getString("username"));
 //        biography.setText(user.getString("biography"));
-        showTweets(tweets);
-
+        ViewService.showTweets(tweets,vbox,scroll);
     }
 
-    /**
-     * show user's tweets
-     * @param tweets
-     * @throws Exception
-     */
-    private void showTweets(JSONArray tweets) throws Exception {
-        if(tweets.length()==0){
-            Label label = new Label("no tweet yet!");
-            vbox.getChildren().add(label);
-            scroll.setContent(vbox);
-        }
-        for(int i=0;i<tweets.length();i++){
-            FXMLLoader loader = new FXMLLoader(new File(ClientConfig.getProperty("tweet.frame")).toURI().toURL());
-            Parent tweet = loader.load();
-            Tweet tweetController =(Tweet) loader.getController();
-            System.out.println(tweetController);
-            tweetController.update((JSONObject) tweets.get(i));
-            vbox.getChildren().add(tweet);
-        }
-        scroll.setContent(vbox);
-    }
 }

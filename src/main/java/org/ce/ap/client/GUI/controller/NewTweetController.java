@@ -44,8 +44,7 @@ public class NewTweetController {
      */
     @FXML
     void sendNewTweet(ActionEvent event) throws Exception {
-        JSONObject request = toJson();
-        JSONObject response = ConnectionServiceImpl.getConnectionService().request(request);
+        JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.TWEET,toJson());
         if (!response.getBoolean("hasError")){
             Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
             ViewService.showScene(stage,"timeline.page");
@@ -59,9 +58,6 @@ public class NewTweetController {
     private JSONObject toJson(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("text", text.getText());
-        JSONObject request= new JSONObject();
-        request.put("method", ServiceWordsEnum.TWEET);
-        request.put("parameterValues", jsonObject);
-        return request;
+        return jsonObject;
     }
 }

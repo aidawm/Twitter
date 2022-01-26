@@ -1,5 +1,6 @@
 package org.ce.ap.client.GUI;
 
+import org.ce.ap.ServiceWordsEnum;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -56,4 +57,10 @@ public class ConnectionServiceImpl  {
         return response;
     }
 
+    public JSONObject request(ServiceWordsEnum serviceWordsEnum, JSONObject jsonObject) throws IOException {
+        JSONObject request = new JSONObject();
+        request.put("method", serviceWordsEnum);
+        request.put("parameterValues", jsonObject);
+        return request(request);
+    }
 }

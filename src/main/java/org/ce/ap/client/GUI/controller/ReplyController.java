@@ -28,7 +28,7 @@ import java.io.IOException;
  * control replyPage.fxml
  * manage replies of a tweet
  */
-public class ReplyController {
+public class ReplyController implements Updater{
     private JSONObject tweetJson;
     /////// new reply text
     @FXML
@@ -45,23 +45,11 @@ public class ReplyController {
      * @param tweetJson
      * @throws Exception
      */
+    @Override
     public void update(JSONObject tweetJson) throws Exception {
         this.tweetJson=tweetJson;
         JSONArray replies = (JSONArray) tweetJson.get("replies");
-        if (replies.length() == 0) {
-            Label label = new Label("no tweet yet!");
-            vbox.getChildren().add(label);
-            scroll.setContent(vbox);
-        }
-        for (int i = 0; i < replies.length(); i++) {
-            FXMLLoader loader = new FXMLLoader(new File(ClientConfig.getProperty("tweet.frame")).toURI().toURL());
-            Parent tweet = loader.load();
-            Tweet tweetController = (Tweet) loader.getController();
-            System.out.println(tweetController);
-            tweetController.update((JSONObject) replies.get(i));
-            vbox.getChildren().add(tweet);
-        }
-        scroll.setContent(vbox);
+        ViewService.showTweets(replies,vbox,scroll);
     }
 
     /**
@@ -85,10 +73,7 @@ public class ReplyController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("tweet",tweetJson);
         jsonObject.put("text",replyText.getText());
-        JSONObject request = new JSONObject();
-        request.put("method", ServiceWordsEnum.REPLY);
-        request.put("parameterValues", jsonObject);
-        JSONObject response = ConnectionServiceImpl.getConnectionService().request(request);
+        JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.REPLY,jsonObject);
         if (!response.getBoolean("hasError"))
             update((JSONObject) ((JSONArray)response.get("result")).get(0));
     }

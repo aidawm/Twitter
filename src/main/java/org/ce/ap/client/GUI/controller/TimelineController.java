@@ -25,7 +25,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class TimelineController {
+public class TimelineController extends TopMenu{
     private ArrayList<Tweet> tweetList;
     @FXML
     private ScrollPane scroll;
@@ -33,6 +33,16 @@ public class TimelineController {
     @FXML
     private VBox vBox;
 
+    @FXML
+    public void initialize(){
+        vBox.getChildren().clear();
+        try {
+            showTweets();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     @FXML
     void refresh(ActionEvent event) throws Exception {
         vBox.getChildren().clear();
@@ -45,64 +55,25 @@ public class TimelineController {
     }
     @FXML
     void goToProfile(ActionEvent event) throws Exception{
-        JSONObject request = new JSONObject();
-        request.put("method", ServiceWordsEnum.USER_INFO);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", GraphicConfig.getProperty("username.logIn"));
-        request.put("parameterValues", jsonObject);
-        JSONObject response = ConnectionServiceImpl.getConnectionService().request(request);
+        JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.USER_INFO,jsonObject);
         if(!response.getBoolean("hasError")){
             Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(new File(ClientConfig.getProperty("profile.page")).toURI().toURL());
-            Parent root = fxmlLoader.load();
-            ProfileController profileController = (ProfileController) fxmlLoader.getController();
-            profileController.update((JSONObject)((JSONArray) response.get("result")).get(0));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            ViewService.showScene(stage,"profile.page",(JSONObject)((JSONArray) response.get("result")).get(0));
         }
 
     }
 
-    private JSONObject toJson(){
-        JSONObject request = new JSONObject();
-        request.put("method", ServiceWordsEnum.TIMELINE);
-        request.put("parameterValues", new JSONObject());
-        return request;
-    }
     private JSONArray tweetList() throws IOException {
-        JSONObject request = toJson();
-        JSONObject response = ConnectionServiceImpl.getConnectionService().request(request);
+        JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.TIMELINE,new JSONObject());
         JSONArray tweets = (JSONArray) response.get("result");
         return tweets;
     }
 
-    private void showTweets() throws Exception {
+    public void showTweets() throws Exception {
         JSONArray tweets = tweetList();
-        if(tweets.length()==0){
-            Label label = new Label("no tweet yet!");
-            vBox.getChildren().add(label);
-            scroll.setContent(vBox);
-        }
-        for(int i=0;i<tweets.length();i++){
-            FXMLLoader loader;
-            Parent tweet;
-
-            if(((JSONObject)tweets.get(i)).keySet().contains("retweetedTweet")){
-                loader = new FXMLLoader(new File(ClientConfig.getProperty("retweet.frame")).toURI().toURL());
-                tweet=loader.load();
-                Retweet tweetController = (Retweet) loader.getController();
-                tweetController.update((JSONObject) tweets.get(i));
-            }
-            else {
-                loader = new FXMLLoader(new File(ClientConfig.getProperty("tweet.frame")).toURI().toURL());
-                tweet=loader.load();
-                Tweet tweetController =(Tweet) loader.getController();
-                tweetController.update((JSONObject) tweets.get(i));
-            }
-
-            vBox.getChildren().add(tweet);
-        }
-        scroll.setContent(vBox);
+        ViewService.showTweets(tweets,vBox,scroll);
     }
+
 }

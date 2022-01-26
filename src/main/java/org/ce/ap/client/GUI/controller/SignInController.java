@@ -62,8 +62,7 @@ public class SignInController {
      */
     @FXML
     void signIn(ActionEvent event) throws Exception {
-        JSONObject request = toJson();
-        JSONObject response = ConnectionServiceImpl.getConnectionService().request(request);
+        JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.SIGNIN,toJson());
         if(!response.getBoolean("hasError")){
             GraphicConfig.setProperty("username.logIn",username.getText());
             if(rememberMe.isSelected()){
@@ -84,10 +83,6 @@ public class SignInController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", username.getText());
         jsonObject.put("password", password.getText());
-
-        JSONObject request = new JSONObject();
-        request.put("method", ServiceWordsEnum.SIGNIN);
-        request.put("parameterValues", jsonObject);
-        return request;
+        return jsonObject;
     }
 }
