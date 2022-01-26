@@ -80,5 +80,6 @@ public enum ServiceWordsEnum {
      * Show users service words enum.
      */
     SHOW_USERS,
+    USER_INFO,
 }
 

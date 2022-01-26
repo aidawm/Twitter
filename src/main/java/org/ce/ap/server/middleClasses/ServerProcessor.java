@@ -362,7 +362,28 @@ public class ServerProcessor {
                 } finally {
                     return response;
                 }
-
+            case USER_INFO:
+                try {
+//                    User user = userManager.findUser(jsonParameters.getString("username"));
+                    JSONObject userInfo = new JSONObject();
+                    User user = userAccount.getUser();
+                    ArrayList<Tweet> tweets = tweetManager.findTweetsByAuthor(user);
+                    JSONArray tweetArray = toJsonArrayTweet(tweets);
+                    userInfo.put("user",user.toJson());
+                    userInfo.put("tweets",tweetArray);
+                    JSONArray jsonArray= new JSONArray();
+                    jsonArray.put(userInfo);
+                    response.put("hasError", false);
+                    response.put("count", 1);
+                    response.put("result", jsonArray);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response.put("hasError", true);
+                    response.put("errorCode", "UsernameNotFound");
+                }
+                finally {
+                    return response;
+                }
         }
         return null;
     }
@@ -431,6 +452,7 @@ public class ServerProcessor {
         finally {
             return response;
         }
+
     }
 
     /**
