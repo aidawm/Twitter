@@ -1,11 +1,11 @@
-package main.java.org.ce.ap.server.managers;
+package  org.ce.ap.server.managers;
 
-import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
-import main.java.org.ce.ap.server.model.user.User;
-import main.java.org.ce.ap.server.services.observer.SubscribersManager;
+import  org.ce.ap.server.exceptions.InvalidUsernameException;
+import  org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.services.observer.SubscribersManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import main.java.org.ce.ap.server.DataBase.UserDataBase;
+import  org.ce.ap.server.DataBase.UserDataBase;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

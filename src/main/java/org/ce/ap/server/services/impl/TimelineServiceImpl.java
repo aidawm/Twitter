@@ -1,10 +1,10 @@
-package main.java.org.ce.ap.server.services.impl;
+package  org.ce.ap.server.services.impl;
 
-import main.java.org.ce.ap.server.model.user.User;
-import main.java.org.ce.ap.server.services.observer.Subscriber;
-import main.java.org.ce.ap.server.services.TimelineService;
-import main.java.org.ce.ap.server.model.tweet.Tweet;
-import main.java.org.ce.ap.server.managers.TweetManager;
+import  org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.services.observer.Subscriber;
+import  org.ce.ap.server.services.TimelineService;
+import  org.ce.ap.server.model.tweet.Tweet;
+import  org.ce.ap.server.managers.TweetManager;
 
 import java.util.ArrayList;
 import java.util.Comparator;

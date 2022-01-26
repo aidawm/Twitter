@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.client.services;
+package  org.ce.ap.client.CLI.services;
 
 import java.io.IOException;
 

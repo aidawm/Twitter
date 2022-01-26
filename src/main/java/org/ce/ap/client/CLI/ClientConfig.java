@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.client;
+package  org.ce.ap.client.CLI;
 
         import java.io.FileInputStream;
         import java.io.FileNotFoundException;

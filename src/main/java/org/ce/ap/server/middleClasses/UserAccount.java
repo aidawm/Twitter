@@ -1,17 +1,17 @@
-package main.java.org.ce.ap.server.middleClasses;
+package  org.ce.ap.server.middleClasses;
 
-import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import main.java.org.ce.ap.server.exceptions.InvalidUsernameException;
-import main.java.org.ce.ap.server.managers.TweetManager;
-import main.java.org.ce.ap.server.services.impl.ObserverServiceImpl;
-import main.java.org.ce.ap.server.services.impl.TimelineServiceImpl;
-import main.java.org.ce.ap.server.services.impl.TweetingServiceImpl;
+import  org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import  org.ce.ap.server.exceptions.InvalidUsernameException;
+import  org.ce.ap.server.managers.TweetManager;
+import  org.ce.ap.server.services.impl.ObserverServiceImpl;
+import  org.ce.ap.server.services.impl.TimelineServiceImpl;
+import  org.ce.ap.server.services.impl.TweetingServiceImpl;
 
 import java.util.ArrayList;
 
-import main.java.org.ce.ap.server.model.tweet.Retweet;
-import main.java.org.ce.ap.server.model.tweet.Tweet;
-import main.java.org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.model.tweet.Retweet;
+import  org.ce.ap.server.model.tweet.Tweet;
+import  org.ce.ap.server.model.user.User;
 
 /**
  * The type User account.

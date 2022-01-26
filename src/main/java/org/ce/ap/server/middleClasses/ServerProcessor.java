@@ -1,16 +1,16 @@
-package main.java.org.ce.ap.server.middleClasses;
+package  org.ce.ap.server.middleClasses;
 
-import main.java.org.ce.ap.ServiceWordsEnum;
-import main.java.org.ce.ap.server.exceptions.*;
-import main.java.org.ce.ap.server.managers.TweetManager;
-import main.java.org.ce.ap.server.managers.UserManager;
-import main.java.org.ce.ap.server.services.impl.AuthenticationServiceImpl;
-import main.java.org.ce.ap.server.model.tweet.Retweet;
-import main.java.org.ce.ap.server.model.tweet.Tweet;
-import main.java.org.ce.ap.server.model.user.User;
+import  org.ce.ap.ServiceWordsEnum;
+import  org.ce.ap.server.exceptions.*;
+import  org.ce.ap.server.managers.TweetManager;
+import  org.ce.ap.server.managers.UserManager;
+import  org.ce.ap.server.services.impl.AuthenticationServiceImpl;
+import  org.ce.ap.server.model.tweet.Retweet;
+import  org.ce.ap.server.model.tweet.Tweet;
+import  org.ce.ap.server.model.user.User;
 import org.json.*;
 import com.google.gson.Gson;
-import main.java.org.ce.ap.server.DataBase.*;
+import  org.ce.ap.server.DataBase.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

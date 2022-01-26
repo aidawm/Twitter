@@ -1,7 +1,7 @@
-package main.java.org.ce.ap.client.services.impl;
+package  org.ce.ap.client.CLI.services.impl;
 
-import main.java.org.ce.ap.*;
-import main.java.org.ce.ap.client.services.CommandParserService;
+import  org.ce.ap.*;
+import  org.ce.ap.client.CLI.services.CommandParserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

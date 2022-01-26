@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.client.exception;
+package  org.ce.ap.client.CLI.exception;
 
 /**
  * The type Invalid command exception.

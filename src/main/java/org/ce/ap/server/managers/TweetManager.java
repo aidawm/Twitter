@@ -1,13 +1,13 @@
-package main.java.org.ce.ap.server.managers;
+package  org.ce.ap.server.managers;
 
-import main.java.org.ce.ap.server.exceptions.*;
-import main.java.org.ce.ap.server.DataBase.TweetDataBase;
+import  org.ce.ap.server.exceptions.*;
+import  org.ce.ap.server.DataBase.TweetDataBase;
 
-import main.java.org.ce.ap.server.model.tweet.Retweet;
-import main.java.org.ce.ap.server.model.tweet.Tweet;
-import main.java.org.ce.ap.server.model.user.User;
-import main.java.org.ce.ap.server.services.observer.Publisher;
-import main.java.org.ce.ap.server.services.observer.Subscriber;
+import  org.ce.ap.server.model.tweet.Retweet;
+import  org.ce.ap.server.model.tweet.Tweet;
+import  org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.services.observer.Publisher;
+import  org.ce.ap.server.services.observer.Subscriber;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

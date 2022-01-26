@@ -1,7 +1,7 @@
-package main.java.org.ce.ap.server.services;
+package  org.ce.ap.server.services;
 
-import main.java.org.ce.ap.server.services.observer.Subscriber;
-import main.java.org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.services.observer.Subscriber;
+import  org.ce.ap.server.model.user.User;
 
 /**
  * this interface subscribes or unsubscribes the given user

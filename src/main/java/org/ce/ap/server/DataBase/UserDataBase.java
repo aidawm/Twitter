@@ -1,6 +1,6 @@
-package main.java.org.ce.ap.server.DataBase;
+package  org.ce.ap.server.DataBase;
 
-import main.java.org.ce.ap.server.ServerConfig;
+import  org.ce.ap.server.ServerConfig;
 import org.json.JSONObject;
 
 import java.io.*;

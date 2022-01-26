@@ -1,10 +1,10 @@
-package main.java.org.ce.ap.server.services;
+package  org.ce.ap.server.services;
 
-import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import main.java.org.ce.ap.server.exceptions.TweetDoesntExistException;
-import main.java.org.ce.ap.server.model.tweet.Retweet;
-import main.java.org.ce.ap.server.model.tweet.Tweet;
-import main.java.org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import  org.ce.ap.server.exceptions.TweetDoesntExistException;
+import  org.ce.ap.server.model.tweet.Retweet;
+import  org.ce.ap.server.model.tweet.Tweet;
+import  org.ce.ap.server.model.user.User;
 
 /**
  * The interface Tweeting service.

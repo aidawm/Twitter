@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.server.exceptions;
+package  org.ce.ap.server.exceptions;
 
 /**
  * this exception handles the date exceptions

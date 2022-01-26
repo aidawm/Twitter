@@ -1,7 +1,7 @@
-package main.java.org.ce.ap.server.services;
+package  org.ce.ap.server.services;
 
-import main.java.org.ce.ap.server.exceptions.*;
-import main.java.org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.exceptions.*;
+import  org.ce.ap.server.model.user.User;
 
 /**
  * this interface verifies the user

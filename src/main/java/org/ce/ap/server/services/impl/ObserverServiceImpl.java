@@ -1,10 +1,10 @@
-package main.java.org.ce.ap.server.services.impl;
+package  org.ce.ap.server.services.impl;
 
-import main.java.org.ce.ap.server.services.ObserverService;
-import main.java.org.ce.ap.server.services.observer.Subscriber;
-import main.java.org.ce.ap.server.services.observer.SubscribersManager;
-import main.java.org.ce.ap.server.model.user.User;
-import main.java.org.ce.ap.server.managers.UserManager;
+import  org.ce.ap.server.services.ObserverService;
+import  org.ce.ap.server.services.observer.Subscriber;
+import  org.ce.ap.server.services.observer.SubscribersManager;
+import  org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.managers.UserManager;
 
 /**
  * The type Observer service.

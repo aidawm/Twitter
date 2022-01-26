@@ -1,11 +1,11 @@
-package main.java.org.ce.ap.client.services.impl;
+package  org.ce.ap.client.CLI.services.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import main.java.org.ce.ap.client.services.ConnectionService;
+import  org.ce.ap.client.CLI.services.ConnectionService;
 import org.json.JSONObject;
 
 /**

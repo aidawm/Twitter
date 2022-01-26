@@ -1,13 +1,12 @@
-package main.java.org.ce.ap.client.services.impl;
+package  org.ce.ap.client.CLI.services.impl;
 
-import main.java.org.ce.ap.client.services.ConsoleViewService;
-import main.java.org.ce.ap.server.model.tweet.Tweet;
+import  org.ce.ap.client.CLI.services.ConsoleViewService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 
-import main.java.org.ce.ap.*;
+import  org.ce.ap.*;
 
 /**
  * The type Console view service.

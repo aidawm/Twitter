@@ -1,4 +1,4 @@
-package main.java.org.ce.ap;
+package org.ce.ap;
 
 /**
  * The enum Service words enum.

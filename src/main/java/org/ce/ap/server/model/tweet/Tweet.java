@@ -1,11 +1,11 @@
-package main.java.org.ce.ap.server.model.tweet;
+package  org.ce.ap.server.model.tweet;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import main.java.org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import  org.ce.ap.server.model.user.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

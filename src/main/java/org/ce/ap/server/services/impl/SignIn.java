@@ -1,9 +1,9 @@
-package main.java.org.ce.ap.server.services.impl;
+package  org.ce.ap.server.services.impl;
 
-import main.java.org.ce.ap.server.exceptions.*;
-import main.java.org.ce.ap.server.managers.UserManager;
-import main.java.org.ce.ap.server.model.user.User;
-import main.java.org.ce.ap.server.services.AuthenticationService;
+import  org.ce.ap.server.exceptions.*;
+import  org.ce.ap.server.managers.UserManager;
+import  org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.services.AuthenticationService;
 
 
 /**

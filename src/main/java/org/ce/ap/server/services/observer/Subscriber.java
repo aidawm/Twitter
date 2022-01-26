@@ -1,6 +1,6 @@
-package main.java.org.ce.ap.server.services.observer;
+package  org.ce.ap.server.services.observer;
 
-import main.java.org.ce.ap.server.model.tweet.Tweet;
+import  org.ce.ap.server.model.tweet.Tweet;
 
 /**
  * this interface update tweets

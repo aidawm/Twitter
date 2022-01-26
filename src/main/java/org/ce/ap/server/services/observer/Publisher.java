@@ -1,7 +1,7 @@
-package main.java.org.ce.ap.server.services.observer;
+package  org.ce.ap.server.services.observer;
 
-import main.java.org.ce.ap.server.model.tweet.Tweet;
-import main.java.org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.model.tweet.Tweet;
+import  org.ce.ap.server.model.user.User;
 
 import java.util.HashSet;
 

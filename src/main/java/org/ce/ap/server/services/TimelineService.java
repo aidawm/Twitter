@@ -1,6 +1,6 @@
-package main.java.org.ce.ap.server.services;
+package  org.ce.ap.server.services;
 
-import main.java.org.ce.ap.server.model.tweet.Tweet;
+import  org.ce.ap.server.model.tweet.Tweet;
 
 import java.util.ArrayList;
 

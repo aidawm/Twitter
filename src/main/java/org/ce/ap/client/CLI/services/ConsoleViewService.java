@@ -1,6 +1,6 @@
-package main.java.org.ce.ap.client.services;
+package  org.ce.ap.client.CLI.services;
 
-import main.java.org.ce.ap.ServiceWordsEnum;
+import  org.ce.ap.ServiceWordsEnum;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

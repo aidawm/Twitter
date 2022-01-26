@@ -1,4 +1,4 @@
-package main.java.org.ce.ap.server;
+package  org.ce.ap.server;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,9 +1,9 @@
-package main.java.org.ce.ap.server;
+package  org.ce.ap.server;
 
 
-import main.java.org.ce.ap.server.managers.TweetManager;
-import main.java.org.ce.ap.server.managers.UserManager;
-import main.java.org.ce.ap.server.middleClasses.ServerProcessor;
+import  org.ce.ap.server.managers.TweetManager;
+import  org.ce.ap.server.managers.UserManager;
+import  org.ce.ap.server.middleClasses.ServerProcessor;
 import org.json.JSONObject;
 
 import java.io.IOException;

@@ -1,7 +1,7 @@
-package main.java.org.ce.ap.server.model.tweet;
+package  org.ce.ap.server.model.tweet;
 
-import main.java.org.ce.ap.server.exceptions.InvalidCharacterNumberException;
-import main.java.org.ce.ap.server.model.user.User;
+import  org.ce.ap.server.exceptions.InvalidCharacterNumberException;
+import  org.ce.ap.server.model.user.User;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
