@@ -1,16 +1,17 @@
-package org.ce.ap.client.CLI;
+package org.ce.ap.client.GUI;
 
-import  org.ce.ap.client.CLI.services.impl.CommandParserServiceImpl;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
 import org.ce.ap.client.ClientConfig;
 
-
-import java.io.*;
+import java.io.IOException;
 import java.net.Socket;
 
 /**
  * The type Client.
  */
-public class Client {
+public class Client extends Application {
 
     /**
      * The entry point of application.
@@ -18,13 +19,12 @@ public class Client {
      * @param args the input arguments
      */
     public static void main(String[] args) {
-
         int port = Integer.parseInt(ClientConfig.getProperty("client.port"));
         String host = ClientConfig.getProperty("server.host");
         try (Socket client = new Socket(host, port)) {
+           ConnectionServiceImpl.makeConnectionService(client);
             System.out.println("Connected to server.");
-            CommandParserServiceImpl commandParserService = new CommandParserServiceImpl(client);
-            commandParserService.run();
+            launch(args);
             System.out.print("All messages sent.\nClosing ... ");
         } catch (IOException ex) {
             System.err.println(ex);
@@ -33,4 +33,14 @@ public class Client {
     }
 
 
+    /**
+     * start javafx
+     * @param primaryStage
+     * @throws Exception
+     */
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Twitter");
+        ViewService.showScene(primaryStage,"welcome.page");
+    }
 }
