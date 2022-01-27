@@ -16,15 +16,6 @@
          </content>
       </ScrollPane>
    </center>
-   <bottom>
-      <Button mnemonicParsing="false" onAction="#refresh" text="refresh" BorderPane.alignment="CENTER" />
-   </bottom>
-   <right>
-      <Button mnemonicParsing="false" onAction="#newTweet" text="+ tweet" BorderPane.alignment="CENTER" />
-   </right>
-   <left>
-      <Button mnemonicParsing="false" onAction="#goToProfile" text="profile" BorderPane.alignment="CENTER" />
-   </left>
    <top>
       <MenuBar fx:id="menu" BorderPane.alignment="CENTER">
         <menus>
@@ -54,4 +45,16 @@
         </menus>
       </MenuBar>
    </top>
+   <left>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#goToProfile" text="profile" />
+            <Button mnemonicParsing="false" onAction="#refresh" text="refresh" />
+            <Button mnemonicParsing="false" onAction="#searchUsers" text="search" />
+         </children>
+      </VBox>
+   </left>
+   <bottom>
+      <Button mnemonicParsing="false" onAction="#newTweet" text="+ tweet" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>

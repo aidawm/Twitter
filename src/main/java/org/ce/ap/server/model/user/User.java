@@ -19,7 +19,7 @@ public class User {
     private String password;
     private LocalDate birthDate;
     private final LocalDate registryDate;
-    private String biography;
+    private String biography="";
     private HashSet<User> followings = new HashSet<>();
     private HashSet<User> followers = new HashSet<>();
 

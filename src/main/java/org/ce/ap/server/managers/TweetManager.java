@@ -188,7 +188,7 @@ public class TweetManager extends Publisher implements Subscriber {
      */
     public ArrayList findTweetsByAuthor(User author) {
         String username = author.getUsername();
-        return new ArrayList<>(userToTweets.get(username));
+        return (userToTweets.get(username)==null)?new ArrayList<Tweet>():new ArrayList<Tweet>(userToTweets.get(username));
     }
 
     /**

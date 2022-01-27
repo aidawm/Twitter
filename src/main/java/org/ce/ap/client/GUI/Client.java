@@ -41,6 +41,8 @@ public class Client extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Twitter");
+        primaryStage.setResizable(false);
+        primaryStage.setFullScreen(true);
         ViewService.showScene(primaryStage,"welcome.page");
     }
 }

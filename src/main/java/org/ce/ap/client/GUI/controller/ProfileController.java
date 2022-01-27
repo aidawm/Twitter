@@ -9,9 +9,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.ce.ap.ServiceWordsEnum;
 import org.ce.ap.client.ClientConfig;
+import org.ce.ap.client.GUI.ConnectionServiceImpl;
+import org.ce.ap.client.GUI.GraphicConfig;
 import org.ce.ap.client.GUI.ViewService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,6 +28,7 @@ import java.io.IOException;
  * create user profile
  */
 public class ProfileController implements Updater{
+    JSONObject userJson ;
     ///// user's biography
     @FXML
     private Label biography;
@@ -43,6 +48,17 @@ public class ProfileController implements Updater{
     @FXML
     private Label username;
 
+    @FXML
+    private Button follow;
+
+    @FXML
+    private Label follower_num;
+
+    @FXML
+    private Label following_num;
+
+    @FXML
+    private AnchorPane anchor;
     /**
      * go to the timeline
      * @param event
@@ -66,12 +82,63 @@ public class ProfileController implements Updater{
     @Override
     public void update(JSONObject userInfo) throws Exception {
         JSONObject user = userInfo.getJSONObject("user");
+        userJson =user;
+
         JSONArray tweets = userInfo.getJSONArray("tweets");
 
         name.setText(user.getString("firstName")+" "+user.getString("lastName"));
         username.setText(user.getString("username"));
 //        biography.setText(user.getString("biography"));
         ViewService.showTweets(tweets,vbox,scroll);
+
+        if(username.getText().equals(GraphicConfig.getProperty("username.logIn"))){
+            anchor.getChildren().remove(follow);
+        }
+        follower_num.setText(String.valueOf(user.getJSONArray("followers").length()));
+        following_num.setText(String.valueOf(user.getJSONArray("followings").length()));
+        if(isFollower(user.getJSONArray("followers")))
+            follow.setText("unfollow");
+        else
+            follow.setText("follow");
+
+        if(user.getString("biography")==null)
+            biography.setText("");
+        else
+            biography.setText(user.getString("biography"));
     }
 
+    @FXML
+    void followOrUnfollow(ActionEvent event) throws Exception{
+        if(follow.getText().equals("follow")){
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("user", userJson);
+            JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.FOLLOW,jsonObject);
+            if (!response.getBoolean("hasError")){
+                Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+                ViewService.showScene(stage,"profile.page",(JSONObject) response.getJSONArray("result").get(0));
+        }
+        }
+        else{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("user", userJson);
+            JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.UNFOLLOW,jsonObject);
+            if (!response.getBoolean("hasError")){
+                Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+                ViewService.showScene(stage,"profile.page",(JSONObject) response.getJSONArray("result").get(0));
+            }
+        }
+    }
+
+    private boolean isFollower(JSONArray followers){
+        for(int i=0;i<followers.length();i++){
+            if(followers.get(i).equals(GraphicConfig.getProperty("username.logIn")))
+                return true;
+        }
+        return false;
+    }
+    @FXML
+    void searchUsers(ActionEvent event) {
+
+    }
 }

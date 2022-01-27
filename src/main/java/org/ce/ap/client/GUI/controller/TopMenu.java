@@ -24,8 +24,9 @@ public class TopMenu {
     public void initialize(){
     }
     @FXML
-    void about(ActionEvent event) {
-
+    void about(ActionEvent event) throws Exception {
+        Stage stage = (Stage) menu.getScene().getWindow();
+        ViewService.showScene(stage,"about.page");
     }
 
     @FXML

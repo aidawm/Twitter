@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.ce.ap.client.ClientConfig;
@@ -27,19 +28,23 @@ public class ViewService {
         updater.update(jsonObject);
         Scene scene = new Scene(root);
         setTheme(scene);
+
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
     public static void showScene(Stage stage, String viewFxml) throws Exception{
         Parent root = FXMLLoader.load(new File(ClientConfig.getProperty(viewFxml)).toURI().toURL());
         showScene(stage,root);
+        stage.setMaximized(true);
     }
     public static void showScene(Stage stage, Parent root) throws Exception{
         Scene scene =new Scene(root);
         setTheme(scene);
         stage.setScene(scene);
         stage.show();
+        stage.setMaximized(true);
     }
 
     public static void setTheme(Scene scene){
@@ -73,6 +78,30 @@ public class ViewService {
             }
 
             vBox.getChildren().add(tweet);
+        }
+        scroll.setContent(vBox);
+    }
+
+    public static void makeWarning(TextField textField,String message){
+        textField.setText(message);
+        textField.selectAll();
+        textField.requestFocus();
+    }
+    public static void showUsers(JSONArray users, VBox vBox, ScrollPane scroll) throws Exception {
+        if(users.length()==0){
+            Label label = new Label("no user yet!");
+            vBox.getChildren().add(label);
+            scroll.setContent(vBox);
+        }
+        for(int i=0;i<users.length();i++){
+            FXMLLoader loader;
+            Parent user;
+                loader = new FXMLLoader(new File(ClientConfig.getProperty("user.frame")).toURI().toURL());
+                user=loader.load();
+                Updater tweetController = (Updater) loader.getController();
+                tweetController.update((JSONObject) users.get(i));
+
+            vBox.getChildren().add(user);
         }
         scroll.setContent(vBox);
     }

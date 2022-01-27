@@ -75,5 +75,11 @@ public class TimelineController extends TopMenu{
         JSONArray tweets = tweetList();
         ViewService.showTweets(tweets,vBox,scroll);
     }
+    @FXML
+    void searchUsers(ActionEvent event) throws Exception {
+        JSONObject response = ConnectionServiceImpl.getConnectionService().request(ServiceWordsEnum.SHOW_USERS,new JSONObject());
+        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+        ViewService.showScene(stage,"search.page",response);
+    }
 
 }

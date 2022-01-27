@@ -304,6 +304,7 @@ public class ServerProcessor {
                 logDataBase.writeLogFile(false, username, "Attempt FOLLOW");
                 try {
                     userAccount.addFollowing(userManager.findUser(((JSONObject) jsonParameters.get("user")).getString("username")));
+
                     logDataBase.writeLogFile(false, username, "Successful FOLLOW");
                     response.put("hasError", false);
                     response.put("count", 1);
@@ -364,9 +365,8 @@ public class ServerProcessor {
                 }
             case USER_INFO:
                 try {
-//                    User user = userManager.findUser(jsonParameters.getString("username"));
+                    User user = userManager.findUser(jsonParameters.getString("username"));
                     JSONObject userInfo = new JSONObject();
-                    User user = userAccount.getUser();
                     ArrayList<Tweet> tweets = tweetManager.findTweetsByAuthor(user);
                     JSONArray tweetArray = toJsonArrayTweet(tweets);
                     userInfo.put("user",user.toJson());

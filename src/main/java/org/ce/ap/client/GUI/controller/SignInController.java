@@ -11,6 +11,7 @@ import org.ce.ap.ServiceWordsEnum;
 import org.ce.ap.client.GUI.ConnectionServiceImpl;
 import org.ce.ap.client.GUI.GraphicConfig;
 import org.ce.ap.client.GUI.ViewService;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -72,6 +73,7 @@ public class SignInController {
             Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
             ViewService.showScene(stage,"timeline.page");
         }
+
     }
 
     /**
