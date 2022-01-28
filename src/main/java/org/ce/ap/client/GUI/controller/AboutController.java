@@ -8,6 +8,9 @@ import org.ce.ap.client.GUI.ViewService;
 
 public class AboutController {
     @FXML
+    /**
+     * go to timeline
+     */
     void goBack(ActionEvent event) throws Exception {
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
         ViewService.showScene(stage,"timeline.page");

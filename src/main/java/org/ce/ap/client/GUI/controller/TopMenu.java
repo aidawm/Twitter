@@ -20,15 +20,22 @@ public class TopMenu {
     @FXML
     private MenuBar menu;
 
-    @FXML
-    public void initialize(){
-    }
+    /**
+     * about us page
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void about(ActionEvent event) throws Exception {
         Stage stage = (Stage) menu.getScene().getWindow();
         ViewService.showScene(stage,"about.page");
     }
 
+    /**
+     * swich between dark and light mode
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void chooseTheme(ActionEvent event) throws Exception {
         String currentTheme = GraphicConfig.getProperty("theme.mode");
@@ -42,16 +49,28 @@ public class TopMenu {
         ViewService.setTheme(scene);
     }
 
+    /**
+     * exit from twitter
+     * @param event
+     */
     @FXML
     void exit(ActionEvent event) {
         System.exit(0);
     }
 
+    /**
+     * help page
+     * @param event
+     */
     @FXML
     void help(ActionEvent event) {
 
     }
 
+    /**
+     * log out from twitter
+     * @param event
+     */
     @FXML
     void logOut(ActionEvent event) throws Exception {
         GraphicConfig.removeProperty("username.remember");
@@ -61,6 +80,10 @@ public class TopMenu {
     }
 
 
+    /**
+     * change screen size
+     * @param event
+     */
     @FXML
     void screenSize(ActionEvent event) {
 

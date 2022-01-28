@@ -107,6 +107,11 @@ public class ProfileController implements Updater{
             biography.setText(user.getString("biography"));
     }
 
+    /**
+     * follow or unfollow a user
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void followOrUnfollow(ActionEvent event) throws Exception{
         if(follow.getText().equals("follow")){
@@ -130,6 +135,11 @@ public class ProfileController implements Updater{
         }
     }
 
+    /**
+     * follower or not
+     * @param followers
+     * @return
+     */
     private boolean isFollower(JSONArray followers){
         for(int i=0;i<followers.length();i++){
             if(followers.get(i).equals(GraphicConfig.getProperty("username.logIn")))

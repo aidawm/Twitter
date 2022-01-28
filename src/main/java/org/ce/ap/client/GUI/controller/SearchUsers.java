@@ -7,6 +7,9 @@ import org.ce.ap.client.GUI.ViewService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * update the scene
+ */
 public class SearchUsers implements Updater{
     @FXML
     private ScrollPane scroll;
